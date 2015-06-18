@@ -1,0 +1,21 @@
+syntax: glob
+*.suo
+*.orig
+
+#VS temp files:
+.user
+
+#VS temp dirs:
+obj
+Debug
+Release
+bin
+packages
+*.csproj.user
+
+#project post build temp files:
+typescript-spike\TypeScriptHTMLApp1\Scripts\Tests\TestRunSummary.xml
+
+#chutzpah:
+_Chutzpah*
+TestRunSummary.xml
