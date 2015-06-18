@@ -5,7 +5,7 @@ ref:
 http://www.jimmycollins.org/blog/?p=466
 
 console app:
-snapenium <testDetails.csv> <testName>|ALL <reportOutput.html> [-o = leave browser Open] [-r = Record new snapshot images]
+screenium <testDetails.csv> <testName>|ALL <reportOutput.html> [-o = leave browser Open] [-r = Record new snapshot images]
 
 testDetails.csv:
 ============
