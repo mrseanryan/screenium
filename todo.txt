@@ -1,0 +1,44 @@
+screenium TODO
+==============
+
+ref:
+http://www.jimmycollins.org/blog/?p=466
+
+console app:
+snapenium <testDetails.csv> <testName>|ALL <reportOutput.html> [-o = leave browser Open] [-r = Record new snapshot images]
+
+testDetails.csv:
+============
+testName, testDescription, divId, urlPrefix, urlQuery1, urlQuery2, urlQuery3
+
+xx - make console, return code
+xx - add args
+xx - fire up chrome
+xx - add test BAT files
+xx - make test sites
+xx - fire up test sites
+xx - saving screenshots (-s)
+xx - comparing against saved screenshots
+xx - improve report
+
+report:
+=====
+xx - overall result as red/green bar
+xx - list of failed/passing tests with red/green
+xx - links to detail section: expected, actual images side-by-side
+
+example URLs
+============
+Example URL queries that browser will process:
+
+hard coded generated data + time span: 
+
+&importedTestData=hard_coded_testdata&realTimeTestData=hard_coded_testdata&spanStartInSeconds=1433149200&spanLengthInSeconds=300
+
+CSV data + depth span:
+
+&importedTestData=testImportedData1&realTimeTestData=testRealtimeData1&spanStartInMeters=200&spanLengthInMeters=100
+
+CSV data + depth span + showing point labels:
+
+&importedTestData=testImportedData1&realTimeTestData=testRealtimeData1&spanStartInMeters=25&spanLengthInMeters=20&showPointLabels=true
