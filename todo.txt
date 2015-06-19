@@ -2,7 +2,7 @@ screenium TODO
 ==============
 
 console app:
-screenium <testDetails.csv> <testName>|ALL <reportOutput.html> [-o = leave browser Open] [-r = Record new snapshot images]
+screenium <testDetails.csv> <testName>|ALL <reportOutput.html> [-o = leave browser Open] [-s = Save new snapshot images]
 
 testDetails.csv:
 ============
@@ -18,7 +18,7 @@ xx - fire up test sites
   design pattern: Page Object and Page Factory
   https://code.google.com/p/selenium/wiki/PageFactory
 
-xx - saving screenshots (-s)
+xx - saving screenshots (-s) (with prompt for Y)
 xx - comparing against saved screenshots
 xx - report from x.partial.template.html templates -> html
 xx - improve report
