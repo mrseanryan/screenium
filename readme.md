@@ -22,13 +22,17 @@ http://seleniumhq.github.io/selenium/docs/api/dotnet/index.html
 Selenium WebDriver nuget package:
 ---------------------------------
 Selenium.WebDriver
+
 http://www.seleniumhq.org/docs/03_webdriver.jsp
+
 http://www.seleniumhq.org/docs/03_webdriver.jsp#chromedriver 
  
 chrome driver
 -------------
 https://sites.google.com/a/chromium.org/chromedriver/
+
 https://sites.google.com/a/chromium.org/chromedriver/getting-started
+
 https://github.com/SeleniumHQ/selenium/wiki/ChromeDriver
 
 Selenium WebDriver & chromedriver
