@@ -1,9 +1,6 @@
 screenium TODO
 ==============
 
-ref:
-http://www.jimmycollins.org/blog/?p=466
-
 console app:
 screenium <testDetails.csv> <testName>|ALL <reportOutput.html> [-o = leave browser Open] [-r = Record new snapshot images]
 
@@ -11,14 +8,19 @@ testDetails.csv:
 ============
 testName, testDescription, divId, urlPrefix, urlQuery1, urlQuery2, urlQuery3
 
+xx - look at args parsing code in SplashScreen app
 xx - make console, return code
 xx - add args
 xx - fire up chrome
 xx - add test BAT files
 xx - make test sites
 xx - fire up test sites
+  design pattern: Page Object and Page Factory
+  https://code.google.com/p/selenium/wiki/PageFactory
+
 xx - saving screenshots (-s)
 xx - comparing against saved screenshots
+xx - report from x.partial.template.html templates -> html
 xx - improve report
 
 report:
