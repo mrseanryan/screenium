@@ -47,9 +47,9 @@ https://github.com/SeleniumHQ/selenium/wiki/ChromeDriver
 
 Selenium WebDriver & chromedriver
 ---------------------------------
-WebDriver works with Chrome through the chromedriver binary (found on the chromium project’s download page). You need to have both chromedriver and a version of chrome browser installed.
+WebDriver works with Chrome through the chromedriver binary (found on the chromium project download page). You need to have both chromedriver and a version of chrome browser installed.
 
-chromedriver needs to be placed somewhere on your system’s path in order for WebDriver to automatically discover it.
+chromedriver needs to be placed somewhere on your system path in order for WebDriver to automatically discover it.
 
 The Chrome browser itself is discovered by chromedriver in the default installation path.
 These both can be overridden by environment variables. 
