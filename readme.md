@@ -8,6 +8,16 @@ dependencies
 - Visual Studio 2013
 - Chrome web browser
 
+- Selenium WebDriver
+nuget: Selenium.WebDriver
+version: 2.46.0
+
+nuget: WebDriver.Support
+
+- ChromeDriver
+version: 2.16
+http://chromedriver.storage.googleapis.com/index.html?path=2.16/
+
 references
 ==========
 

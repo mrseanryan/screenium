@@ -8,10 +8,10 @@ testDetails.csv:
 ============
 testName, testDescription, divId, urlPrefix, urlQuery1, urlQuery2, urlQuery3
 
+xx - fire up chrome
 xx - look at args parsing code in SplashScreen app
 xx - make console, return code
 xx - add args
-xx - fire up chrome
 xx - add test BAT files
 xx - make test sites
 xx - fire up test sites

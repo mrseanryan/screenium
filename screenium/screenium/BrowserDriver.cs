@@ -1,33 +1,38 @@
-﻿
+﻿using OpenQA.Selenium;
+using OpenQA.Selenium.Chrome;
+using OpenQA.Selenium.Support.UI;
+using System;
+
 namespace screenium
 {
-	class BrowserDriver
-	{
+    class BrowserDriver
+    {
 
-		/*
-		IWebDriver driver = new ChromeDriver();
+        internal void TestChrome()
+        {
+            IWebDriver driver = new ChromeDriver();
 
-		driver.Navigate().GoToUrl("http://www.google.com/");
-		
-		// Find the text input element by its name
-		IWebElement query = driver.FindElement(By.Name("q"));
+            driver.Navigate().GoToUrl("http://www.google.com/");
 
-		// Enter something to search for
-		query.SendKeys("Cheese");
+            // Find the text input element by its name
+            IWebElement query = driver.FindElement(By.Name("q"));
 
-		// Now submit the form. WebDriver will find the form for us from the element
-		query.Submit();
+            // Enter something to search for
+            query.SendKeys("Cheese");
 
-		// Google's search is rendered dynamically with JavaScript.
-		// Wait for the page to load, timeout after 10 seconds
-		WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
-		wait.Until((d) => { return d.Title.ToLower().StartsWith("cheese"); });
+            // Now submit the form. WebDriver will find the form for us from the element
+            query.Submit();
 
-		// Should see: "Cheese - Google Search"
-		System.Console.WriteLine("Page title is: " + driver.Title);
+            // Google's search is rendered dynamically with JavaScript.
+            // Wait for the page to load, timeout after 10 seconds
+            WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
+            wait.Until((d) => { return d.Title.ToLower().StartsWith("cheese"); });
 
-		//Close the browser
-		driver.Quit();
-		 */
-	}
+            // Should see: "Cheese - Google Search"
+            Console.WriteLine("Page title is: " + driver.Title);
+
+            //Close the browser
+            driver.Quit();
+        }
+    }
 }

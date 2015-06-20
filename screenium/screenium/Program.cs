@@ -10,6 +10,8 @@ namespace screenium
     {
         static void Main(string[] args)
         {
+            BrowserDriver driver = new BrowserDriver();
+            driver.TestChrome();
         }
     }
 }
