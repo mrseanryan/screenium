@@ -3,14 +3,20 @@
 <head>
     <title>log plot layout tryout</title>
 
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+
     <link href="http://cdn.kendostatic.com/2015.2.624/styles/kendo.common.min.css" rel="stylesheet" />
     <link href="http://cdn.kendostatic.com/2015.2.624/styles/kendo.default.min.css" rel="stylesheet" />
 
     <!--<script src="js/jquery.min.js"></script>-->
 
     <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+    <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+
     <script src="http://cdn.kendostatic.com/2015.2.624/js/kendo.all.min.js"></script>
     <!--<script src="http://cdn.kendostatic.com/2015.2.624/js/kendo.timezones.min.js"></script>-->
+
+
 
 </head>
 <body>
@@ -21,117 +27,122 @@
             <td id="tdZone1" width="600px">
                 <div id="zone1">
                     <!-- LP here in zone 1 -->
-                    <div id="example">
+                    <div id="example" style="border: solid 1px black;">
 
-                        <div id="vertical">
-                            <div id="top-pane">
-                                <div id="horizontal-headings" style="height: 100%; width: 100%;">
-                                    <div id="ruler-pane">
-                                        <div class="pane-content">
-                                            <h3>Inner splitter / ruler header pane</h3>
+                            <div id="vertical">
+                                <div id="top-pane">
+                                    <div id="horizontal-headings">
+                                        <div id="ruler-pane">
+                                            <div class="pane-content">
+                                                <h3>Inner splitter / ruler header pane</h3>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div id="column1-pane">
-                                        <div class="pane-content">
-                                            <h3>Inner splitter / column 1 - header pane</h3>
+                                        <div id="column1-pane">
+                                            <div class="pane-content">
+                                                <h3>Inner splitter / column 1 - header pane</h3>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div id="column2-pane">
-                                        <div class="pane-content">
-                                            <h3>Inner splitter / column 2 - header pane</h3>
+                                        <div id="column2-pane">
+                                            <div class="pane-content">
+                                                <h3>Inner splitter / column 2 - header pane</h3>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div id="column3-pane">
-                                        <div class="pane-content">
-                                            <h3>Inner splitter / column 3 - header pane</h3>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div id="top-pane-2">
-                                <div id="horizontal-headings-2" style="height: 100%; width: 100%;">
-                                    <div id="ruler-pane-2">
-                                        <div class="pane-content">
-                                            <h3>Inner splitter / ruler header pane</h3>
-                                        </div>
-                                    </div>
-                                    <div id="column1-pane-2">
-                                        <div class="pane-content">
-                                            <h3>Inner splitter / column 1 - header pane</h3>
-                                        </div>
-                                    </div>
-                                    <div id="column2-pane-2">
-                                        <div class="pane-content">
-                                            <h3>Inner splitter / column 2 - header pane</h3>
-                                        </div>
-                                    </div>
-                                    <div id="column3-pane-2">
-                                        <div class="pane-content">
-                                            <h3>Inner splitter / column 3 - header pane</h3>
+                                        <div id="column3-pane">
+                                            <div class="pane-content">
+                                                <h3>Inner splitter / column 3 - header pane</h3>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div id="middle-pane">
-                                <div id="horizontal-main" style="height: 100%; width: 100%;">
-                                    <div id="ruler-main-pane">
-                                        <div class="pane-content">
+                                <div id="top-pane-2">
+                                    <div id="horizontal-headings-2" style="height: 100%; width: 100%;">
+                                        <div id="ruler-pane-2">
+                                            <div class="pane-content">
+                                                <h3>Inner splitter / ruler header pane</h3>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div id="column1-main-pane">
-                                        <div class="pane-content">
+                                        <div id="column1-pane-2">
+                                            <div class="pane-content">
+                                                <h3>Inner splitter / column 1 - header pane</h3>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div id="column2-main-pane">
-                                        <div class="pane-content">
+                                        <div id="column2-pane-2">
+                                            <div class="pane-content">
+                                                <h3>Inner splitter / column 2 - header pane</h3>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div id="column3-main-pane">
-                                        <div class="pane-content">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div id="bottom-pane">
-                                <div id="horizontal-footers" style="height: 100%; width: 100%;">
-                                    <div id="ruler-pane-footer">
-                                        <div class="pane-content">
-                                            <h3>Inner splitter / ruler footer pane</h3>
-                                        </div>
-                                    </div>
-                                    <div id="column1-pane-footer">
-                                        <div class="pane-content">
-                                            <h3>Inner splitter / column 1 - footer pane</h3>
-                                        </div>
-                                    </div>
-                                    <div id="column2-pane-footer">
-                                        <div class="pane-content">
-                                            <h3>Inner splitter / column 2 - footer pane</h3>
-                                        </div>
-                                    </div>
-                                    <div id="column3-pane-footer">
-                                        <div class="pane-content">
-                                            <h3>Inner splitter / column 3 - footer pane</h3>
+                                        <div id="column3-pane-2">
+                                            <div class="pane-content">
+                                                <h3>Inner splitter / column 3 - header pane</h3>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div id="bottom-empty-pane">
-                                <div id="horizontal-empty" style="height: 100%; width: 100%;">
+                                <div id="middle-pane">
+                                    <div id="horizontal-main" style="height: 100%; width: 100%;">
+                                        <div id="ruler-main-pane">
+
+                                            <img src="images/wv_lp_ruler_main.png" class="stretch-image" />
+
+                                            <!--<div class="pane-content">
+                                            </div>-->
+                                        </div>
+                                        <div id="column1-main-pane">
+                                            <div class="pane-content">
+                                            </div>
+                                        </div>
+                                        <div id="column2-main-pane">
+                                            <div class="pane-content">
+                                            </div>
+                                        </div>
+                                        <div id="column3-main-pane">
+                                            <div class="pane-content">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="bottom-pane">
+                                    <div id="horizontal-footers" style="height: 100%; width: 100%;">
+                                        <div id="ruler-pane-footer">
+                                            <div class="pane-content">
+                                                <h3>Inner splitter / ruler footer pane</h3>
+                                            </div>
+                                        </div>
+                                        <div id="column1-pane-footer">
+                                            <div class="pane-content">
+                                                <h3>Inner splitter / column 1 - footer pane</h3>
+                                            </div>
+                                        </div>
+                                        <div id="column2-pane-footer">
+                                            <div class="pane-content">
+                                                <h3>Inner splitter / column 2 - footer pane</h3>
+                                            </div>
+                                        </div>
+                                        <div id="column3-pane-footer">
+                                            <div class="pane-content">
+                                                <h3>Inner splitter / column 3 - footer pane</h3>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="bottom-empty-pane">
+                                    <div id="horizontal-empty">
+                                    </div>
                                 </div>
                             </div>
                         </div>
 
                         <script>
-                            $(document).ready(function () {
+                            var createKendoSplitters = function () {
+                                
                                 var splitter = $("#vertical").kendoSplitter({
                                     orientation: "vertical",
                                     panes: [
                                         { collapsible: true, resizable: true },
                                         { collapsible: true, resizable: true },
                                         { collapsible: false, resizable: true, size: "400px" },
-                                        { collapsible: true, resizable: true, size: "100px" },
-                                        { collapsible: true, resizable: true, size: "100px" }
+                                        { collapsible: true, resizable: true },
+                                        { collapsible: true, resizable: true }
                                     ],
                                     expand: onExpand,
                                     collapse: onCollapse,
@@ -187,6 +198,14 @@
                                     contentload: onContentLoad,
                                     resize: onResize
                                 });
+                            };
+
+                            $(document).ready(function () {
+
+                                createKendoSplitters();
+
+                                //jQuery resizable:
+                                $('#example').resizable();
                             });
 
                             function onResize(e) {
@@ -224,10 +243,6 @@
                                 margin: 0 auto;
                             }
 
-                            #ruler-main-pane {
-                                background-image: url(images/wv_lp_ruler_main.png);
-                            }
-
                             #column1-main-pane {
                                 background-image: url(images/wv_lp_column1_main.png);
                             }
@@ -242,6 +257,12 @@
 
                             .pane-content {
                                 padding: 0 10px;
+                            }
+
+                            .stretch-image {
+                                margin: auto;
+                                height: 100%;
+                                width: 100%;
                             }
                         </style>
                     </div>
