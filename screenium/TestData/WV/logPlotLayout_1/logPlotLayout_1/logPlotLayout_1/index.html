@@ -16,101 +16,240 @@
 <body>
 
     <!-- WV uses tables for zones:-->
-<table>
-    <tr>
-        <td id="tdZone1" width="400px">
-            <div id="zone1">
-                <!-- LP here in zone 1 -->
-                <div id="example">
+    <table>
+        <tr>
+            <td id="tdZone1" width="600px">
+                <div id="zone1">
+                    <!-- LP here in zone 1 -->
+                    <div id="example">
 
-                    <div id="vertical">
-                        <div id="top-pane">
-                            <div id="horizontal" style="height: 100%; width: 100%;">
-                                <div id="ruler-pane">
-                                    <div class="pane-content">
-                                        <h3>Inner splitter / ruler header pane</h3>
+                        <div id="vertical">
+                            <div id="top-pane">
+                                <div id="horizontal-headings" style="height: 100%; width: 100%;">
+                                    <div id="ruler-pane">
+                                        <div class="pane-content">
+                                            <h3>Inner splitter / ruler header pane</h3>
+                                        </div>
                                     </div>
-                                </div>
-                                <div id="column1-pane">
-                                    <div class="pane-content">
-                                        <h3>Inner splitter / column 1 - header pane</h3>
+                                    <div id="column1-pane">
+                                        <div class="pane-content">
+                                            <h3>Inner splitter / column 1 - header pane</h3>
+                                        </div>
                                     </div>
-                                </div>
-                                <div id="column2-pane">
-                                    <div class="pane-content">
-                                        <h3>Inner splitter / column 2 - header pane</h3>
+                                    <div id="column2-pane">
+                                        <div class="pane-content">
+                                            <h3>Inner splitter / column 2 - header pane</h3>
+                                        </div>
                                     </div>
-                                </div>
-                                <div id="column3-pane">
-                                    <div class="pane-content">
-                                        <h3>Inner splitter / column 3 - header pane</h3>
+                                    <div id="column3-pane">
+                                        <div class="pane-content">
+                                            <h3>Inner splitter / column 3 - header pane</h3>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div id="middle-pane">
-                            <div class="pane-content">
-                                <h3>Outer splitter / middle pane</h3>
-                                <p>Resizable only.</p>
+                            <div id="top-pane-2">
+                                <div id="horizontal-headings-2" style="height: 100%; width: 100%;">
+                                    <div id="ruler-pane-2">
+                                        <div class="pane-content">
+                                            <h3>Inner splitter / ruler header pane</h3>
+                                        </div>
+                                    </div>
+                                    <div id="column1-pane-2">
+                                        <div class="pane-content">
+                                            <h3>Inner splitter / column 1 - header pane</h3>
+                                        </div>
+                                    </div>
+                                    <div id="column2-pane-2">
+                                        <div class="pane-content">
+                                            <h3>Inner splitter / column 2 - header pane</h3>
+                                        </div>
+                                    </div>
+                                    <div id="column3-pane-2">
+                                        <div class="pane-content">
+                                            <h3>Inner splitter / column 3 - header pane</h3>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="middle-pane">
+                                <div id="horizontal-main" style="height: 100%; width: 100%;">
+                                    <div id="ruler-main-pane">
+                                        <div class="pane-content">
+                                        </div>
+                                    </div>
+                                    <div id="column1-main-pane">
+                                        <div class="pane-content">
+                                        </div>
+                                    </div>
+                                    <div id="column2-main-pane">
+                                        <div class="pane-content">
+                                        </div>
+                                    </div>
+                                    <div id="column3-main-pane">
+                                        <div class="pane-content">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="bottom-pane">
+                                <div id="horizontal-footers" style="height: 100%; width: 100%;">
+                                    <div id="ruler-pane-footer">
+                                        <div class="pane-content">
+                                            <h3>Inner splitter / ruler footer pane</h3>
+                                        </div>
+                                    </div>
+                                    <div id="column1-pane-footer">
+                                        <div class="pane-content">
+                                            <h3>Inner splitter / column 1 - footer pane</h3>
+                                        </div>
+                                    </div>
+                                    <div id="column2-pane-footer">
+                                        <div class="pane-content">
+                                            <h3>Inner splitter / column 2 - footer pane</h3>
+                                        </div>
+                                    </div>
+                                    <div id="column3-pane-footer">
+                                        <div class="pane-content">
+                                            <h3>Inner splitter / column 3 - footer pane</h3>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="bottom-empty-pane">
+                                <div id="horizontal-empty" style="height: 100%; width: 100%;">
+                                </div>
                             </div>
                         </div>
-                        <div id="bottom-pane">
-                            <div class="pane-content">
-                                <h3>Outer splitter / bottom pane</h3>
-                                <p>Non-resizable and non-collapsible.</p>
-                            </div>
-                        </div>
+
+                        <script>
+                            $(document).ready(function () {
+                                var splitter = $("#vertical").kendoSplitter({
+                                    orientation: "vertical",
+                                    panes: [
+                                        { collapsible: true, resizable: true },
+                                        { collapsible: true, resizable: true },
+                                        { collapsible: false, resizable: true, size: "400px" },
+                                        { collapsible: true, resizable: true, size: "100px" },
+                                        { collapsible: true, resizable: true, size: "100px" }
+                                    ],
+                                    expand: onExpand,
+                                    collapse: onCollapse,
+                                    contentload: onContentLoad,
+                                    resize: onResize
+                                });
+
+                                $("#horizontal-headings").kendoSplitter({
+                                    panes: [
+                                        { collapsible: true },
+                                        { collapsible: true },
+                                        { collapsible: true },
+                                        { collapsible: true }
+                                    ],
+                                    expand: onExpand,
+                                    collapse: onCollapse,
+                                    contentload: onContentLoad,
+                                    resize: onResize
+                                });
+                                $("#horizontal-headings-2").kendoSplitter({
+                                    panes: [
+                                        { collapsible: true },
+                                        { collapsible: true },
+                                        { collapsible: true },
+                                        { collapsible: true }
+                                    ],
+                                    expand: onExpand,
+                                    collapse: onCollapse,
+                                    contentload: onContentLoad,
+                                    resize: onResize
+                                });
+                                $("#horizontal-main").kendoSplitter({
+                                    panes: [
+                                        { collapsible: true },
+                                        { collapsible: true },
+                                        { collapsible: true },
+                                        { collapsible: true }
+                                    ],
+                                    expand: onExpand,
+                                    collapse: onCollapse,
+                                    contentload: onContentLoad,
+                                    resize: onResize
+                                });
+                                $("#horizontal-footers").kendoSplitter({
+                                    panes: [
+                                        { collapsible: true },
+                                        { collapsible: true },
+                                        { collapsible: true },
+                                        { collapsible: true }
+                                    ],
+                                    expand: onExpand,
+                                    collapse: onCollapse,
+                                    contentload: onContentLoad,
+                                    resize: onResize
+                                });
+                            });
+
+                            function onResize(e) {
+                                console.log("Resized :: Splitter <b>#" + this.element[0].id + "</b>");
+                            }
+
+                            function onExpand(e) {
+                                console.log("Expanded :: Pane <b>#" + e.pane.id + "</b> from splitter <b>#" + this.element[0].id + "</b> expanded");
+                            }
+
+                            function onCollapse(e) {
+                                console.log("Collapsed :: Pane <b>#" + e.pane.id + "</b> from splitter <b>#" + this.element[0].id + "</b> collapsed");
+                            }
+
+                            function onContentLoad(e) {
+                                console.log("Content loaded in <b>#" + e.pane.id +
+                                    "</b> and starts with <b>" + $(e.pane).text().substr(0, 20) + "...</b>");
+                            }
+
+                            /*
+                            var pane = getPane($("#index").val());
+
+                            if (!pane) {
+                                throw 'pane not found!';
+                            }
+
+                            splitter.size(pane, 666);
+                            */
+                        </script>
+
+                        <style>
+                            #vertical {
+                                /*overall height of the log plot*/
+                                height: 700px;
+                                margin: 0 auto;
+                            }
+
+                            #ruler-main-pane {
+                                background-image: url(images/wv_lp_ruler_main.png);
+                            }
+
+                            #column1-main-pane {
+                                background-image: url(images/wv_lp_column1_main.png);
+                            }
+
+                            #column2-main-pane {
+                                background-image: url(images/wv_lp_column2_main.png);
+                            }
+
+                            #column3-main-pane {
+                                background-image: url(images/wv_lp_column3_main.png);
+                            }
+
+                            .pane-content {
+                                padding: 0 10px;
+                            }
+                        </style>
                     </div>
 
-                    <script>
-                        $(document).ready(function () {
-                            $("#vertical").kendoSplitter({
-                                orientation: "vertical",
-                                panes: [
-                                    { collapsible: false },
-                                    { collapsible: false, size: "100px" },
-                                    { collapsible: false, resizable: false, size: "100px" }
-                                ]
-                            });
-
-                            $("#horizontal").kendoSplitter({
-                                panes: [
-                                    { collapsible: true },
-                                    { collapsible: false },
-                                    { collapsible: true }
-                                ]
-                            });
-                        });
-                    </script>
-
-                    <style>
-                        #vertical {
-                            height: 380px;
-                            margin: 0 auto;
-                        }
-
-                        #middle-pane {
-                            background-color: rgba(60, 70, 80, 0.10);
-                        }
-
-                        #bottom-pane {
-                            background-color: rgba(60, 70, 80, 0.15);
-                        }
-
-                        #left-pane, #center-pane, #right-pane {
-                            background-color: rgba(60, 70, 80, 0.05);
-                        }
-
-                        .pane-content {
-                            padding: 0 10px;
-                        }
-                    </style>
                 </div>
-
-            </div>
-        </td>
-    </tr>    
-</table>
+            </td>
+        </tr>
+    </table>
 
 </body>
 </html>
