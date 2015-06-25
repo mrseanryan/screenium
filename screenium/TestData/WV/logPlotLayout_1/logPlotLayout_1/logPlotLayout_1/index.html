@@ -144,8 +144,11 @@
                         });
 
                         var makeColumnsDraggable = function () {
-                            var draggableId = 'column0-pane-heading';
-                            var dropTargetId = 'column1-pane-heading';
+                            var draggablePrefix = 'column0';
+                            var draggableId = draggablePrefix + '-pane-heading';
+
+                            var dropPrefix = 'column1';
+                            var dropTargetId = dropPrefix + '-pane-heading';
 
                             function droptargetOnDragEnter(e) {
                                 $("#" + dropTargetId).addClass("dropTargetEntered");
@@ -180,7 +183,7 @@
 
                                 draggable.removeClass("draggableOnDrag");
 
-                                //TODO - swap the contents of the column divs
+                                swapColumnContents(draggablePrefix, dropPrefix);
                             }
 
                             $("#" + draggableId).kendoDraggable({
@@ -201,18 +204,48 @@
                             //TODO make the other columns be draggable
                         };
 
+                        var swapColumnContents = function (sourceColumnPrefix, targetColumnPrefix) {
+                            for (var rowSuffix in rowSuffixesIncludingMain) {
+                                if (rowSuffixesIncludingMain.hasOwnProperty(rowSuffix)) {
+                                    rowSuffix = rowSuffixesIncludingMain[rowSuffix];
+                                    var sourcePaneId = sourceColumnPrefix + rowSuffix;
+                                    var targetPaneId = targetColumnPrefix + rowSuffix;
+
+                                    var sourceDiv = $('#' + sourcePaneId);
+                                    var destDiv = $('#' + targetPaneId);
+
+                                    swapChildrenOfDivs(sourceDiv, destDiv);
+                                }
+                            }
+                        };
+
+                        var swapChildrenOfDivs = function(sourceDiv, destDiv) {
+                            //using detach() NOT remove() to preserve jQuery objects and events
+                            var sourceChildren = sourceDiv.children().detach();
+                            var destChildren = destDiv.children().detach();
+
+                            sourceChildren.appendTo(destDiv);
+                            destChildren.appendTo(sourceDiv);
+                        };
+
+                        var columnPrefixes = [
+                            'column0', 'column1', 'column2', 'column3'
+                        ];
+
+                        var rowSuffixes = [
+                            '-pane-heading', '-pane-footer'
+                        ];
+
+                        var rowSuffixesIncludingMain = [
+                            '-pane-heading', '-pane-footer', '-pane-main'
+                        ];
+
                         //adjust the pane sizes, after some resize event.
                         //unfortunately, kendo ui does not always provide the pane object that was resized.
                         //so, this function adjusts ALL panes, taking Main as the authority.
                         var adjustPaneSizes = function () {
                             var authorityPaneSuffix = '-pane-main';
-                            var columnPrefixes = [
-                                'column0', 'column1', 'column2', 'column3'
-                            ];
-
-                            var rowSuffixes = [
-                                '-pane-heading', '-pane-footer'
-                            ];
+                            
                             var rowSuffixToSplitter = [];
 
                             //using Null Object to handle edge cases during control creation (where 1 or more row splitters not yet created)
