@@ -38,17 +38,17 @@
                                             <h3>ruler header</h3>
                                         </div>
                                     </div>
-                                    <div id="column1-pane">
+                                    <div id="column1-pane-heading-1">
                                         <div class="pane-content">
                                             <h3>col 1 - header</h3>
                                         </div>
                                     </div>
-                                    <div id="column2-pane">
+                                    <div id="column2-pane-heading-1">
                                         <div class="pane-content">
                                             <h3>col 2 - header</h3>
                                         </div>
                                     </div>
-                                    <div id="column3-pane">
+                                    <div id="column3-pane-heading-1">
                                         <div class="pane-content">
                                             <h3>col 3 - header</h3>
                                         </div>
@@ -62,17 +62,17 @@
                                             <h3>ruler header</h3>
                                         </div>
                                     </div>
-                                    <div id="column1-pane-2">
+                                    <div id="column1-pane-heading-2">
                                         <div class="pane-content">
                                             <h3>col 1 - header</h3>
                                         </div>
                                     </div>
-                                    <div id="column2-pane-2">
+                                    <div id="column2-pane-heading-2">
                                         <div class="pane-content">
                                             <h3>col 2 - header</h3>
                                         </div>
                                     </div>
-                                    <div id="column3-pane-2">
+                                    <div id="column3-pane-heading-2">
                                         <div class="pane-content">
                                             <h3>col 3 - header</h3>
                                         </div>
@@ -81,16 +81,16 @@
                             </div>
                             <div id="middle-pane">
                                 <div id="horizontal-main" style="height: 100%; width: 100%;">
-                                    <div id="ruler-main-pane">
+                                    <div id="ruler-pane-main">
                                         <img src="images/wv_lp_ruler_main.png" class="stretch-image" />
                                     </div>
-                                    <div id="column1-main-pane">
+                                    <div id="column1-pane-main">
                                         <img src="images/wv_lp_column1_main.png" class="stretch-image" />
                                     </div>
-                                    <div id="column2-main-pane">
+                                    <div id="column2-pane-main">
                                         <img src="images/wv_lp_column2_main.png" class="stretch-image" />
                                     </div>
-                                    <div id="column3-main-pane">
+                                    <div id="column3-pane-main">
                                         <img src="images/wv_lp_column3_main.png" class="stretch-image" />
                                     </div>
                                 </div>
@@ -202,19 +202,48 @@
                         //unfortunately, kendo ui does not always provide the pane object that was resized.
                         //so, this function adjusts ALL panes, taking Main as the authority.
                         var adjustPaneSizes = function () {
-                            //xxx list of authorityPaneIds => list of targetPaneIds
+                            var authorityPaneSuffix = '-pane-main';
+                            var columnPrefixes = [
+                                'ruler', 'column1', 'column2', 'column3'
+                            ];
 
-                            var authorityPaneId = 'ruler-main-pane';
-                            var authorityPane = getPane(authorityPaneId);
-                            var size = authorityPane.size;
+                            var rowSuffixes = [
+                                '-pane-heading-1', '-pane-heading-2', '-pane-footer'
+                            ];
+                            var rowSuffixToSplitter = [];
+                            rowSuffixToSplitter[rowSuffixes[0]] = headingsHorizontalSplitter;
+                            rowSuffixToSplitter[rowSuffixes[1]] = headings2HorizontalSplitter;
+                            rowSuffixToSplitter[rowSuffixes[2]] = footersHorizontalSplitter;
 
-                            var targetPaneId = 'ruler-pane-heading-1';
+                            var resizeOtherPanesInColumn = function (columnPrefix) {
+                                var authorityPaneId = columnPrefix + authorityPaneSuffix;
+                                var authorityPane = getPane(authorityPaneId);
+                                var size = authorityPane.size;
+                                if (!size) {
+                                    return; //occurs on startup
+                                }
 
-                            if (authorityPane.collapsed) {
-                                size = 0;
+                                if(authorityPane.collapsed) {
+                                    size = 0;
+                                }
+
+                                for (var rowSuffix in rowSuffixes) {
+                                    if (rowSuffixes.hasOwnProperty(rowSuffix)) {
+                                        rowSuffix = rowSuffixes[rowSuffix];
+                                        var targetPaneId = columnPrefix + rowSuffix;
+
+                                        var splitter = rowSuffixToSplitter[rowSuffix];
+                                        splitter.size('#' + targetPaneId, size);
+                                    }
+                                }
+                            };
+
+                            for(var columnPrefix in columnPrefixes) {
+                                if (columnPrefixes.hasOwnProperty(columnPrefix)) {
+                                    columnPrefix = columnPrefixes[columnPrefix];
+                                    resizeOtherPanesInColumn(columnPrefix);
+                                }
                             }
-
-                            headingsHorizontalSplitter.size('#' + targetPaneId, size);
                         };
 
                         var getPane = function (id) {
