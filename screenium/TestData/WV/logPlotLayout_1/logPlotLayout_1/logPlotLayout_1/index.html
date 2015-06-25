@@ -139,7 +139,56 @@
                             $('#example').resizable({
                                 //handles: "e"
                             });
+
+                            makeColumnsDraggable();
                         });
+
+                        var makeColumnsDraggable = function () {
+                            var draggableId = 'ruler-pane-heading-1';
+                            var dropTargetId = 'column1-pane-heading-1';
+
+                            function droptargetOnDragEnter(e) {
+                                $("#" + dropTargetId).addClass("dropTargetEntered");
+                            }
+                            function droptargetOnDragLeave(e) {
+                                $("#" + dropTargetId).removeClass("dropTargetEntered");
+                            }
+                            var droptargetOnDrop = function (e) {
+                                $("#" + draggableId).removeClass("draggableOnDrag");
+                                $("#" + dropTargetId).removeClass("dropTargetEntered");
+                            }
+
+                            function draggableOnDragStart(e) {
+                                $("#" + draggableId).addClass("draggableOnDrag");
+                                $("#" + dropTargetId).removeClass("dropTargetEntered");
+                            }
+                            //TODO swap the columns!
+                            var draggableOnDragEnd = function (e) {
+                                var draggable = $("#" + draggableId);
+
+                                if (!draggable.data("kendoDraggable").dropped) {
+                                    // drag ended outside of any droptarget
+                                }
+
+                                draggable.removeClass("draggableOnDrag");
+                            }
+
+                            $("#" + draggableId).kendoDraggable({
+                                hint: function () {
+                                    return $("#" + draggableId).clone(); //TODO review will this work OK with real plots
+                                },
+                                dragstart: draggableOnDragStart,
+                                dragend: draggableOnDragEnd
+                            });
+
+                            $("#" + dropTargetId).kendoDropTarget({
+                                dragenter: droptargetOnDragEnter,
+                                dragleave: droptargetOnDragLeave,
+                                drop: droptargetOnDrop
+                            });
+
+                            //TODO make the other columns be draggable
+                        };
 
                         //adjust the pane sizes, after some resize event.
                         //unfortunately, kendo ui does not always provide the pane object that was resized.
@@ -157,7 +206,7 @@
 
                             //using Null Object to handle edge cases during control creation (where 1 or more row splitters not yet created)
                             var nullObjectSplitter = {
-                                size: function() {
+                                size: function () {
                                 }
                             };
 
@@ -168,7 +217,7 @@
                                 var authorityPaneId = columnPrefix + authorityPaneSuffix;
                                 var authorityPane = getPane(authorityPaneId);
                                 var size = authorityPane.size;
-                                if(authorityPane.collapsed) {
+                                if (authorityPane.collapsed) {
                                     size = 0;
                                 }
                                 if (typeof (size) === 'undefined') {
@@ -177,7 +226,7 @@
                                 }
 
                                 for (var rowSuffix in rowSuffixes) {
-                                    if(rowSuffixes.hasOwnProperty(rowSuffix)) {
+                                    if (rowSuffixes.hasOwnProperty(rowSuffix)) {
                                         rowSuffix = rowSuffixes[rowSuffix];
                                         var targetPaneId = columnPrefix + rowSuffix;
 
@@ -187,7 +236,7 @@
                                 }
                             };
 
-                            for(var columnPrefix in columnPrefixes) {
+                            for (var columnPrefix in columnPrefixes) {
                                 if (columnPrefixes.hasOwnProperty(columnPrefix)) {
                                     columnPrefix = columnPrefixes[columnPrefix];
                                     resizeOtherPanesInColumn(columnPrefix);
@@ -234,6 +283,20 @@
                             margin: 0;
                             height: 99%;
                             width: 100%;
+                        }
+
+                        .dropTargetEntered {
+                            border: cyan solid 2px;
+                            border-radius: 10px;
+                            cursor: default;
+                        }
+
+                        .draggableOnDrag {
+                            border: yellow solid 2px;
+                            cursor: move;
+                            border-radius: 10px;
+                            background-color: #03a9f4;
+                            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.23), 0 3px 10px rgba(0, 0, 0, 0.16);
                         }
                     </style>
                 </div>
