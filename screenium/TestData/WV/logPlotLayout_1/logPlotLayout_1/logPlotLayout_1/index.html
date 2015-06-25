@@ -149,20 +149,28 @@
 
                             function droptargetOnDragEnter(e) {
                                 $("#" + dropTargetId).addClass("dropTargetEntered");
+
+                                $('body').css('cursor', 'pointer');
                             }
                             function droptargetOnDragLeave(e) {
                                 $("#" + dropTargetId).removeClass("dropTargetEntered");
+
+                                $('body').css('cursor', 'move');
                             }
                             var droptargetOnDrop = function (e) {
                                 $("#" + draggableId).removeClass("draggableOnDrag");
                                 $("#" + dropTargetId).removeClass("dropTargetEntered");
+
+                                $('body').css('cursor', 'default');
                             }
 
                             function draggableOnDragStart(e) {
                                 $("#" + draggableId).addClass("draggableOnDrag");
                                 $("#" + dropTargetId).removeClass("dropTargetEntered");
+
+                                $('body').css('cursor', 'move');
                             }
-                            //TODO swap the columns!
+                            
                             var draggableOnDragEnd = function (e) {
                                 var draggable = $("#" + draggableId);
 
@@ -171,6 +179,8 @@
                                 }
 
                                 draggable.removeClass("draggableOnDrag");
+
+                                //TODO - swap the contents of the column divs
                             }
 
                             $("#" + draggableId).kendoDraggable({
@@ -178,7 +188,8 @@
                                     return $("#" + draggableId).clone(); //TODO review will this work OK with real plots
                                 },
                                 dragstart: draggableOnDragStart,
-                                dragend: draggableOnDragEnd
+                                dragend: draggableOnDragEnd,
+                                cursorOffset: { top: 10, left: 10 }
                             });
 
                             $("#" + dropTargetId).kendoDropTarget({
@@ -288,12 +299,10 @@
                         .dropTargetEntered {
                             border: cyan solid 2px;
                             border-radius: 10px;
-                            cursor: default;
                         }
 
                         .draggableOnDrag {
                             border: yellow solid 2px;
-                            cursor: move;
                             border-radius: 10px;
                             background-color: #03a9f4;
                             box-shadow: 0 3px 10px rgba(0, 0, 0, 0.23), 0 3px 10px rgba(0, 0, 0, 0.16);
