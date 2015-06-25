@@ -144,18 +144,32 @@
                         });
 
                         var makeColumnsDraggable = function () {
-                            var draggablePrefix = 'column0';
-                            var draggableId = draggablePrefix + '-pane-heading';
+                            for (var dragColumn in columnPrefixes) {
+                                if (columnPrefixes.hasOwnProperty(dragColumn)) {
+                                    dragColumn = columnPrefixes[dragColumn];
 
-                            var dropPrefix = 'column1';
+                                    for(var dropColumn in columnPrefixes) {
+                                        if(columnPrefixes.hasOwnProperty(dropColumn)) {
+                                            dropColumn = columnPrefixes[dropColumn];
+                                            if(dragColumn !== dropColumn) {
+                                                makeColumnDraggable(dragColumn, dropColumn);
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        };
+
+                        var makeColumnDraggable = function (draggablePrefix, dropPrefix) {
+                            var draggableId = draggablePrefix + '-pane-heading';
                             var dropTargetId = dropPrefix + '-pane-heading';
 
-                            function droptargetOnDragEnter(e) {
+                            var droptargetOnDragEnter = function(e) {
                                 $("#" + dropTargetId).addClass("dropTargetEntered");
 
                                 $('body').css('cursor', 'pointer');
                             }
-                            function droptargetOnDragLeave(e) {
+                            var droptargetOnDragLeave = function(e) {
                                 $("#" + dropTargetId).removeClass("dropTargetEntered");
 
                                 $('body').css('cursor', 'move');
@@ -167,7 +181,7 @@
                                 $('body').css('cursor', 'default');
                             }
 
-                            function draggableOnDragStart(e) {
+                            var draggableOnDragStart = function(e) {
                                 $("#" + draggableId).addClass("draggableOnDrag");
                                 $("#" + dropTargetId).removeClass("dropTargetEntered");
 
@@ -200,11 +214,10 @@
                                 dragleave: droptargetOnDragLeave,
                                 drop: droptargetOnDrop
                             });
-
-                            //TODO make the other columns be draggable
                         };
 
                         var swapColumnContents = function (sourceColumnPrefix, targetColumnPrefix) {
+                            //TODO fix - wrong columns are being passed in!
                             for (var rowSuffix in rowSuffixesIncludingMain) {
                                 if (rowSuffixesIncludingMain.hasOwnProperty(rowSuffix)) {
                                     rowSuffix = rowSuffixesIncludingMain[rowSuffix];
