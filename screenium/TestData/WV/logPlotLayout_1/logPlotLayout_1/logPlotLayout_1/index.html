@@ -146,29 +146,29 @@
                             $("#horizontal-headings").kendoSplitter({
                                 panes: [
                                     { collapsible: false, resizable: false, scrollable: false },
-                                    { collapsible: false, resizable: false },
-                                    { collapsible: false, resizable: false },
-                                    { collapsible: false, resizable: false }
+                                    { collapsible: false, resizable: false, scrollable: false },
+                                    { collapsible: false, resizable: false, scrollable: false },
+                                    { collapsible: false, resizable: false, scrollable: false }
                                 ]
                             });
                             headingsHorizontalSplitter = $("#horizontal-headings").data("kendoSplitter");
 
                             $("#horizontal-headings-2").kendoSplitter({
                                 panes: [
-                                    { collapsible: false, resizable: false },
-                                    { collapsible: false, resizable: false },
-                                    { collapsible: false, resizable: false },
-                                    { collapsible: false, resizable: false }
+                                    { collapsible: false, resizable: false, scrollable: false },
+                                    { collapsible: false, resizable: false, scrollable: false },
+                                    { collapsible: false, resizable: false, scrollable: false },
+                                    { collapsible: false, resizable: false, scrollable: false }
                                 ]
                             });
                             headings2HorizontalSplitter = $("#horizontal-headings-2").data('kendoSplitter');
 
                             $("#horizontal-main").kendoSplitter({
                                 panes: [
-                                    { collapsible: true },
-                                    { collapsible: true },
-                                    { collapsible: true },
-                                    { collapsible: true }
+                                    { collapsible: true, scrollable: false },
+                                    { collapsible: true, scrollable: false },
+                                    { collapsible: true, scrollable: false },
+                                    { collapsible: true, scrollable: false }
                                 ],
                                 expand: onExpandMainHorizontal,
                                 collapse: onCollapseMainHorizontal,
@@ -179,10 +179,10 @@
 
                             $("#horizontal-footers").kendoSplitter({
                                 panes: [
-                                    { collapsible: false, resizable: false },
-                                    { collapsible: false, resizable: false },
-                                    { collapsible: false, resizable: false },
-                                    { collapsible: false, resizable: false }
+                                    { collapsible: false, resizable: false, scrollable: false },
+                                    { collapsible: false, resizable: false, scrollable: false },
+                                    { collapsible: false, resizable: false, scrollable: false },
+                                    { collapsible: false, resizable: false, scrollable: false }
                                 ]
                             });
                             footersHorizontalSplitter = $("#horizontal-footers").data('kendoSplitter');
@@ -202,6 +202,8 @@
                         //unfortunately, kendo ui does not always provide the pane object that was resized.
                         //so, this function adjusts ALL panes, taking Main as the authority.
                         var adjustPaneSizes = function () {
+                            //xxx list of authorityPaneIds => list of targetPaneIds
+
                             var authorityPaneId = 'ruler-main-pane';
                             var authorityPane = getPane(authorityPaneId);
                             var size = authorityPane.size;
