@@ -27,16 +27,16 @@
                         <div id="vertical" style="height: 97%; width: 99%;">
                             <div id="top-pane">
                                 <div id="horizontal-headings" style="height: 100%; width: 100%;">
-                                    <div id="column0-pane-heading-1">
+                                    <div id="column0-pane-heading">
                                         <img src="images/wv_lp_ruler_heading.png" class="stretch-image" />
                                     </div>
-                                    <div id="column1-pane-heading-1">
+                                    <div id="column1-pane-heading">
                                         <img src="images/wv_lp_column1_header.png" class="stretch-image" />
                                     </div>
-                                    <div id="column2-pane-heading-1">
+                                    <div id="column2-pane-heading">
                                         <img src="images/wv_lp_column2_header.png" class="stretch-image" />
                                     </div>
-                                    <div id="column3-pane-heading-1">
+                                    <div id="column3-pane-heading">
                                         <img src="images/wv_lp_column3_header.png" class="stretch-image" />
                                     </div>
                                 </div>
@@ -144,8 +144,8 @@
                         });
 
                         var makeColumnsDraggable = function () {
-                            var draggableId = 'column0-pane-heading-1';
-                            var dropTargetId = 'column1-pane-heading-1';
+                            var draggableId = 'column0-pane-heading';
+                            var dropTargetId = 'column1-pane-heading';
 
                             function droptargetOnDragEnter(e) {
                                 $("#" + dropTargetId).addClass("dropTargetEntered");
@@ -200,7 +200,7 @@
                             ];
 
                             var rowSuffixes = [
-                                '-pane-heading-1', '-pane-footer'
+                                '-pane-heading', '-pane-footer'
                             ];
                             var rowSuffixToSplitter = [];
 
