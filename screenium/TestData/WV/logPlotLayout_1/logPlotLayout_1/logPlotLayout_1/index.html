@@ -31,25 +31,25 @@
 
                             <div id="vertical">
                                 <div id="top-pane">
-                                    <div id="horizontal-headings">
+                                    <div id="horizontal-headings" style="height: 100%; width: 100%;">
                                         <div id="ruler-pane">
                                             <div class="pane-content">
-                                                <h3>Inner splitter / ruler header pane</h3>
+                                                <h3>ruler header</h3>
                                             </div>
                                         </div>
                                         <div id="column1-pane">
                                             <div class="pane-content">
-                                                <h3>Inner splitter / column 1 - header pane</h3>
+                                                <h3>col 1 - header</h3>
                                             </div>
                                         </div>
                                         <div id="column2-pane">
                                             <div class="pane-content">
-                                                <h3>Inner splitter / column 2 - header pane</h3>
+                                                <h3>col 2 - header</h3>
                                             </div>
                                         </div>
                                         <div id="column3-pane">
                                             <div class="pane-content">
-                                                <h3>Inner splitter / column 3 - header pane</h3>
+                                                <h3>col 3 - header</h3>
                                             </div>
                                         </div>
                                     </div>
@@ -58,22 +58,22 @@
                                     <div id="horizontal-headings-2" style="height: 100%; width: 100%;">
                                         <div id="ruler-pane-2">
                                             <div class="pane-content">
-                                                <h3>Inner splitter / ruler header pane</h3>
+                                                <h3>ruler header</h3>
                                             </div>
                                         </div>
                                         <div id="column1-pane-2">
                                             <div class="pane-content">
-                                                <h3>Inner splitter / column 1 - header pane</h3>
+                                                <h3>col 1 - header</h3>
                                             </div>
                                         </div>
                                         <div id="column2-pane-2">
                                             <div class="pane-content">
-                                                <h3>Inner splitter / column 2 - header pane</h3>
+                                                <h3>col 2 - header</h3>
                                             </div>
                                         </div>
                                         <div id="column3-pane-2">
                                             <div class="pane-content">
-                                                <h3>Inner splitter / column 3 - header pane</h3>
+                                                <h3>col 3 - header</h3>
                                             </div>
                                         </div>
                                     </div>
@@ -98,22 +98,22 @@
                                     <div id="horizontal-footers" style="height: 100%; width: 100%;">
                                         <div id="ruler-pane-footer">
                                             <div class="pane-content">
-                                                <h3>Inner splitter / ruler footer pane</h3>
+                                                <h3>ruler footer</h3>
                                             </div>
                                         </div>
                                         <div id="column1-pane-footer">
                                             <div class="pane-content">
-                                                <h3>Inner splitter / column 1 - footer pane</h3>
+                                                <h3>col 1 - footer</h3>
                                             </div>
                                         </div>
                                         <div id="column2-pane-footer">
                                             <div class="pane-content">
-                                                <h3>Inner splitter / column 2 - footer pane</h3>
+                                                <h3>col 2 - footer</h3>
                                             </div>
                                         </div>
                                         <div id="column3-pane-footer">
                                             <div class="pane-content">
-                                                <h3>Inner splitter / column 3 - footer pane</h3>
+                                                <h3>col 3 - footer</h3>
                                             </div>
                                         </div>
                                     </div>
@@ -145,10 +145,10 @@
 
                                 $("#horizontal-headings").kendoSplitter({
                                     panes: [
-                                        { collapsible: true },
-                                        { collapsible: true },
-                                        { collapsible: true },
-                                        { collapsible: true }
+                                        { collapsible: false },
+                                        { collapsible: false },
+                                        { collapsible: false },
+                                        { collapsible: false }
                                     ],
                                     expand: onExpand,
                                     collapse: onCollapse,
@@ -157,10 +157,10 @@
                                 });
                                 $("#horizontal-headings-2").kendoSplitter({
                                     panes: [
-                                        { collapsible: true },
-                                        { collapsible: true },
-                                        { collapsible: true },
-                                        { collapsible: true }
+                                        { collapsible: false },
+                                        { collapsible: false },
+                                        { collapsible: false },
+                                        { collapsible: false }
                                     ],
                                     expand: onExpand,
                                     collapse: onCollapse,
@@ -181,10 +181,10 @@
                                 });
                                 $("#horizontal-footers").kendoSplitter({
                                     panes: [
-                                        { collapsible: true },
-                                        { collapsible: true },
-                                        { collapsible: true },
-                                        { collapsible: true }
+                                        { collapsible: false },
+                                        { collapsible: false },
+                                        { collapsible: false },
+                                        { collapsible: false }
                                     ],
                                     expand: onExpand,
                                     collapse: onCollapse,
@@ -198,7 +198,9 @@
                                 createKendoSplitters();
 
                                 //jQuery resizable:
-                                $('#example').resizable();
+                                $('#example').resizable({
+                                    handles: "e"
+                                });
                             });
 
                             function onResize(e) {
