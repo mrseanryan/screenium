@@ -8,19 +8,13 @@
     <link href="http://cdn.kendostatic.com/2015.2.624/styles/kendo.common.min.css" rel="stylesheet" />
     <link href="http://cdn.kendostatic.com/2015.2.624/styles/kendo.default.min.css" rel="stylesheet" />
 
-    <!--<script src="js/jquery.min.js"></script>-->
-
     <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
     <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 
     <script src="http://cdn.kendostatic.com/2015.2.624/js/kendo.all.min.js"></script>
     <!--<script src="http://cdn.kendostatic.com/2015.2.624/js/kendo.timezones.min.js"></script>-->
-
-
-
 </head>
 <body>
-
     <!-- WV uses tables for zones:-->
     <table>
         <tr>
@@ -55,30 +49,6 @@
                                     </div>
                                 </div>
                             </div>
-                            <div id="top-pane-2">
-                                <div id="horizontal-headings-2" style="height: 100%; width: 100%;">
-                                    <div id="ruler-pane-heading-2">
-                                        <div class="pane-content">
-                                            <h3>ruler header</h3>
-                                        </div>
-                                    </div>
-                                    <div id="column1-pane-heading-2">
-                                        <div class="pane-content">
-                                            <h3>col 1 - header</h3>
-                                        </div>
-                                    </div>
-                                    <div id="column2-pane-heading-2">
-                                        <div class="pane-content">
-                                            <h3>col 2 - header</h3>
-                                        </div>
-                                    </div>
-                                    <div id="column3-pane-heading-2">
-                                        <div class="pane-content">
-                                            <h3>col 3 - header</h3>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
                             <div id="middle-pane">
                                 <div id="horizontal-main" style="height: 100%; width: 100%;">
                                     <div id="ruler-pane-main">
@@ -98,24 +68,16 @@
                             <div id="bottom-pane">
                                 <div id="horizontal-footers" style="height: 100%; width: 100%;">
                                     <div id="ruler-pane-footer">
-                                        <div class="pane-content">
-                                            <h3>ruler footer</h3>
-                                        </div>
+                                        <!--empty-->
                                     </div>
                                     <div id="column1-pane-footer">
-                                        <div class="pane-content">
-                                            <h3>col 1 - footer</h3>
-                                        </div>
+                                        <img src="images/wv_lp_column1_footer.png" class="stretch-image" />
                                     </div>
                                     <div id="column2-pane-footer">
-                                        <div class="pane-content">
-                                            <h3>col 2 - footer</h3>
-                                        </div>
+                                        <img src="images/wv_lp_column2_footer.png" class="stretch-image" />
                                     </div>
                                     <div id="column3-pane-footer">
-                                        <div class="pane-content">
-                                            <h3>col 3 - footer</h3>
-                                        </div>
+                                        <img src="images/wv_lp_column3_footer.png" class="stretch-image" />
                                     </div>
                                 </div>
                             </div>
@@ -136,7 +98,6 @@
                                 orientation: "vertical",
                                 panes: [
                                     { collapsible: true, resizable: true, size: "50px" }, //headings
-                                    { collapsible: true, resizable: true, size: "50px" }, //headings 2
                                     { collapsible: false, resizable: true }, //main
                                     { collapsible: true, resizable: true, size: "50px" } //footer
                                 ]
@@ -152,16 +113,6 @@
                                 ]
                             });
                             headingsHorizontalSplitter = $("#horizontal-headings").data("kendoSplitter");
-
-                            $("#horizontal-headings-2").kendoSplitter({
-                                panes: [
-                                    { collapsible: false, resizable: false, scrollable: false },
-                                    { collapsible: false, resizable: false, scrollable: false },
-                                    { collapsible: false, resizable: false, scrollable: false },
-                                    { collapsible: false, resizable: false, scrollable: false }
-                                ]
-                            });
-                            headings2HorizontalSplitter = $("#horizontal-headings-2").data('kendoSplitter');
 
                             $("#horizontal-main").kendoSplitter({
                                 panes: [
@@ -208,27 +159,33 @@
                             ];
 
                             var rowSuffixes = [
-                                '-pane-heading-1', '-pane-heading-2', '-pane-footer'
+                                '-pane-heading-1', '-pane-footer'
                             ];
                             var rowSuffixToSplitter = [];
-                            rowSuffixToSplitter[rowSuffixes[0]] = headingsHorizontalSplitter;
-                            rowSuffixToSplitter[rowSuffixes[1]] = headings2HorizontalSplitter;
-                            rowSuffixToSplitter[rowSuffixes[2]] = footersHorizontalSplitter;
+
+                            //using Null Object to handle edge cases during control creation (where 1 or more row splitters not yet created)
+                            var nullObjectSplitter = {
+                                size: function() {
+                                }
+                            };
+
+                            rowSuffixToSplitter[rowSuffixes[0]] = headingsHorizontalSplitter ? headingsHorizontalSplitter : nullObjectSplitter;
+                            rowSuffixToSplitter[rowSuffixes[1]] = footersHorizontalSplitter ? footersHorizontalSplitter : nullObjectSplitter;
 
                             var resizeOtherPanesInColumn = function (columnPrefix) {
                                 var authorityPaneId = columnPrefix + authorityPaneSuffix;
                                 var authorityPane = getPane(authorityPaneId);
                                 var size = authorityPane.size;
-                                if (!size) {
-                                    return; //occurs on startup
-                                }
-
                                 if(authorityPane.collapsed) {
                                     size = 0;
                                 }
+                                if (typeof (size) === 'undefined') {
+                                    //bug in kendo ui?
+                                    size = $('#' + authorityPaneId).width();
+                                }
 
                                 for (var rowSuffix in rowSuffixes) {
-                                    if (rowSuffixes.hasOwnProperty(rowSuffix)) {
+                                    if(rowSuffixes.hasOwnProperty(rowSuffix)) {
                                         rowSuffix = rowSuffixes[rowSuffix];
                                         var targetPaneId = columnPrefix + rowSuffix;
 
