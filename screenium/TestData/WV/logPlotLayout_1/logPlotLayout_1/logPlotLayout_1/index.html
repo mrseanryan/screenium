@@ -26,14 +26,14 @@
         <tr>
             <td id="tdZone1" width="600px">
                 <div id="zone1">
-                <!-- LP here in zone 1 -->
+                    <!-- LP here in zone 1 -->
                     <!--LP control: width and height-->
                     <div id="example" style="border: solid 1px black; height: 700px; width:500px;">
 
                         <div id="vertical" style="height: 97%; width: 99%;">
                             <div id="top-pane">
                                 <div id="horizontal-headings" style="height: 100%; width: 100%;">
-                                    <div id="ruler-pane">
+                                    <div id="ruler-pane-heading-1">
                                         <div class="pane-content">
                                             <h3>ruler header</h3>
                                         </div>
@@ -57,7 +57,7 @@
                             </div>
                             <div id="top-pane-2">
                                 <div id="horizontal-headings-2" style="height: 100%; width: 100%;">
-                                    <div id="ruler-pane-2">
+                                    <div id="ruler-pane-heading-2">
                                         <div class="pane-content">
                                             <h3>ruler header</h3>
                                         </div>
@@ -82,16 +82,16 @@
                             <div id="middle-pane">
                                 <div id="horizontal-main" style="height: 100%; width: 100%;">
                                     <div id="ruler-main-pane">
-                                        <img src="images/wv_lp_ruler_main.png" class="stretch-image"/>
+                                        <img src="images/wv_lp_ruler_main.png" class="stretch-image" />
                                     </div>
                                     <div id="column1-main-pane">
-                                        <img src="images/wv_lp_column1_main.png" class="stretch-image"/>
+                                        <img src="images/wv_lp_column1_main.png" class="stretch-image" />
                                     </div>
                                     <div id="column2-main-pane">
-                                        <img src="images/wv_lp_column2_main.png" class="stretch-image"/>
+                                        <img src="images/wv_lp_column2_main.png" class="stretch-image" />
                                     </div>
                                     <div id="column3-main-pane">
-                                        <img src="images/wv_lp_column3_main.png" class="stretch-image"/>
+                                        <img src="images/wv_lp_column3_main.png" class="stretch-image" />
                                     </div>
                                 </div>
                             </div>
@@ -124,70 +124,68 @@
                     </div>
 
                     <script>
+                        var mainVerticalSplitter;
+                        var headingsHorizontalSplitter;
+                        var headings2HorizontalSplitter;
+                        var mainHorizontalSplitter;
+                        var footersHorizontalSplitter;
+
                         var createKendoSplitters = function () {
 
-                            var mainVerticalSplitter = $("#vertical").kendoSplitter({
+                            $("#vertical").kendoSplitter({
                                 orientation: "vertical",
                                 panes: [
                                     { collapsible: true, resizable: true, size: "50px" }, //headings
                                     { collapsible: true, resizable: true, size: "50px" }, //headings 2
                                     { collapsible: false, resizable: true }, //main
                                     { collapsible: true, resizable: true, size: "50px" } //footer
-                                ],
-                                expand: onExpand,
-                                collapse: onCollapse,
-                                contentload: onContentLoad,
-                                resize: onResize
+                                ]
                             });
+                            mainVerticalSplitter = $("#vertical").data("kendoSplitter");
 
-                            var headingsHorizontalSplitter = $("#horizontal-headings").kendoSplitter({
+                            $("#horizontal-headings").kendoSplitter({
+                                panes: [
+                                    { collapsible: false, resizable: false, scrollable: false },
+                                    { collapsible: false, resizable: false },
+                                    { collapsible: false, resizable: false },
+                                    { collapsible: false, resizable: false }
+                                ]
+                            });
+                            headingsHorizontalSplitter = $("#horizontal-headings").data("kendoSplitter");
+
+                            $("#horizontal-headings-2").kendoSplitter({
                                 panes: [
                                     { collapsible: false, resizable: false },
                                     { collapsible: false, resizable: false },
                                     { collapsible: false, resizable: false },
                                     { collapsible: false, resizable: false }
-                                ],
-                                expand: onExpand,
-                                collapse: onCollapse,
-                                contentload: onContentLoad,
-                                resize: onResize
+                                ]
                             });
-                            var headings2HorizontalSplitter = $("#horizontal-headings-2").kendoSplitter({
-                                panes: [
-                                    { collapsible: false, resizable: false },
-                                    { collapsible: false, resizable: false },
-                                    { collapsible: false, resizable: false },
-                                    { collapsible: false, resizable: false }
-                                ],
-                                expand: onExpand,
-                                collapse: onCollapse,
-                                contentload: onContentLoad,
-                                resize: onResize
-                            });
-                            var mainHorizontalSplitter = $("#horizontal-main").kendoSplitter({
+                            headings2HorizontalSplitter = $("#horizontal-headings-2").data('kendoSplitter');
+
+                            $("#horizontal-main").kendoSplitter({
                                 panes: [
                                     { collapsible: true },
                                     { collapsible: true },
                                     { collapsible: true },
                                     { collapsible: true }
                                 ],
-                                expand: onExpand,
-                                collapse: onCollapse,
-                                contentload: onContentLoad,
-                                resize: onResize
+                                expand: onExpandMainHorizontal,
+                                collapse: onCollapseMainHorizontal,
+                                contentload: onContentLoadMainHorizontal,
+                                resize: onResizeMainHorizontal
                             });
-                            var footersHorizontalSplitter = $("#horizontal-footers").kendoSplitter({
+                            mainHorizontalSplitter = $("#horizontal-main").data('kendoSplitter');
+
+                            $("#horizontal-footers").kendoSplitter({
                                 panes: [
                                     { collapsible: false, resizable: false },
                                     { collapsible: false, resizable: false },
                                     { collapsible: false, resizable: false },
                                     { collapsible: false, resizable: false }
-                                ],
-                                expand: onExpand,
-                                collapse: onCollapse,
-                                contentload: onContentLoad,
-                                resize: onResize
+                                ]
                             });
+                            footersHorizontalSplitter = $("#horizontal-footers").data('kendoSplitter');
                         };
 
                         $(document).ready(function () {
@@ -200,43 +198,53 @@
                             });
                         });
 
-                        function onResize(e) {
+                        //adjust the pane sizes, after some resize event.
+                        //unfortunately, kendo ui does not always provide the pane object that was resized.
+                        //so, this function adjusts ALL panes, taking Main as the authority.
+                        var adjustPaneSizes = function () {
+                            var authorityPaneId = 'ruler-main-pane';
+                            var authorityPane = getPane(authorityPaneId);
+                            var size = authorityPane.size;
+
+                            var targetPaneId = 'ruler-pane-heading-1';
+
+                            if (authorityPane.collapsed) {
+                                size = 0;
+                            }
+
+                            headingsHorizontalSplitter.size('#' + targetPaneId, size);
+                        };
+
+                        var getPane = function (id) {
+                            return $('#' + id).data('pane');
+                        };
+
+                        function onResizeMainHorizontal(e) {
                             console.log("Resized :: Splitter <b>#" + this.element[0].id + "</b>");
+                            adjustPaneSizes();
                         }
 
-                        function onExpand(e) {
+                        function onExpandMainHorizontal(e) {
                             console.log("Expanded :: Pane <b>#" + e.pane.id + "</b> from splitter <b>#" + this.element[0].id + "</b> expanded");
+                            adjustPaneSizes();
                         }
 
-                        function onCollapse(e) {
+                        function onCollapseMainHorizontal(e) {
                             console.log("Collapsed :: Pane <b>#" + e.pane.id + "</b> from splitter <b>#" + this.element[0].id + "</b> collapsed");
+                            adjustPaneSizes();
                         }
 
-                        function onContentLoad(e) {
+                        function onContentLoadMainHorizontal(e) {
                             console.log("Content loaded in <b>#" + e.pane.id +
                                 "</b> and starts with <b>" + $(e.pane).text().substr(0, 20) + "...</b>");
                         }
-
-                        /*
-                        var pane = getPane($("#index").val());
-
-                        if (!pane) {
-                            throw 'pane not found!';
-                        }
-
-                        splitter.size(pane, 666);
-                        */
                     </script>
 
                     <style>
                         #example {
-                            /*overall height of the zone*/
-                            /*height: 700px;*/
                         }
 
                         #vertical {
-                            /*overall height of the log plot*/
-                            /*height: 700px;*/
                             margin: 0 auto;
                         }
 
