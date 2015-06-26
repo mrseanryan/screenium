@@ -77,6 +77,7 @@
                         <div id="verticalSpaceAtBottom" style="height:15px;">&nbsp;</div>
                     </div>
 
+                <!-- ReSharper disable once UnusedParameter -->
                     <script>
                         var mainVerticalSplitter;
                         var headingsHorizontalSplitter;
@@ -160,56 +161,148 @@
                             }
                         };
 
-                        var makeColumnDraggable = function (draggablePrefix, dropPrefix) {
-                            var draggableId = draggablePrefix + '-pane-heading';
-                            var dropTargetId = dropPrefix + '-pane-heading';
+                        var makeColumnDraggable = function (columnPrefix) {
+                            var getDraggableIdFromEvent = function (e) {
+                                var draggableId;
+                                if(e.draggable) {
+                                    draggableId = e.draggable.element[0].id;
+                                } else {
+                                    return null;
+                                }
+                                if(typeof (draggableId) === 'undefined') {
+                                    throw 'cannot find id!';
+                                }
+                                return draggableId;
+                            };
 
-                            var droptargetOnDragEnter = function(e) {
-                                $("#" + dropTargetId).addClass("dropTargetEntered");
+                            var getDropTargetIdFromEvent = function (e) {
+                                var dropTargetId;
+                                if(e.dropTarget) {
+                                    dropTargetId = e.dropTarget[0].id;
+                                } else {
+                                    return null;
+                                }
+                                if (typeof (dropTargetId) === 'undefined') {
+                                    throw 'cannot find id!';
+                                }
+                                return dropTargetId;
+                            };
 
-                                $('body').css('cursor', 'pointer');
-                            }
-                            var droptargetOnDragLeave = function(e) {
-                                $("#" + dropTargetId).removeClass("dropTargetEntered");
-
-                                $('body').css('cursor', 'move');
-                            }
-                            var droptargetOnDrop = function (e) {
-                                $("#" + draggableId).removeClass("draggableOnDrag");
-                                $("#" + dropTargetId).removeClass("dropTargetEntered");
-
+                            var setCursorAsDefault = function() {
                                 $('body').css('cursor', 'default');
-                            }
+                            };
+                            var setCursorAsDenied = function() {
+                                $('body').css('cursor', 'not-allowed');
+                            };
+                            var setCursorAsDragging = function () {
+                                $('body').css('cursor', 'move');
+                            };
+                            var setCursorAsDroppable = function () {
+                                $('body').css('cursor', 'move');
+                            };
 
-                            var draggableOnDragStart = function(e) {
-                                $("#" + draggableId).addClass("draggableOnDrag");
+                            var droptargetOnDragEnter = function (e) {
+                                var draggableId = getDraggableIdFromEvent(e);
+                                var dropTargetId = getDropTargetIdFromEvent(e);
+
+                                if(draggableId !== dropTargetId) {
+                                    $("#" + dropTargetId).addClass("dropTargetEntered");
+
+                                    setCursorAsDroppable();
+                                }
+                            };
+                            var droptargetOnDragLeave = function(e) {
+                                var dropTargetId = getDropTargetIdFromEvent(e);
+
                                 $("#" + dropTargetId).removeClass("dropTargetEntered");
 
-                                $('body').css('cursor', 'move');
-                            }
-                            
-                            var draggableOnDragEnd = function (e) {
+                                setCursorAsDragging();
+                            };
+                            var getColumnPrefixFromDragDrop = function (id) {
+                                id = id.split('-')[0];
+                                return id;
+                            };
+                            var restoreMouseAndUi = function (draggableId, dropTargetId) {
+                                var draggable = $("#" + draggableId);
+                                draggable.removeClass("draggableOnDrag");
+                                if (dropTargetId) {
+                                    $("#" + dropTargetId).removeClass("dropTargetEntered");
+                                }
+                                setCursorAsDefault();
+                            };
+
+                            var droptargetOnDrop = function (e) {
+                                var draggableId = getDraggableIdFromEvent(e);
+                                var dropTargetId = getDropTargetIdFromEvent(e);
+
                                 var draggable = $("#" + draggableId);
 
-                                if (!draggable.data("kendoDraggable").dropped) {
-                                    // drag ended outside of any droptarget
+                                restoreMouseAndUi(draggableId, dropTargetId);
+
+                                if (!draggableId || !dropTargetId) {
+                                    return;
                                 }
 
-                                draggable.removeClass("draggableOnDrag");
+                                if (!draggable.data("kendoDraggable")) {
+                                    // drag ended outside of any droptarget
+                                    return;
+                                }
 
-                                swapColumnContents(draggablePrefix, dropPrefix);
+                                var dropColumnPrefix = getColumnPrefixFromDragDrop(dropTargetId);
+                                var dragColumnPrefix = getColumnPrefixFromDragDrop(draggableId);
+
+                                swapColumnContents(dragColumnPrefix, dropColumnPrefix);
                             }
 
-                            $("#" + draggableId).kendoDraggable({
+                            var draggableOnDrag = function(e) {
+                                var draggableId = getDraggableIdFromEvent(e);
+
+                                var isDroppable = e.dropTarget;
+
+                                if (isDroppable && draggableId !== e.dropTarget.id) {
+                                    setCursorAsDroppable();
+                                } else {
+                                    setCursorAsDenied();
+                                }
+                            };
+
+                            var draggableOnDragStart = function (e) {
+                                var draggableId = getDraggableIdFromEvent(e);
+                                if (!draggableId) {
+                                    draggableId = e.currentTarget[0].id;
+                                }
+                                if(draggableId) {
+                                    $("#" + draggableId).addClass("draggableOnDrag");
+
+                                    setCursorAsDragging();
+                                }
+                            }
+
+                            var draggableOnDragEnd = function (e) {
+                                //not implementing main drop operation here, since e does not contain the drag'n'drop elements!
+                                var draggableId = getDraggableIdFromEvent(e);
+                                var dropTargetId = getDropTargetIdFromEvent(e);
+
+                                if (!draggableId) {
+                                    draggableId = e.currentTarget[0].id;
+                                }
+
+                                restoreMouseAndUi(draggableId, dropTargetId);
+                            }
+
+                            var dragDropId = columnPrefix + '-pane-heading';
+
+                            $("#" + dragDropId).kendoDraggable({
                                 hint: function () {
-                                    return $("#" + draggableId).clone(); //TODO review will this work OK with real plots
+                                    return $("#" + dragDropId).clone(); //TODO review will this work OK with real plots
                                 },
+                                drag: draggableOnDrag,
                                 dragstart: draggableOnDragStart,
                                 dragend: draggableOnDragEnd,
                                 cursorOffset: { top: 10, left: 10 }
                             });
 
-                            $("#" + dropTargetId).kendoDropTarget({
+                            $("#" + dragDropId).kendoDropTarget({
                                 dragenter: droptargetOnDragEnter,
                                 dragleave: droptargetOnDragLeave,
                                 drop: droptargetOnDrop
@@ -217,7 +310,10 @@
                         };
 
                         var swapColumnContents = function (sourceColumnPrefix, targetColumnPrefix) {
-                            //TODO fix - wrong columns are being passed in!
+                            if (sourceColumnPrefix === targetColumnPrefix) {
+                                return;
+                            }
+
                             for (var rowSuffix in rowSuffixesIncludingMain) {
                                 if (rowSuffixesIncludingMain.hasOwnProperty(rowSuffix)) {
                                     rowSuffix = rowSuffixesIncludingMain[rowSuffix];
@@ -305,7 +401,7 @@
                             return $('#' + id).data('pane');
                         };
 
-                        function onResizeMainHorizontal(e) {
+                        function onResizeMainHorizontal() {
                             console.log("Resized :: Splitter <b>#" + this.element[0].id + "</b>");
                             adjustPaneSizes();
                         }
@@ -325,9 +421,6 @@
                     </script>
 
                     <style>
-                        #example {
-                        }
-
                         #vertical {
                             margin: 0 auto;
                         }
@@ -344,14 +437,18 @@
 
                         .dropTargetEntered {
                             border: cyan solid 2px;
+                            -ms-border-radius: 10px;
                             border-radius: 10px;
                         }
 
                         .draggableOnDrag {
                             border: yellow solid 2px;
+                            -ms-border-radius: 10px;
                             border-radius: 10px;
                             background-color: #03a9f4;
-                            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.23), 0 3px 10px rgba(0, 0, 0, 0.16);
+                            -webkit-box-shadow: 0 3px 10px #000000, 0 3px 10px #000000;
+                            -ms-box-shadow: 0 3px 10px #000000, 0 3px 10px #000000;
+                            box-shadow: 0 3px 10px #000000, 0 3px 10px #000000;
                         }
                     </style>
                 </div>
