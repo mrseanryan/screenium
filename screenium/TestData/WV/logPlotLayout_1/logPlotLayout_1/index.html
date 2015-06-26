@@ -22,10 +22,10 @@
                 <div id="zone1">
                     <!-- LP here in zone 1 -->
                     <!--LP control: width and height-->
-                    <div id="example" style="border: solid 1px black; height: 700px; width:500px;">
+                    <div id="logPlot" style="border: solid 1px black; height: 700px; width: 500px;">
 
                         <div id="vertical" style="height: 97%; width: 99%;">
-                            <div id="top-pane">
+                            <div id="header-row-pane">
                                 <div id="horizontal-headings" style="height: 100%; width: 100%;">
                                     <div id="column0-pane-heading">
                                         <img src="images/wv_lp_ruler_heading.png" class="stretch-image" />
@@ -41,7 +41,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div id="middle-pane">
+                            <div id="main-row-pane">
                                 <div id="horizontal-main" style="height: 100%; width: 100%;">
                                     <div id="column0-pane-main">
                                         <img src="images/wv_lp_ruler_main.png" class="stretch-image" />
@@ -57,7 +57,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div id="bottom-pane">
+                            <div id="footer-row-pane">
                                 <div id="horizontal-footers" style="height: 100%; width: 100%;">
                                     <div id="column0-pane-footer">
                                         <!--empty-->
@@ -74,10 +74,10 @@
                                 </div>
                             </div>
                         </div>
-                        <div id="verticalSpaceAtBottom" style="height:15px;">&nbsp;</div>
+                        <div id="verticalSpaceAtBottom" style="height: 15px;">&nbsp;</div>
                     </div>
 
-                <!-- ReSharper disable once UnusedParameter -->
+                    <!-- ReSharper disable once UnusedParameter -->
                     <script>
                         var mainVerticalSplitter;
                         var headingsHorizontalSplitter;
@@ -85,9 +85,10 @@
                         var mainHorizontalSplitter;
                         var footersHorizontalSplitter;
 
-                        var createKendoSplitters = function () {
+                        var containerDiv;
 
-                            $("#vertical").kendoSplitter({
+                        var createKendoSplitters = function () {
+                            containerDiv.find("#vertical").kendoSplitter({
                                 orientation: "vertical",
                                 panes: [
                                     { collapsible: true, resizable: true, size: "50px" }, //headings
@@ -95,9 +96,9 @@
                                     { collapsible: true, resizable: true, size: "50px" } //footer
                                 ]
                             });
-                            mainVerticalSplitter = $("#vertical").data("kendoSplitter");
+                            mainVerticalSplitter = containerDiv.find("#vertical").data("kendoSplitter");
 
-                            $("#horizontal-headings").kendoSplitter({
+                            containerDiv.find("#horizontal-headings").kendoSplitter({
                                 panes: [
                                     { collapsible: false, resizable: false, scrollable: false },
                                     { collapsible: false, resizable: false, scrollable: false },
@@ -105,9 +106,9 @@
                                     { collapsible: false, resizable: false, scrollable: false }
                                 ]
                             });
-                            headingsHorizontalSplitter = $("#horizontal-headings").data("kendoSplitter");
+                            headingsHorizontalSplitter = containerDiv.find("#horizontal-headings").data("kendoSplitter");
 
-                            $("#horizontal-main").kendoSplitter({
+                            containerDiv.find("#horizontal-main").kendoSplitter({
                                 panes: [
                                     { collapsible: true, scrollable: false },
                                     { collapsible: true, scrollable: false },
@@ -119,9 +120,9 @@
                                 contentload: onContentLoadMainHorizontal,
                                 resize: onResizeMainHorizontal
                             });
-                            mainHorizontalSplitter = $("#horizontal-main").data('kendoSplitter');
+                            mainHorizontalSplitter = containerDiv.find("#horizontal-main").data('kendoSplitter');
 
-                            $("#horizontal-footers").kendoSplitter({
+                            containerDiv.find("#horizontal-footers").kendoSplitter({
                                 panes: [
                                     { collapsible: false, resizable: false, scrollable: false },
                                     { collapsible: false, resizable: false, scrollable: false },
@@ -129,15 +130,16 @@
                                     { collapsible: false, resizable: false, scrollable: false }
                                 ]
                             });
-                            footersHorizontalSplitter = $("#horizontal-footers").data('kendoSplitter');
+                            footersHorizontalSplitter = containerDiv.find("#horizontal-footers").data('kendoSplitter');
                         };
 
                         $(document).ready(function () {
+                            containerDiv = $('#zone1');
 
                             createKendoSplitters();
 
                             //jQuery resizable:
-                            $('#example').resizable({
+                            containerDiv.find('#logPlot').resizable({
                                 //handles: "e"
                             });
 
@@ -149,10 +151,10 @@
                                 if (columnPrefixes.hasOwnProperty(dragColumn)) {
                                     dragColumn = columnPrefixes[dragColumn];
 
-                                    for(var dropColumn in columnPrefixes) {
-                                        if(columnPrefixes.hasOwnProperty(dropColumn)) {
+                                    for (var dropColumn in columnPrefixes) {
+                                        if (columnPrefixes.hasOwnProperty(dropColumn)) {
                                             dropColumn = columnPrefixes[dropColumn];
-                                            if(dragColumn !== dropColumn) {
+                                            if (dragColumn !== dropColumn) {
                                                 makeColumnDraggable(dragColumn, dropColumn);
                                             }
                                         }
@@ -164,12 +166,12 @@
                         var makeColumnDraggable = function (columnPrefix) {
                             var getDraggableIdFromEvent = function (e) {
                                 var draggableId;
-                                if(e.draggable) {
+                                if (e.draggable) {
                                     draggableId = e.draggable.element[0].id;
                                 } else {
                                     return null;
                                 }
-                                if(typeof (draggableId) === 'undefined') {
+                                if (typeof (draggableId) === 'undefined') {
                                     throw 'cannot find id!';
                                 }
                                 return draggableId;
@@ -177,7 +179,7 @@
 
                             var getDropTargetIdFromEvent = function (e) {
                                 var dropTargetId;
-                                if(e.dropTarget) {
+                                if (e.dropTarget) {
                                     dropTargetId = e.dropTarget[0].id;
                                 } else {
                                     return null;
@@ -188,10 +190,10 @@
                                 return dropTargetId;
                             };
 
-                            var setCursorAsDefault = function() {
+                            var setCursorAsDefault = function () {
                                 $('body').css('cursor', 'default');
                             };
-                            var setCursorAsDenied = function() {
+                            var setCursorAsDenied = function () {
                                 $('body').css('cursor', 'not-allowed');
                             };
                             var setCursorAsDragging = function () {
@@ -205,16 +207,16 @@
                                 var draggableId = getDraggableIdFromEvent(e);
                                 var dropTargetId = getDropTargetIdFromEvent(e);
 
-                                if(draggableId !== dropTargetId) {
-                                    $("#" + dropTargetId).addClass("dropTargetEntered");
+                                if (draggableId !== dropTargetId) {
+                                    containerDiv.find("#" + dropTargetId).addClass("dropTargetEntered");
 
                                     setCursorAsDroppable();
                                 }
                             };
-                            var droptargetOnDragLeave = function(e) {
+                            var droptargetOnDragLeave = function (e) {
                                 var dropTargetId = getDropTargetIdFromEvent(e);
 
-                                $("#" + dropTargetId).removeClass("dropTargetEntered");
+                                containerDiv.find("#" + dropTargetId).removeClass("dropTargetEntered");
 
                                 setCursorAsDragging();
                             };
@@ -223,10 +225,10 @@
                                 return id;
                             };
                             var restoreMouseAndUi = function (draggableId, dropTargetId) {
-                                var draggable = $("#" + draggableId);
+                                var draggable = containerDiv.find("#" + draggableId);
                                 draggable.removeClass("draggableOnDrag");
                                 if (dropTargetId) {
-                                    $("#" + dropTargetId).removeClass("dropTargetEntered");
+                                    containerDiv.find("#" + dropTargetId).removeClass("dropTargetEntered");
                                 }
                                 setCursorAsDefault();
                             };
@@ -235,7 +237,7 @@
                                 var draggableId = getDraggableIdFromEvent(e);
                                 var dropTargetId = getDropTargetIdFromEvent(e);
 
-                                var draggable = $("#" + draggableId);
+                                var draggable = containerDiv.find("#" + draggableId);
 
                                 restoreMouseAndUi(draggableId, dropTargetId);
 
@@ -254,7 +256,7 @@
                                 swapColumnContents(dragColumnPrefix, dropColumnPrefix);
                             }
 
-                            var draggableOnDrag = function(e) {
+                            var draggableOnDrag = function (e) {
                                 var draggableId = getDraggableIdFromEvent(e);
 
                                 var isDroppable = e.dropTarget;
@@ -271,8 +273,8 @@
                                 if (!draggableId) {
                                     draggableId = e.currentTarget[0].id;
                                 }
-                                if(draggableId) {
-                                    $("#" + draggableId).addClass("draggableOnDrag");
+                                if (draggableId) {
+                                    containerDiv.find("#" + draggableId).addClass("draggableOnDrag");
 
                                     setCursorAsDragging();
                                 }
@@ -292,9 +294,9 @@
 
                             var dragDropId = columnPrefix + '-pane-heading';
 
-                            $("#" + dragDropId).kendoDraggable({
+                            containerDiv.find("#" + dragDropId).kendoDraggable({
                                 hint: function () {
-                                    return $("#" + dragDropId).clone(); //TODO review will this work OK with real plots
+                                    return containerDiv.find("#" + dragDropId).clone(); //TODO review will this work OK with real plots
                                 },
                                 drag: draggableOnDrag,
                                 dragstart: draggableOnDragStart,
@@ -302,7 +304,7 @@
                                 cursorOffset: { top: 10, left: 10 }
                             });
 
-                            $("#" + dragDropId).kendoDropTarget({
+                            containerDiv.find("#" + dragDropId).kendoDropTarget({
                                 dragenter: droptargetOnDragEnter,
                                 dragleave: droptargetOnDragLeave,
                                 drop: droptargetOnDrop
@@ -320,15 +322,15 @@
                                     var sourcePaneId = sourceColumnPrefix + rowSuffix;
                                     var targetPaneId = targetColumnPrefix + rowSuffix;
 
-                                    var sourceDiv = $('#' + sourcePaneId);
-                                    var destDiv = $('#' + targetPaneId);
+                                    var sourceDiv = containerDiv.find('#' + sourcePaneId);
+                                    var destDiv = containerDiv.find('#' + targetPaneId);
 
                                     swapChildrenOfDivs(sourceDiv, destDiv);
                                 }
                             }
                         };
 
-                        var swapChildrenOfDivs = function(sourceDiv, destDiv) {
+                        var swapChildrenOfDivs = function (sourceDiv, destDiv) {
                             //using detach() NOT remove() to preserve jQuery objects and events
                             var sourceChildren = sourceDiv.children().detach();
                             var destChildren = destDiv.children().detach();
@@ -354,7 +356,7 @@
                         //so, this function adjusts ALL panes, taking Main as the authority.
                         var adjustPaneSizes = function () {
                             var authorityPaneSuffix = '-pane-main';
-                            
+
                             var rowSuffixToSplitter = [];
 
                             //using Null Object to handle edge cases during control creation (where 1 or more row splitters not yet created)
@@ -375,7 +377,7 @@
                                 }
                                 if (typeof (size) === 'undefined') {
                                     //bug in kendo ui?
-                                    size = $('#' + authorityPaneId).width();
+                                    size = containerDiv.find('#' + authorityPaneId).width();
                                 }
 
                                 for (var rowSuffix in rowSuffixes) {
@@ -398,7 +400,7 @@
                         };
 
                         var getPane = function (id) {
-                            return $('#' + id).data('pane');
+                            return containerDiv.find('#' + id).data('pane');
                         };
 
                         function onResizeMainHorizontal() {
@@ -416,7 +418,7 @@
 
                         function onContentLoadMainHorizontal(e) {
                             console.log("Content loaded in <b>#" + e.pane.id +
-                                "</b> and starts with <b>" + $(e.pane).text().substr(0, 20) + "...</b>");
+                                "</b> and starts with <b>" + containerDiv.find(e.pane).text().substr(0, 20) + "...</b>");
                         }
                     </script>
 
