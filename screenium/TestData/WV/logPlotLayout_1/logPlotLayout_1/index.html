@@ -79,16 +79,43 @@
 
                     <!-- ReSharper disable once UnusedParameter -->
                     <script>
-                        var mainVerticalSplitter;
-                        var headingsHorizontalSplitter;
-                        var headings2HorizontalSplitter;
-                        var mainHorizontalSplitter;
-                        var footersHorizontalSplitter;
+                        var LogPlotLayoutCreator = function (containerDivId) {
+                            this._containerDiv = $('#' + containerDivId);
 
-                        var containerDiv;
+                            this._mainVerticalSplitter = null;
+                            this._headingsHorizontalSplitter = null;
+                            this._mainHorizontalSplitter = null;
+                            this._footersHorizontalSplitter = null;
 
-                        var createKendoSplitters = function () {
-                            containerDiv.find("#vertical").kendoSplitter({
+                            this._columnPrefixes = [
+                                'column0', 'column1', 'column2', 'column3'
+                            ];
+
+                            this._rowSuffixes = [
+                                '-pane-heading', '-pane-footer'
+                            ];
+
+                            this._rowSuffixesIncludingMain = [
+                                '-pane-heading', '-pane-footer', '-pane-main'
+                            ];
+                        };
+
+                        LogPlotLayoutCreator.prototype.construct = function() {
+                            this._createKendoSplitters();
+
+                            //jQuery resizable:
+                            this._containerDiv.find('#logPlot').resizable({
+                                //handles: "e"
+                            });
+
+                            this._makeColumnsDraggable();
+                        };
+
+
+                        LogPlotLayoutCreator.prototype._createKendoSplitters = function () {
+                            var self = this;
+
+                            this._containerDiv.find("#vertical").kendoSplitter({
                                 orientation: "vertical",
                                 panes: [
                                     { collapsible: true, resizable: true, size: "50px" }, //headings
@@ -96,9 +123,9 @@
                                     { collapsible: true, resizable: true, size: "50px" } //footer
                                 ]
                             });
-                            mainVerticalSplitter = containerDiv.find("#vertical").data("kendoSplitter");
+                            this._mainVerticalSplitter = this._containerDiv.find("#vertical").data("kendoSplitter");
 
-                            containerDiv.find("#horizontal-headings").kendoSplitter({
+                            this._containerDiv.find("#horizontal-headings").kendoSplitter({
                                 panes: [
                                     { collapsible: false, resizable: false, scrollable: false },
                                     { collapsible: false, resizable: false, scrollable: false },
@@ -106,23 +133,31 @@
                                     { collapsible: false, resizable: false, scrollable: false }
                                 ]
                             });
-                            headingsHorizontalSplitter = containerDiv.find("#horizontal-headings").data("kendoSplitter");
+                            this._headingsHorizontalSplitter = this._containerDiv.find("#horizontal-headings").data("kendoSplitter");
 
-                            containerDiv.find("#horizontal-main").kendoSplitter({
+                            this._containerDiv.find("#horizontal-main").kendoSplitter({
                                 panes: [
                                     { collapsible: true, scrollable: false },
                                     { collapsible: true, scrollable: false },
                                     { collapsible: true, scrollable: false },
                                     { collapsible: true, scrollable: false }
                                 ],
-                                expand: onExpandMainHorizontal,
-                                collapse: onCollapseMainHorizontal,
-                                contentload: onContentLoadMainHorizontal,
-                                resize: onResizeMainHorizontal
+                                expand: function(e) {
+                                    self._onExpandMainHorizontal(e, this);
+                                },
+                                collapse: function(e) {
+                                    self._onCollapseMainHorizontal(e, this);
+                                },
+                                contentload: function(e) {
+                                    self._onContentLoadMainHorizontal(e, this);
+                                },
+                                resize: function(e) {
+                                    self._onResizeMainHorizontal(e, this);
+                                }
                             });
-                            mainHorizontalSplitter = containerDiv.find("#horizontal-main").data('kendoSplitter');
+                            this._mainHorizontalSplitter = this._containerDiv.find("#horizontal-main").data('kendoSplitter');
 
-                            containerDiv.find("#horizontal-footers").kendoSplitter({
+                            this._containerDiv.find("#horizontal-footers").kendoSplitter({
                                 panes: [
                                     { collapsible: false, resizable: false, scrollable: false },
                                     { collapsible: false, resizable: false, scrollable: false },
@@ -130,32 +165,19 @@
                                     { collapsible: false, resizable: false, scrollable: false }
                                 ]
                             });
-                            footersHorizontalSplitter = containerDiv.find("#horizontal-footers").data('kendoSplitter');
+                            this._footersHorizontalSplitter = this._containerDiv.find("#horizontal-footers").data('kendoSplitter');
                         };
 
-                        $(document).ready(function () {
-                            containerDiv = $('#zone1');
+                        LogPlotLayoutCreator.prototype._makeColumnsDraggable = function () {
+                            for (var dragColumn in this._columnPrefixes) {
+                                if (this._columnPrefixes.hasOwnProperty(dragColumn)) {
+                                    dragColumn = this._columnPrefixes[dragColumn];
 
-                            createKendoSplitters();
-
-                            //jQuery resizable:
-                            containerDiv.find('#logPlot').resizable({
-                                //handles: "e"
-                            });
-
-                            makeColumnsDraggable();
-                        });
-
-                        var makeColumnsDraggable = function () {
-                            for (var dragColumn in columnPrefixes) {
-                                if (columnPrefixes.hasOwnProperty(dragColumn)) {
-                                    dragColumn = columnPrefixes[dragColumn];
-
-                                    for (var dropColumn in columnPrefixes) {
-                                        if (columnPrefixes.hasOwnProperty(dropColumn)) {
-                                            dropColumn = columnPrefixes[dropColumn];
+                                    for (var dropColumn in this._columnPrefixes) {
+                                        if (this._columnPrefixes.hasOwnProperty(dropColumn)) {
+                                            dropColumn = this._columnPrefixes[dropColumn];
                                             if (dragColumn !== dropColumn) {
-                                                makeColumnDraggable(dragColumn, dropColumn);
+                                                this._makeColumnDraggable(dragColumn, dropColumn);
                                             }
                                         }
                                     }
@@ -163,7 +185,9 @@
                             }
                         };
 
-                        var makeColumnDraggable = function (columnPrefix) {
+                        LogPlotLayoutCreator.prototype._makeColumnDraggable = function (columnPrefix) {
+                            var self = this;
+
                             var getDraggableIdFromEvent = function (e) {
                                 var draggableId;
                                 if (e.draggable) {
@@ -208,7 +232,7 @@
                                 var dropTargetId = getDropTargetIdFromEvent(e);
 
                                 if (draggableId !== dropTargetId) {
-                                    containerDiv.find("#" + dropTargetId).addClass("dropTargetEntered");
+                                    self._containerDiv.find("#" + dropTargetId).addClass("dropTargetEntered");
 
                                     setCursorAsDroppable();
                                 }
@@ -216,7 +240,7 @@
                             var droptargetOnDragLeave = function (e) {
                                 var dropTargetId = getDropTargetIdFromEvent(e);
 
-                                containerDiv.find("#" + dropTargetId).removeClass("dropTargetEntered");
+                                self._containerDiv.find("#" + dropTargetId).removeClass("dropTargetEntered");
 
                                 setCursorAsDragging();
                             };
@@ -225,10 +249,10 @@
                                 return id;
                             };
                             var restoreMouseAndUi = function (draggableId, dropTargetId) {
-                                var draggable = containerDiv.find("#" + draggableId);
+                                var draggable = self._containerDiv.find("#" + draggableId);
                                 draggable.removeClass("draggableOnDrag");
                                 if (dropTargetId) {
-                                    containerDiv.find("#" + dropTargetId).removeClass("dropTargetEntered");
+                                    self._containerDiv.find("#" + dropTargetId).removeClass("dropTargetEntered");
                                 }
                                 setCursorAsDefault();
                             };
@@ -237,7 +261,7 @@
                                 var draggableId = getDraggableIdFromEvent(e);
                                 var dropTargetId = getDropTargetIdFromEvent(e);
 
-                                var draggable = containerDiv.find("#" + draggableId);
+                                var draggable = self._containerDiv.find("#" + draggableId);
 
                                 restoreMouseAndUi(draggableId, dropTargetId);
 
@@ -253,7 +277,7 @@
                                 var dropColumnPrefix = getColumnPrefixFromDragDrop(dropTargetId);
                                 var dragColumnPrefix = getColumnPrefixFromDragDrop(draggableId);
 
-                                swapColumnContents(dragColumnPrefix, dropColumnPrefix);
+                                self._swapColumnContents(dragColumnPrefix, dropColumnPrefix);
                             }
 
                             var draggableOnDrag = function (e) {
@@ -274,7 +298,7 @@
                                     draggableId = e.currentTarget[0].id;
                                 }
                                 if (draggableId) {
-                                    containerDiv.find("#" + draggableId).addClass("draggableOnDrag");
+                                    self._containerDiv.find("#" + draggableId).addClass("draggableOnDrag");
 
                                     setCursorAsDragging();
                                 }
@@ -294,9 +318,9 @@
 
                             var dragDropId = columnPrefix + '-pane-heading';
 
-                            containerDiv.find("#" + dragDropId).kendoDraggable({
+                            self._containerDiv.find("#" + dragDropId).kendoDraggable({
                                 hint: function () {
-                                    return containerDiv.find("#" + dragDropId).clone(); //TODO review will this work OK with real plots
+                                    return self._containerDiv.find("#" + dragDropId).clone(); //TODO review will this work OK with real plots
                                 },
                                 drag: draggableOnDrag,
                                 dragstart: draggableOnDragStart,
@@ -304,33 +328,33 @@
                                 cursorOffset: { top: 10, left: 10 }
                             });
 
-                            containerDiv.find("#" + dragDropId).kendoDropTarget({
+                            self._containerDiv.find("#" + dragDropId).kendoDropTarget({
                                 dragenter: droptargetOnDragEnter,
                                 dragleave: droptargetOnDragLeave,
                                 drop: droptargetOnDrop
                             });
                         };
 
-                        var swapColumnContents = function (sourceColumnPrefix, targetColumnPrefix) {
+                        LogPlotLayoutCreator.prototype._swapColumnContents = function (sourceColumnPrefix, targetColumnPrefix) {
                             if (sourceColumnPrefix === targetColumnPrefix) {
                                 return;
                             }
 
-                            for (var rowSuffix in rowSuffixesIncludingMain) {
-                                if (rowSuffixesIncludingMain.hasOwnProperty(rowSuffix)) {
-                                    rowSuffix = rowSuffixesIncludingMain[rowSuffix];
+                            for (var rowSuffix in this._rowSuffixesIncludingMain) {
+                                if (this._rowSuffixesIncludingMain.hasOwnProperty(rowSuffix)) {
+                                    rowSuffix = this._rowSuffixesIncludingMain[rowSuffix];
                                     var sourcePaneId = sourceColumnPrefix + rowSuffix;
                                     var targetPaneId = targetColumnPrefix + rowSuffix;
 
-                                    var sourceDiv = containerDiv.find('#' + sourcePaneId);
-                                    var destDiv = containerDiv.find('#' + targetPaneId);
+                                    var sourceDiv = this._containerDiv.find('#' + sourcePaneId);
+                                    var destDiv = this._containerDiv.find('#' + targetPaneId);
 
-                                    swapChildrenOfDivs(sourceDiv, destDiv);
+                                    this._swapChildrenOfDivs(sourceDiv, destDiv);
                                 }
                             }
                         };
 
-                        var swapChildrenOfDivs = function (sourceDiv, destDiv) {
+                        LogPlotLayoutCreator.prototype._swapChildrenOfDivs = function (sourceDiv, destDiv) {
                             //using detach() NOT remove() to preserve jQuery objects and events
                             var sourceChildren = sourceDiv.children().detach();
                             var destChildren = destDiv.children().detach();
@@ -339,22 +363,13 @@
                             destChildren.appendTo(sourceDiv);
                         };
 
-                        var columnPrefixes = [
-                            'column0', 'column1', 'column2', 'column3'
-                        ];
+                        /**adjust the pane sizes, after some resize event.
+                        *unfortunately, kendo ui does not always provide the pane object that was resized.
+                        *so, this function adjusts ALL panes, taking Main as the authority.
+                        */
+                        LogPlotLayoutCreator.prototype._adjustPaneSizes = function () {
+                            var self = this;
 
-                        var rowSuffixes = [
-                            '-pane-heading', '-pane-footer'
-                        ];
-
-                        var rowSuffixesIncludingMain = [
-                            '-pane-heading', '-pane-footer', '-pane-main'
-                        ];
-
-                        //adjust the pane sizes, after some resize event.
-                        //unfortunately, kendo ui does not always provide the pane object that was resized.
-                        //so, this function adjusts ALL panes, taking Main as the authority.
-                        var adjustPaneSizes = function () {
                             var authorityPaneSuffix = '-pane-main';
 
                             var rowSuffixToSplitter = [];
@@ -365,24 +380,24 @@
                                 }
                             };
 
-                            rowSuffixToSplitter[rowSuffixes[0]] = headingsHorizontalSplitter ? headingsHorizontalSplitter : nullObjectSplitter;
-                            rowSuffixToSplitter[rowSuffixes[1]] = footersHorizontalSplitter ? footersHorizontalSplitter : nullObjectSplitter;
+                            rowSuffixToSplitter[this._rowSuffixes[0]] = this._headingsHorizontalSplitter ? this._headingsHorizontalSplitter : nullObjectSplitter;
+                            rowSuffixToSplitter[this._rowSuffixes[1]] = this._footersHorizontalSplitter ? this._footersHorizontalSplitter : nullObjectSplitter;
 
                             var resizeOtherPanesInColumn = function (columnPrefix) {
                                 var authorityPaneId = columnPrefix + authorityPaneSuffix;
-                                var authorityPane = getPane(authorityPaneId);
+                                var authorityPane = self._getPane(authorityPaneId);
                                 var size = authorityPane.size;
                                 if (authorityPane.collapsed) {
                                     size = 0;
                                 }
                                 if (typeof (size) === 'undefined') {
                                     //bug in kendo ui?
-                                    size = containerDiv.find('#' + authorityPaneId).width();
+                                    size = self._containerDiv.find('#' + authorityPaneId).width();
                                 }
 
-                                for (var rowSuffix in rowSuffixes) {
-                                    if (rowSuffixes.hasOwnProperty(rowSuffix)) {
-                                        rowSuffix = rowSuffixes[rowSuffix];
+                                for (var rowSuffix in self._rowSuffixes) {
+                                    if (self._rowSuffixes.hasOwnProperty(rowSuffix)) {
+                                        rowSuffix = self._rowSuffixes[rowSuffix];
                                         var targetPaneId = columnPrefix + rowSuffix;
 
                                         var splitter = rowSuffixToSplitter[rowSuffix];
@@ -391,35 +406,41 @@
                                 }
                             };
 
-                            for (var columnPrefix in columnPrefixes) {
-                                if (columnPrefixes.hasOwnProperty(columnPrefix)) {
-                                    columnPrefix = columnPrefixes[columnPrefix];
+                            for (var columnPrefix in this._columnPrefixes) {
+                                if (this._columnPrefixes.hasOwnProperty(columnPrefix)) {
+                                    columnPrefix = this._columnPrefixes[columnPrefix];
                                     resizeOtherPanesInColumn(columnPrefix);
                                 }
                             }
                         };
 
-                        var getPane = function (id) {
-                            return containerDiv.find('#' + id).data('pane');
+                        LogPlotLayoutCreator.prototype._getPane = function (id) {
+                            return this._containerDiv.find('#' + id).data('pane');
                         };
 
-                        function onResizeMainHorizontal() {
-                            console.log("Resized :: Splitter <b>#" + this.element[0].id + "</b>");
-                            adjustPaneSizes();
+                        LogPlotLayoutCreator.prototype._onResizeMainHorizontal = function (e, elem) {
+                            console.log("Resized :: Splitter <b>#" + elem.element[0].id + "</b>");
+                            this._adjustPaneSizes();
                         }
 
-                        function onExpandMainHorizontal(e) {
-                            console.log("Expanded :: Pane <b>#" + e.pane.id + "</b> from splitter <b>#" + this.element[0].id + "</b> expanded");
+                        LogPlotLayoutCreator.prototype._onExpandMainHorizontal = function (e, elem) {
+                            console.log("Expanded :: Pane <b>#" + e.pane.id + "</b> from splitter <b>#" + elem.element[0].id + "</b> expanded");
                         }
 
-                        function onCollapseMainHorizontal(e) {
-                            console.log("Collapsed :: Pane <b>#" + e.pane.id + "</b> from splitter <b>#" + this.element[0].id + "</b> collapsed");
+                        LogPlotLayoutCreator.prototype._onCollapseMainHorizontal = function (e, elem) {
+                            console.log("Collapsed :: Pane <b>#" + e.pane.id + "</b> from splitter <b>#" + elem.element[0].id + "</b> collapsed");
                         }
 
-                        function onContentLoadMainHorizontal(e) {
+                        LogPlotLayoutCreator.prototype._onContentLoadMainHorizontal = function (e, elem) {
                             console.log("Content loaded in <b>#" + e.pane.id +
-                                "</b> and starts with <b>" + containerDiv.find(e.pane).text().substr(0, 20) + "...</b>");
+                                "</b> and starts with <b>" + this._containerDiv.find(e.pane).text().substr(0, 20) + "...</b>");
                         }
+
+                        $(document).ready(function () {
+                            var layout = new LogPlotLayoutCreator('zone1');
+                            layout.construct();
+                        });
+
                     </script>
 
                     <style>
