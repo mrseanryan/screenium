@@ -83,7 +83,9 @@
                     <script>
                         $(document).ready(function () {
                             var layout = new LogPlotLayoutCreator('zone1');
-                            layout.construct();
+                            layout.construct(4);
+
+                            //TODO add images via layout.getMainDivForColumnHeader(column) etc.
                         });
                     </script>
 

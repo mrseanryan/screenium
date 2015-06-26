@@ -4,14 +4,13 @@
 var LogPlotLayoutCreator = function (containerDivId) {
     this._containerDiv = $('#' + containerDivId);
 
+    this._columnCount = 0;
     this._mainVerticalSplitter = null;
     this._headingsHorizontalSplitter = null;
     this._mainHorizontalSplitter = null;
     this._footersHorizontalSplitter = null;
 
-    this._columnPrefixes = [
-        'column0', 'column1', 'column2', 'column3'
-    ];
+    this._columnPrefixes = [];
 
     this._rowSuffixes = [
         '-pane-heading', '-pane-footer'
@@ -22,7 +21,14 @@ var LogPlotLayoutCreator = function (containerDivId) {
     ];
 };
 
-LogPlotLayoutCreator.prototype.construct = function () {
+LogPlotLayoutCreator.prototype.construct = function (columnCount) {
+    if(!columnCount) {
+        throw 'bad args!';
+    }
+
+    this._columnCount = columnCount;
+    this._createColumnPrefixes();
+    
     this._createKendoSplitters();
 
     //jQuery resizable:
@@ -33,6 +39,13 @@ LogPlotLayoutCreator.prototype.construct = function () {
     this._makeColumnsDraggable();
 };
 
+LogPlotLayoutCreator.prototype._createColumnPrefixes = function () {
+    this._columnPrefixes = [];
+
+    for(var i = 0; i < this._columnCount; i++) {
+        this._columnPrefixes.push("column" + i);
+    }
+};
 
 LogPlotLayoutCreator.prototype._createKendoSplitters = function () {
     var self = this;
@@ -47,47 +60,45 @@ LogPlotLayoutCreator.prototype._createKendoSplitters = function () {
     });
     this._mainVerticalSplitter = this._containerDiv.find("#vertical").data("kendoSplitter");
 
-    this._containerDiv.find("#horizontal-headings").kendoSplitter({
-        panes: [
-            { collapsible: false, resizable: false, scrollable: false },
-            { collapsible: false, resizable: false, scrollable: false },
-            { collapsible: false, resizable: false, scrollable: false },
-            { collapsible: false, resizable: false, scrollable: false }
-        ]
-    });
+    var options = {
+        panes: []
+    };
+    this._addColumnPaneOptions(options.panes, { collapsible: false, resizable: false, scrollable: false });
+
+    this._containerDiv.find("#horizontal-headings").kendoSplitter(options);
     this._headingsHorizontalSplitter = this._containerDiv.find("#horizontal-headings").data("kendoSplitter");
 
-    this._containerDiv.find("#horizontal-main").kendoSplitter({
-        panes: [
-            { collapsible: true, scrollable: false },
-            { collapsible: true, scrollable: false },
-            { collapsible: true, scrollable: false },
-            { collapsible: true, scrollable: false }
-        ],
-        expand: function (e) {
+    options = {
+        panes: [],
+        expand: function(e) {
             self._onExpandMainHorizontal(e, this);
         },
-        collapse: function (e) {
+        collapse: function(e) {
             self._onCollapseMainHorizontal(e, this);
         },
-        contentload: function (e) {
+        contentload: function(e) {
             self._onContentLoadMainHorizontal(e, this);
         },
-        resize: function (e) {
+        resize: function(e) {
             self._onResizeMainHorizontal(e, this);
         }
-    });
+    };
+    this._addColumnPaneOptions(options.panes, { collapsible: true, scrollable: false });
+    this._containerDiv.find("#horizontal-main").kendoSplitter(options);
     this._mainHorizontalSplitter = this._containerDiv.find("#horizontal-main").data('kendoSplitter');
 
-    this._containerDiv.find("#horizontal-footers").kendoSplitter({
-        panes: [
-            { collapsible: false, resizable: false, scrollable: false },
-            { collapsible: false, resizable: false, scrollable: false },
-            { collapsible: false, resizable: false, scrollable: false },
-            { collapsible: false, resizable: false, scrollable: false }
-        ]
-    });
+    options = {
+        panes: []
+    };
+    this._addColumnPaneOptions(options.panes, { collapsible: false, resizable: false, scrollable: false });
+    this._containerDiv.find("#horizontal-footers").kendoSplitter(options);
     this._footersHorizontalSplitter = this._containerDiv.find("#horizontal-footers").data('kendoSplitter');
+};
+
+LogPlotLayoutCreator.prototype._addColumnPaneOptions = function(panes, options) {
+    for(var c = 0; c < this._columnCount; c++) {
+        panes.push(options);
+    };
 };
 
 LogPlotLayoutCreator.prototype._makeColumnsDraggable = function () {
@@ -302,6 +313,7 @@ LogPlotLayoutCreator.prototype._adjustPaneSizes = function () {
         }
     };
 
+    //TODO alter to allow for when footer is at top
     rowSuffixToSplitter[this._rowSuffixes[0]] = this._headingsHorizontalSplitter ? this._headingsHorizontalSplitter : nullObjectSplitter;
     rowSuffixToSplitter[this._rowSuffixes[1]] = this._footersHorizontalSplitter ? this._footersHorizontalSplitter : nullObjectSplitter;
 
