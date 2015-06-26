@@ -29,50 +29,14 @@
                         <div id="vertical" style="height: 97%; width: 99%;">
                             <div id="header-row-pane">
                                 <div id="horizontal-headings" style="height: 100%; width: 100%;">
-                                    <div id="column0-pane-heading">
-                                        <img src="images/wv_lp_ruler_heading.png" class="stretch-image" />
-                                    </div>
-                                    <div id="column1-pane-heading">
-                                        <img src="images/wv_lp_column1_header.png" class="stretch-image" />
-                                    </div>
-                                    <div id="column2-pane-heading">
-                                        <img src="images/wv_lp_column2_header.png" class="stretch-image" />
-                                    </div>
-                                    <div id="column3-pane-heading">
-                                        <img src="images/wv_lp_column3_header.png" class="stretch-image" />
-                                    </div>
                                 </div>
                             </div>
                             <div id="main-row-pane">
                                 <div id="horizontal-main" style="height: 100%; width: 100%;">
-                                    <div id="column0-pane-main">
-                                        <img src="images/wv_lp_ruler_main.png" class="stretch-image" />
-                                    </div>
-                                    <div id="column1-pane-main">
-                                        <img src="images/wv_lp_column1_main.png" class="stretch-image" />
-                                    </div>
-                                    <div id="column2-pane-main">
-                                        <img src="images/wv_lp_column2_main.png" class="stretch-image" />
-                                    </div>
-                                    <div id="column3-pane-main">
-                                        <img src="images/wv_lp_column3_main.png" class="stretch-image" />
-                                    </div>
                                 </div>
                             </div>
                             <div id="footer-row-pane">
                                 <div id="horizontal-footers" style="height: 100%; width: 100%;">
-                                    <div id="column0-pane-footer">
-                                        <!--empty-->
-                                    </div>
-                                    <div id="column1-pane-footer">
-                                        <img src="images/wv_lp_column1_footer.png" class="stretch-image" />
-                                    </div>
-                                    <div id="column2-pane-footer">
-                                        <img src="images/wv_lp_column2_footer.png" class="stretch-image" />
-                                    </div>
-                                    <div id="column3-pane-footer">
-                                        <img src="images/wv_lp_column3_footer.png" class="stretch-image" />
-                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -81,11 +45,25 @@
 
                     <!-- ReSharper disable once UnusedParameter -->
                     <script>
+                        var getHtmlForImage = function(url) {
+                            return $("<img src='"+url+"' class='stretch-image' />");
+                        };
+
                         $(document).ready(function () {
                             var layout = new LogPlotLayoutCreator('zone1');
-                            layout.construct(4);
+                            var columnCount = 4,
+                                rulerPosition = 1;
+                            layout.construct(columnCount, rulerPosition);
 
-                            //TODO add images via layout.getMainDivForColumnHeader(column) etc.
+                            //populate the layout so we have something to look at:
+                            layout.getHeaderDivForRuler().html(getHtmlForImage('images/wv_lp_ruler_heading.png'));
+                            layout.getMainDivForRuler().html(getHtmlForImage('images/wv_lp_ruler_main.png'));
+
+                            for(var c = 1; c < columnCount; c++) {
+                                layout.getHeaderDivForColumn(c).html(getHtmlForImage("images/wv_lp_column"+c+"_header.png"));
+                                layout.getMainDivForColumn(c).html(getHtmlForImage("images/wv_lp_column" + c + "_main.png"));
+                                layout.getValueAxisDivForColumn(c).html(getHtmlForImage("images/wv_lp_column" + c + "_footer.png"));
+                            }
                         });
                     </script>
 

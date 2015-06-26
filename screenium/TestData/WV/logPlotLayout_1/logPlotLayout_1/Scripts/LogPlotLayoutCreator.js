@@ -21,14 +21,16 @@ var LogPlotLayoutCreator = function (containerDivId) {
     ];
 };
 
-LogPlotLayoutCreator.prototype.construct = function (columnCount) {
-    if(!columnCount) {
+LogPlotLayoutCreator.prototype.construct = function (columnCount, rulerPosition) {
+    if(!columnCount || typeof(rulerPosition) === 'undefined') {
         throw 'bad args!';
     }
 
     this._columnCount = columnCount;
-    this._createColumnPrefixes();
-    
+    this._createColumnPrefixes(rulerPosition);
+
+    this._createDivs();
+
     this._createKendoSplitters();
 
     //jQuery resizable:
@@ -39,12 +41,81 @@ LogPlotLayoutCreator.prototype.construct = function (columnCount) {
     this._makeColumnsDraggable();
 };
 
-LogPlotLayoutCreator.prototype._createColumnPrefixes = function () {
+LogPlotLayoutCreator.prototype._createDivs = function () {
+
+    //TODO also create the main div - div id="logPlot ...
+
+    var createDiv = function(columnId, paneType) {
+        return $("<div id='column" + columnId + "-pane-" + paneType + "'></div>");
+    };
+
+    for(var column in this._columnPrefixes) {
+        if (this._columnPrefixes.hasOwnProperty(column)) {
+            column = this._columnPrefixes[column];
+
+            var columnId = parseInt(column.substr('column'.length), 10);
+
+            var div = createDiv(columnId, 'heading');
+            div.appendTo(this._containerDiv.find("#horizontal-headings"));
+
+            div = createDiv(columnId, 'main');
+            div.appendTo(this._containerDiv.find("#horizontal-main"));
+
+            div = createDiv(columnId, 'footer');
+            div.appendTo(this._containerDiv.find("#horizontal-footers"));
+        }
+    }
+};
+
+LogPlotLayoutCreator.prototype.getHeaderDivForRuler = function () {
+    return this.getHeaderDivForColumn(0);
+};
+
+/** get the div element for the Header of the given column
+*/
+LogPlotLayoutCreator.prototype.getHeaderDivForColumn = function (columnId) {
+    var div = this._containerDiv.find("#column" + columnId + "-pane-heading");
+    if(div.length !== 1) {
+        throw 'problem finding the column header div!';
+    }
+    return div;
+};
+/** get the div element for the main display (main canvas) of the Ruler
+*/
+LogPlotLayoutCreator.prototype.getMainDivForRuler = function () {
+    return this.getMainDivForColumn(0);
+};
+
+/** get the div element for the main display (main plot canvas) of the given column
+*/
+LogPlotLayoutCreator.prototype.getMainDivForColumn = function (columnId) {
+    var div = this._containerDiv.find("#column" + columnId + "-pane-main");
+    if (div.length !== 1) {
+        throw 'problem finding the column main div!';
+    }
+    return div;
+};
+
+/** get the div element for the value axis of the given column
+*/
+LogPlotLayoutCreator.prototype.getValueAxisDivForColumn = function (columnId) {
+    var div = this._containerDiv.find("#column" + columnId + "-pane-footer");
+    if (div.length !== 1) {
+        throw 'problem finding the column footer div!';
+    }
+    return div;
+};
+
+LogPlotLayoutCreator.prototype._createColumnPrefixes = function (rulerPosition) {
     this._columnPrefixes = [];
 
-    for(var i = 0; i < this._columnCount; i++) {
+    for (var i = 1; i < this._columnCount; i++) {
         this._columnPrefixes.push("column" + i);
     }
+    
+    //to simplify LP view, the ruler will always be column0.
+    //we simply swap the column IDs, in order to position the ruler as requested:
+    this._columnPrefixes.splice(rulerPosition, 0, "column" + 0);
 };
 
 LogPlotLayoutCreator.prototype._createKendoSplitters = function () {
