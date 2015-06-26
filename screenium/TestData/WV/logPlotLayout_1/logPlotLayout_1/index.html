@@ -22,26 +22,7 @@
         <tr>
             <td id="tdZone1" width="600px">
                 <div id="zone1">
-                    <!-- LP here in zone 1 -->
-                    <!--LP control: width and height-->
-                    <div id="logPlot" style="border: solid 1px black; height: 700px; width: 500px;">
-
-                        <div id="vertical" style="height: 97%; width: 99%;">
-                            <div id="header-row-pane">
-                                <div id="horizontal-headings" style="height: 100%; width: 100%;">
-                                </div>
-                            </div>
-                            <div id="main-row-pane">
-                                <div id="horizontal-main" style="height: 100%; width: 100%;">
-                                </div>
-                            </div>
-                            <div id="footer-row-pane">
-                                <div id="horizontal-footers" style="height: 100%; width: 100%;">
-                                </div>
-                            </div>
-                        </div>
-                        <div id="verticalSpaceAtBottom" style="height: 15px;">&nbsp;</div>
-                    </div>
+                    <!-- LP will be created here in zone 1 -->
 
                     <!-- ReSharper disable once UnusedParameter -->
                     <script>
@@ -52,8 +33,10 @@
                         $(document).ready(function () {
                             var layout = new LogPlotLayoutCreator('zone1');
                             var columnCount = 4,
-                                rulerPosition = 1;
-                            layout.construct(columnCount, rulerPosition);
+                                rulerPosition = 1,
+                                initialWidth = 500,
+                                initialHeight = 700;
+                            layout.construct(columnCount, rulerPosition, initialWidth, initialHeight);
 
                             //populate the layout so we have something to look at:
                             layout.getHeaderDivForRuler().html(getHtmlForImage('images/wv_lp_ruler_heading.png'));

@@ -21,14 +21,17 @@ var LogPlotLayoutCreator = function (containerDivId) {
     ];
 };
 
-LogPlotLayoutCreator.prototype.construct = function (columnCount, rulerPosition) {
-    if(!columnCount || typeof(rulerPosition) === 'undefined') {
+LogPlotLayoutCreator.prototype.construct = function (columnCount, rulerPosition, initialWidth, initialHeight) {
+    if (!columnCount || typeof (rulerPosition) === 'undefined' || !initialWidth || !initialHeight) {
         throw 'bad args!';
     }
 
     this._columnCount = columnCount;
     this._createColumnPrefixes(rulerPosition);
 
+    this._initialWidth = initialWidth;
+    this._initialHeight = initialHeight;
+    
     this._createDivs();
 
     this._createKendoSplitters();
@@ -42,14 +45,42 @@ LogPlotLayoutCreator.prototype.construct = function (columnCount, rulerPosition)
 };
 
 LogPlotLayoutCreator.prototype._createDivs = function () {
+    this._createMainDivs();
 
-    //TODO also create the main div - div id="logPlot ...
+    this._createDivsInColumns();
+};
 
-    var createDiv = function(columnId, paneType) {
+LogPlotLayoutCreator.prototype._createMainDivs = function () {
+    //initialWidth, initialHeight
+
+    var plotDiv = $("<!--LP control: width and height-->" + 
+    "<div id='logPlot' style='border: solid 1px black; height: "+this._initialHeight+"px; width: "+this._initialWidth+"px;'>" + 
+    "<div id='vertical' style='height: 97%; width: 99%;'>" + 
+            "<div id='header-row-pane'>" + 
+                "<div id='horizontal-headings' style='height: 100%; width: 100%;'>" + 
+                "</div>" + 
+            "</div>" + 
+            "<div id='main-row-pane'>" + 
+                "<div id='horizontal-main' style='height: 100%; width: 100%;'>" + 
+                "</div>" + 
+            "</div>" + 
+            "<div id='footer-row-pane'>" + 
+                "<div id='horizontal-footers' style='height: 100%; width: 100%;'>" + 
+                "</div>" + 
+            "</div>" + 
+        "</div>" + 
+        "<div id='verticalSpaceAtBottom' style='height: 15px;'>&nbsp;</div>" + 
+    "</div>");
+
+    plotDiv.appendTo(this._containerDiv);
+};
+
+LogPlotLayoutCreator.prototype._createDivsInColumns = function() {
+    var createDiv = function (columnId, paneType) {
         return $("<div id='column" + columnId + "-pane-" + paneType + "'></div>");
     };
 
-    for(var column in this._columnPrefixes) {
+    for (var column in this._columnPrefixes) {
         if (this._columnPrefixes.hasOwnProperty(column)) {
             column = this._columnPrefixes[column];
 
