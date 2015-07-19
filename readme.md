@@ -1,7 +1,7 @@
 screenium readme
 ================
 
-Screenium = a console tool for automated web site testing, via screenshots taken with Selenium.
+Screenium = a console tool for automated web site testing, via screenshots taken with Selenium WebDriver.
 
 dependencies
 ============
