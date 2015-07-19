@@ -2,10 +2,10 @@ screenium TODO
 ==============
 
 console app:
-screenium <testDetails.csv> <testName>|ALL <reportOutput.html> [-o = leave browser Open] [-s = Save new snapshot images]
+screenium <testDetails.csv> <testName>|ALL <reportOutput.html> [-o = leave browser Open] [-s = Save new snapshot images] [-t = self Test]
 
 testDetails.csv:
-============
+================
 testName, testDescription, divId, urlPrefix, urlQuery1, urlQuery2, urlQuery3
 
 xx - fire up chrome
