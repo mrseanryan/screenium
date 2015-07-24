@@ -70,6 +70,7 @@
                         layout.getMainDivForRuler().html(getHtmlForImage('images/wv_lp_ruler_main.png'));
 
                         var seriesInColumn = [
+                            //TODO refactor to a LogPlotHeaderSerie class
                             {
                                 Id: 0,
                                 Name: "r1s"
@@ -83,11 +84,17 @@
                                 Name: "sin_1s"
                             }
                         ];
+                        var maxSeriesInColumn = 3;
 
-                        for(var c = 1; c < columnCount; c++) {
-                            layout.getHeaderDivForColumn(c).html(headerLayoutCreator.getHtmlForColumnHeader(c, seriesInColumn));
+                        for (var c = 1; c < columnCount; c++) {
+                            //make 1 column with less series:
+                            if (c === columnCount - 1) {
+                                seriesInColumn.pop();
+                            }
+
+                            layout.getHeaderDivForColumn(c).html(headerLayoutCreator.getHtmlForColumnHeader(c, seriesInColumn, maxSeriesInColumn));
                             layout.getMainDivForColumn(c).html(getHtmlForImage("images/wv_lp_column" + c + "_main.png"));
-                            layout.getValueAxisDivForColumn(c).html(headerLayoutCreator.getHtmlForColumnFooter(c, seriesInColumn));
+                            layout.getValueAxisDivForColumn(c).html(headerLayoutCreator.getHtmlForColumnFooter(c, seriesInColumn, maxSeriesInColumn));
                         }
                     });
                 </script>
