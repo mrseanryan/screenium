@@ -8,10 +8,13 @@ specific font stacks to ensure the greatest OS/browser compatibility.
 html, button, input, select, textarea,
 .pure-g [class *= "pure-u"] {
     /* Set your content font stack here: */
-    font-family: Georgia, Times, "Times New Roman", serif;
+    font-family: Verdana;
 }
 
-.headerSerieCell {
+.logPlotHeaderSerieCell {
+  font-family: Verdana; 
+  font-size:8pt; 
+
   margin: 1px;
   padding: 2px;
   /*border: solid darkgray 1px;*/
@@ -24,4 +27,25 @@ html, button, input, select, textarea,
 .logPlotMetaDataIndicators {
     padding-left: 5px;
     padding-right: 5px;
+}
+
+.logPlotHeaderSerieCellTopBox {
+    height: 100%; 
+    border: solid 1px blue;
+}
+
+.logPlotHeaderSmallText {
+    font-size:8pt; 
+}
+
+.logPlotHeaderLargeText {
+    font-size:24pt; 
+}
+.logPlotHeaderCenteredText {
+    text-align: center;
+}
+.logPlotHeaderAutoTruncatedText {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
 }

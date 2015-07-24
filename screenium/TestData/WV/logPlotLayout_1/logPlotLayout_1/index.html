@@ -51,7 +51,73 @@
                     };
 
                     $(document).ready(function () {
-                        var headerLayoutCreator = new LogPlotHeaderLayout();
+                        var headerConfigDefault = {
+                            showHeader: true,
+                            position: JsApiLogPlotHeaderPosition.Top,
+                            showName: true,
+                            showUom: true,
+                            showMetadataIndicators: true,
+                            showSnapshotValue: false,
+                            showScaleIntervals: false,
+                            minHeight: 60
+                        };
+
+                        var headerConfigAllOn = {
+                            showHeader: true,
+                            position: JsApiLogPlotHeaderPosition.TopAndBottom,
+                            showName: true,
+                            showUom: true,
+                            showMetadataIndicators: true,
+                            showSnapshotValue: true,
+                            showScaleIntervals: true,
+                            minHeight: 60
+                        };
+
+                        var headerConfigAllOnExceptMetadata = {
+                            showHeader: true,
+                            position: JsApiLogPlotHeaderPosition.TopAndBottom,
+                            showName: true,
+                            showUom: true,
+                            showMetadataIndicators: false,
+                            showSnapshotValue: true,
+                            showScaleIntervals: true,
+                            minHeight: 60
+                        };
+
+                        var headerConfigDefaultsOff = {
+                            showHeader: true,
+                            position: JsApiLogPlotHeaderPosition.TopAndBottom,
+                            showName: false,
+                            showUom: false,
+                            showMetadataIndicators: false,
+                            showSnapshotValue: true,
+                            showScaleIntervals: true,
+                            minHeight: 60
+                        };
+
+                        var headerConfigMicro = {
+                            showHeader: true,
+                            position: JsApiLogPlotHeaderPosition.Top,
+                            showName: false,
+                            showUom: false,
+                            showMetadataIndicators: false,
+                            showSnapshotValue: false,
+                            showScaleIntervals: false,
+                            minHeight: 60
+                        };
+
+                        var headerConfigMicroWithValue = {
+                            showHeader: true,
+                            position: JsApiLogPlotHeaderPosition.Top,
+                            showName: false,
+                            showUom: false,
+                            showMetadataIndicators: false,
+                            showSnapshotValue: true,
+                            showScaleIntervals: false,
+                            minHeight: 60
+                        };
+
+                        var headerLayoutCreator = new LogPlotHeaderLayout(headerConfigDefault);
                         var callback = {
                             fireOnResizeLayout: function () {
                                 headerLayoutCreator.onResizeLayout();
@@ -59,7 +125,7 @@
                         };
 
                         var layout = new LogPlotLayoutCreator('zone1', callback);
-                        var columnCount = 4,
+                        var columnCount = 6,
                             rulerPosition = 1,
                             initialWidth = 1200,
                             initialHeight = 700;
@@ -86,15 +152,24 @@
                         ];
                         var maxSeriesInColumn = 3;
 
+                        var perSeriesHeaderConfigs = [
+                            null, //use default
+                            headerConfigAllOn,
+						    headerConfigAllOnExceptMetadata,
+						    headerConfigDefaultsOff,
+						    headerConfigMicro,
+						    headerConfigMicroWithValue
+                        ];
+
                         for (var c = 1; c < columnCount; c++) {
                             //make 1 column with less series:
                             if (c === columnCount - 1) {
                                 seriesInColumn.pop();
                             }
 
-                            layout.getHeaderDivForColumn(c).html(headerLayoutCreator.getHtmlForColumnHeader(c, seriesInColumn, maxSeriesInColumn));
+                            layout.getHeaderDivForColumn(c).html(headerLayoutCreator.getHtmlForColumnHeader(c, seriesInColumn, maxSeriesInColumn, perSeriesHeaderConfigs[c-1]));
                             layout.getMainDivForColumn(c).html(getHtmlForImage("images/wv_lp_column" + c + "_main.png"));
-                            layout.getValueAxisDivForColumn(c).html(headerLayoutCreator.getHtmlForColumnFooter(c, seriesInColumn, maxSeriesInColumn));
+                            layout.getValueAxisDivForColumn(c).html(headerLayoutCreator.getHtmlForColumnFooter(c, seriesInColumn, maxSeriesInColumn, perSeriesHeaderConfigs[c - 1]));
                         }
                     });
                 </script>

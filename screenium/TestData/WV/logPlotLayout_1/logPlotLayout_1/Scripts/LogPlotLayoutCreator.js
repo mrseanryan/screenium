@@ -365,7 +365,7 @@ LogPlotLayoutCreator.prototype._makeColumnDraggable = function (columnPrefix) {
 
     self._containerDiv.find("#" + dragDropId).kendoDraggable({
         hint: function () {
-            return self._containerDiv.find("#" + dragDropId).clone(); //TODO review will this work OK with real plots
+            return self._containerDiv.find("#" + dragDropId).clone();
         },
         drag: draggableOnDrag,
         dragstart: draggableOnDragStart,
@@ -425,7 +425,6 @@ LogPlotLayoutCreator.prototype._adjustPaneSizes = function () {
         }
     };
 
-    //TODO alter to allow for when footer is at top
     rowSuffixToSplitter[this._rowSuffixes[0]] = this._headingsHorizontalSplitter ? this._headingsHorizontalSplitter : nullObjectSplitter;
     rowSuffixToSplitter[this._rowSuffixes[1]] = this._footersHorizontalSplitter ? this._footersHorizontalSplitter : nullObjectSplitter;
 
