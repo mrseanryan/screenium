@@ -44,7 +44,7 @@ LogPlotSeriesHeaderLayout.prototype.getInitialHtml = function () {
     html += "<div class='headerSerieCell'>";
 
     //TODO refactor - extract fun
-    html += "<div class='pure-g pure-g-valign-fix'  style='height: 100%;' >" +
+    html += "<div class='pure-g pure-g-valign-fix'  style='height: 100%;   border: solid 1px blue;' >" +
         "<div class='pure-u-4-5' style='height: calc(100% - (50px));'>" + this._getHtmlForNameValueUnits() + this._getHtmlForValueAxis() + "</div>" +
         "<div class='pure-u-1-5' style='height: 100%;'><div class='logPlotMetaDataIndicators'><div>{B}</div><div>{L}</div><div>{F}</div></div></div>";
 
@@ -55,5 +55,13 @@ LogPlotSeriesHeaderLayout.prototype.getInitialHtml = function () {
 };
 
 LogPlotSeriesHeaderLayout.prototype._getHtmlForValueAxis = function () {
-    return "<div style='width:100%; height:50px; border: solid black 1px;' >{value axis here}</div>";
+    return "<div style='width:100%; height:50px; border: solid black 1px;   margin-top: -5px; margin-left: 3px;' >{value axis here}</div>";
+};
+
+LogPlotSeriesHeaderLayout.prototype.onResizeLayout = function() {
+    this._sizeValueFontToMatchHeight();
+};
+
+LogPlotSeriesHeaderLayout.prototype._sizeValueFontToMatchHeight = function () {
+    //xxx
 };

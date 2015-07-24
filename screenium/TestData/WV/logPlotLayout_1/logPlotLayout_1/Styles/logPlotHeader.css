@@ -1,6 +1,5 @@
 ﻿
 /*TODO review if we need this?*/
-
 /*
 When setting the primary font stack, apply it to the Pure grid units along
 with `html`, `button`, `input`, `select`, and `textarea`. Pure Grids use
@@ -12,18 +11,12 @@ html, button, input, select, textarea,
     font-family: Georgia, Times, "Times New Roman", serif;
 }
 
-/*.l-box {
-    padding: 1em;
-    border: solid 1px black;
-}*/
-
 .headerSerieCell {
-    margin: 1px;
-    padding: 1px;
-
-    border: solid darkgray 1px;
-
-    height: 100%;
+  margin: 1px;
+  padding: 2px;
+  /*border: solid darkgray 1px;*/
+  height: 100%;
+  padding-bottom: 1px;
 }
 
 .pure-g-valign-fix{display:block;}

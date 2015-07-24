@@ -21,24 +21,32 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="LogPlotHeaderLayout.js" pinned="false" current-in-tab="false">
+      <file leaf-file-name="LogPlotHeaderLayout.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Scripts/LogPlotHeaderLayout.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="31" column="2" selection-start-line="31" selection-start-column="2" selection-end-line="31" selection-end-column="2" />
+            <state vertical-scroll-proportion="0.6073147">
+              <caret line="57" column="0" selection-start-line="57" selection-start-column="0" selection-end-line="57" selection-end-column="0" />
               <folding>
-                <marker date="1437739190055" expanded="true" signature="312:323" placeholder="..." />
+                <marker date="1437747570205" expanded="true" signature="578:602" placeholder="..." />
+                <marker date="1437747570205" expanded="true" signature="646:657" placeholder="..." />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="LogPlotSeriesHeaderLayout.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="LogPlotSeriesHeaderLayout.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Scripts/LogPlotSeriesHeaderLayout.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.68719923">
-              <caret line="42" column="42" selection-start-line="42" selection-start-column="42" selection-end-line="42" selection-end-column="42" />
-              <folding />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="62" column="2" selection-start-line="62" selection-start-column="2" selection-end-line="62" selection-end-column="2" />
+              <folding>
+                <marker date="1437747097330" expanded="true" signature="794:807" placeholder="..." />
+                <marker date="1437747097330" expanded="true" signature="975:990" placeholder="..." />
+                <marker date="1437747097330" expanded="true" signature="1397:1410" placeholder="..." />
+                <marker date="1437747097330" expanded="true" signature="1457:1485" placeholder="..." />
+                <marker date="1437747097330" expanded="true" signature="1607:1620" placeholder="..." />
+                <marker date="1437747097330" expanded="true" signature="1908:1957" placeholder="..." />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -48,8 +56,8 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/Scripts/LogPlotHeaderLayout.js" />
         <option value="$PROJECT_DIR$/Scripts/LogPlotSeriesHeaderLayout.js" />
+        <option value="$PROJECT_DIR$/Scripts/LogPlotHeaderLayout.js" />
       </list>
     </option>
   </component>
@@ -143,7 +151,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1176" extended-state="6" />
+    <frame x="-8" y="-8" width="1936" height="1176" extended-state="7" />
     <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.25" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
@@ -180,21 +188,29 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/Scripts/LogPlotHeaderLayout.js">
+    <entry file="file://$PROJECT_DIR$/Scripts/LogPlotSeriesHeaderLayout.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="31" column="2" selection-start-line="31" selection-start-column="2" selection-end-line="31" selection-end-column="2" />
+          <caret line="62" column="2" selection-start-line="62" selection-start-column="2" selection-end-line="62" selection-end-column="2" />
           <folding>
-            <marker date="1437739190055" expanded="true" signature="312:323" placeholder="..." />
+            <marker date="1437747097330" expanded="true" signature="794:807" placeholder="..." />
+            <marker date="1437747097330" expanded="true" signature="975:990" placeholder="..." />
+            <marker date="1437747097330" expanded="true" signature="1397:1410" placeholder="..." />
+            <marker date="1437747097330" expanded="true" signature="1457:1485" placeholder="..." />
+            <marker date="1437747097330" expanded="true" signature="1607:1620" placeholder="..." />
+            <marker date="1437747097330" expanded="true" signature="1908:1957" placeholder="..." />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Scripts/LogPlotSeriesHeaderLayout.js">
+    <entry file="file://$PROJECT_DIR$/Scripts/LogPlotHeaderLayout.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.68719923">
-          <caret line="42" column="42" selection-start-line="42" selection-start-column="42" selection-end-line="42" selection-end-column="42" />
-          <folding />
+        <state vertical-scroll-proportion="0.6073147">
+          <caret line="57" column="0" selection-start-line="57" selection-start-column="0" selection-end-line="57" selection-end-column="0" />
+          <folding>
+            <marker date="1437747570205" expanded="true" signature="578:602" placeholder="..." />
+            <marker date="1437747570205" expanded="true" signature="646:657" placeholder="..." />
+          </folding>
         </state>
       </provider>
     </entry>

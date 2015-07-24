@@ -50,8 +50,15 @@
                         return $("<img src='" + url + "' class='stretch-image' />");
                     };
 
-                    $(document).ready(function() {
-                        var layout = new LogPlotLayoutCreator('zone1');
+                    $(document).ready(function () {
+                        var headerLayoutCreator = new LogPlotHeaderLayout();
+                        var callback = {
+                            fireOnResizeLayout: function () {
+                                headerLayoutCreator.onResizeLayout();
+                            }
+                        };
+
+                        var layout = new LogPlotLayoutCreator('zone1', callback);
                         var columnCount = 4,
                             rulerPosition = 1,
                             initialWidth = 1200,
@@ -61,8 +68,6 @@
                         //populate the layout so we have something to look at:
                         layout.getHeaderDivForRuler().html(getHtmlForImage('images/wv_lp_ruler_heading.png'));
                         layout.getMainDivForRuler().html(getHtmlForImage('images/wv_lp_ruler_main.png'));
-
-                        var headerLayoutCreator = new LogPlotHeaderLayout();
 
                         var seriesInColumn = [
                             {

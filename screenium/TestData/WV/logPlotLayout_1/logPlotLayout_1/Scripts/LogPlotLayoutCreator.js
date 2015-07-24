@@ -1,7 +1,9 @@
 ﻿/**
  * create layout to be used by the log plot view.
  */
-var LogPlotLayoutCreator = function (containerDivId) {
+var LogPlotLayoutCreator = function (containerDivId, callback) {
+    this._callback = callback;
+
     this._containerDiv = $('#' + containerDivId);
 
     this._columnCount = 0;
@@ -158,7 +160,11 @@ LogPlotLayoutCreator.prototype._createKendoSplitters = function () {
             { collapsible: true, resizable: true, size: "300px" }, //headings
             { collapsible: false, resizable: true }, //main
             { collapsible: true, resizable: true, size: "300px" } //footer
-        ]
+        ],
+        // ReSharper disable once UnusedParameter
+        resize: function (e) {
+            self._fireOnResizeLayout();
+        }
     });
     this._mainVerticalSplitter = this._containerDiv.find("#vertical").data("kendoSplitter");
 
@@ -195,6 +201,10 @@ LogPlotLayoutCreator.prototype._createKendoSplitters = function () {
     this._addColumnPaneOptions(options.panes, { collapsible: false, resizable: false, scrollable: false });
     this._containerDiv.find("#horizontal-footers").kendoSplitter(options);
     this._footersHorizontalSplitter = this._containerDiv.find("#horizontal-footers").data('kendoSplitter');
+};
+
+LogPlotLayoutCreator.prototype._fireOnResizeLayout = function() {
+    this._callback.fireOnResizeLayout();
 };
 
 LogPlotLayoutCreator.prototype._addColumnPaneOptions = function(panes, options) {
@@ -457,6 +467,8 @@ LogPlotLayoutCreator.prototype._getPane = function (id) {
 LogPlotLayoutCreator.prototype._onResizeMainHorizontal = function(e, elem) {
     console.log("Resized :: Splitter <b>#" + elem.element[0].id + "</b>");
     this._adjustPaneSizes();
+
+    this._fireOnResizeLayout();
 };
 
 LogPlotLayoutCreator.prototype._onExpandMainHorizontal = function(e, elem) {
