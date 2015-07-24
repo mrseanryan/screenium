@@ -20,7 +20,7 @@ LogPlotSeriesHeaderLayout.prototype._getHtmlForNameValueUnits = function () {
         throw "this._isValueShowing - not impl!";
     }
 
-    return "<div class='pure-g pure-g-valign-fix' style='height: 100%;'>" +
+    return "<div class='pure-g pure-g-valign-fix' style='height: calc(100% - ("+this._getHeightOfValueAxis()+"px));'>" +
         "<div class='pure-u-10-24'>" + this._serieName + "</div>" +
 
         //TODO make value font take 100% of height
@@ -46,7 +46,7 @@ LogPlotSeriesHeaderLayout.prototype.getInitialHtml = function () {
     //TODO refactor - extract fun
     //TODO refactor - extract CSS
     html += "<div class='pure-g pure-g-valign-fix'  style='height: 100%;   border: solid 1px blue;' >" +
-        "<div class='pure-u-4-5' style='height: calc(100% - (50px));'>" + this._getHtmlForNameValueUnits() + this._getHtmlForValueAxis() + "</div>" +
+        "<div class='pure-u-4-5' style='height: 100%; min-height: 25px;'>" + this._getHtmlForNameValueUnits() + this._getHtmlForValueAxis() + "</div>" +
         "<div class='pure-u-1-5' style='height: 100%;'><div class='logPlotMetaDataIndicators'><div>{B}</div><div>{L}</div><div>{F}</div></div></div>";
     html += "</div>";
 
@@ -63,7 +63,12 @@ LogPlotSeriesHeaderLayout.prototype.getInitialEmptyHtml = function () {
     return html;
 };
 LogPlotSeriesHeaderLayout.prototype._getHtmlForValueAxis = function () {
-    return "<div style='width:100%; height:50px; border: solid black 1px;   margin-top: -5px; margin-left: 3px;' >{value axis here}</div>";
+    //TODO refactor - extract CSS
+    return "<div style='width:100%; height:" + this._getHeightOfValueAxis() + "px; border: solid black 1px;   margin-top: -5px; margin-left: 3px;' >{value axis here}</div>";
+};
+
+LogPlotSeriesHeaderLayout.prototype._getHeightOfValueAxis = function () {
+    return 37;
 };
 
 LogPlotSeriesHeaderLayout.prototype.onResizeLayout = function () {
