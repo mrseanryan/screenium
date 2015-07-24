@@ -155,9 +155,9 @@ LogPlotLayoutCreator.prototype._createKendoSplitters = function () {
     this._containerDiv.find("#vertical").kendoSplitter({
         orientation: "vertical",
         panes: [
-            { collapsible: true, resizable: true, size: "50px" }, //headings
+            { collapsible: true, resizable: true, size: "300px" }, //headings
             { collapsible: false, resizable: true }, //main
-            { collapsible: true, resizable: true, size: "50px" } //footer
+            { collapsible: true, resizable: true, size: "300px" } //footer
         ]
     });
     this._mainVerticalSplitter = this._containerDiv.find("#vertical").data("kendoSplitter");
