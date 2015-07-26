@@ -87,6 +87,8 @@
     <Content Include="Scripts\External\gridster.net.v0.5.6-0\src\jquery.gridster.js" />
     <Content Include="Scripts\External\gridster.net.v0.5.6-0\src\utils.js" />
     <Content Include="Scripts\LogPlotHeaderLayout.js" />
+    <Content Include="Scripts\LogPlotHeaderLayoutPartsCreator.js" />
+    <Content Include="Scripts\LogPlotHeaderLayoutStrategy.js" />
     <Content Include="Scripts\LogPlotLayoutCreator.js" />
     <Content Include="Scripts\LogPlotSeriesHeaderLayout.js" />
     <Content Include="Styles\logPlotHeader.css" />

@@ -102,7 +102,7 @@ LogPlotHeaderLayout.prototype.constructColumnHeader = function (headerContainerD
  * @function
  */
 LogPlotHeaderLayout.prototype.constructColumnFooter = function (footerContainerDiv, seriesInColumn, maxSeriesInColumn, seriesHeaderConfig) {
-    footerContainerDiv.html(this._getHtmlForColumnHeader(seriesInColumn, maxSeriesInColumn, seriesHeaderConfig));
+    footerContainerDiv.html(this._getHtmlForColumnFooter(seriesInColumn, maxSeriesInColumn, seriesHeaderConfig));
     this._cacheColumnFooterParts(footerContainerDiv, seriesInColumn);
 };
 
@@ -151,7 +151,7 @@ LogPlotHeaderLayout.prototype._getHtmlForColumn = function (seriesInColumn, isAt
             serie = seriesInColumn[serie];
 
             var headerLayoutProp = this._getHeaderLayoutPropertyName(isAtTop);
-
+            //TODO review is OO but is this needed?
             serie[headerLayoutProp] = new LogPlotSeriesHeaderLayout(isAtTop, serie.Id, serie.Name, activeConfig);
 
             html += htmlRowStart;
@@ -191,7 +191,7 @@ LogPlotHeaderLayout.prototype._getHtmlForColumnHeader = function (seriesInColumn
 /**
  * @function 
  */
-LogPlotHeaderLayout.prototype.getHtmlForColumnFooter = function (seriesInColumn, maxSeriesInColumn, perSeriesHeaderConfig) {
+LogPlotHeaderLayout.prototype._getHtmlForColumnFooter = function (seriesInColumn, maxSeriesInColumn, perSeriesHeaderConfig) {
     return this._getHtmlForColumn(seriesInColumn, false, maxSeriesInColumn, perSeriesHeaderConfig);
 };
 

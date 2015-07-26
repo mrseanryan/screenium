@@ -13,6 +13,10 @@ var LogPlotSeriesHeaderLayout = function (isAtTop, serieId, serieName, headerCon
     this._serieId = serieId;
     this._serieName = serieName;
     this._config = headerConfig;
+
+    this._partsCreator = new LogPlotHeaderLayoutPartsCreator();
+    var layoutFactory = new LogPlotHeaderLayoutStrategyFactory(headerConfig, isAtTop, this._partsCreator);
+    this._layoutStrategy = layoutFactory.create();
 };
 
 LogPlotSeriesHeaderLayout.prototype._getHtmlForNameValueUnits = function () {
@@ -56,18 +60,14 @@ LogPlotSeriesHeaderLayout.prototype.getInitialHtml = function () {
 
     html += "<div class='logPlotHeaderSerieCell'>";
 
-    //TODO handle on/off:
-    //this._config.getShowName
-    //this._config.getShowUom
-    //this._config.getShowMetadataIndicators
-    //this._config.getShowSnapshotValue
-
     //TODO refactor - extract fun
     //TODO refactor - extract CSS
 
     var hasTopRow = this._config.getShowName() || this._config.getShowUom() || this._config.getShowSnapshotValue();
 
-    //TODO refactor to polymorphism ?
+    html += this._layoutStrategy.createLayoutHtml();
+
+    //TODO move this HTML stuff down into the strategies ...
 
     //if we have a top row, then put the metadata indicators on that row (so that value axis has full width)
     if (hasTopRow) {
