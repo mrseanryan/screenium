@@ -70,6 +70,7 @@
     <Content Include="images\wv_lp_column5_main.png" />
     <Content Include="images\wv_lp_column6_main.png" />
     <Content Include="images\wv_lp_column7_main.png" />
+    <Content Include="images\wv_lp_column8_main.png" />
     <Content Include="images\wv_lp_ruler_heading.png" />
     <Content Include="images\wv_lp_ruler_main.png" />
     <Content Include="index.html" />
