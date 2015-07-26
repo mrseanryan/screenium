@@ -1,225 +1,225 @@
 ﻿<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <title>log plot layout tryout</title>
+	<title>log plot layout tryout</title>
 
-    <!--=== CSS ========================================================-->
-    <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+	<!--=== CSS ========================================================-->
+	<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
 
-    <link href="http://cdn.kendostatic.com/2015.2.624/styles/kendo.common.min.css" rel="stylesheet" />
-    <link href="http://cdn.kendostatic.com/2015.2.624/styles/kendo.default.min.css" rel="stylesheet" />
+	<link href="http://cdn.kendostatic.com/2015.2.624/styles/kendo.common.min.css" rel="stylesheet" />
+	<link href="http://cdn.kendostatic.com/2015.2.624/styles/kendo.default.min.css" rel="stylesheet" />
 
-    <link rel="stylesheet" href="http://yui.yahooapis.com/combo?pure/0.6.0/base-min.css&pure/0.6.0/grids-min.css&pure/0.6.0/grids-responsive-min.css">
-    <link href="Styles/logPlotHeader.css" rel="stylesheet" />
+	<link rel="stylesheet" href="http://yui.yahooapis.com/combo?pure/0.6.0/base-min.css&pure/0.6.0/grids-min.css&pure/0.6.0/grids-responsive-min.css">
+	<link href="Styles/logPlotHeader.css" rel="stylesheet" />
 
-    <!--=== JAVASCRIPT ========================================================-->
-    <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
-    <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+	<!--=== JAVASCRIPT ========================================================-->
+	<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+	<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 
-    <script src="http://cdn.kendostatic.com/2015.2.624/js/kendo.all.min.js"></script>
-    <!--<script src="http://cdn.kendostatic.com/2015.2.624/js/kendo.timezones.min.js"></script>-->
+	<script src="http://cdn.kendostatic.com/2015.2.624/js/kendo.all.min.js"></script>
+	<!--<script src="http://cdn.kendostatic.com/2015.2.624/js/kendo.timezones.min.js"></script>-->
 
-    <script src="Scripts/LogPlotLayoutCreator.js"></script>
-    <script src="Scripts/LogPlotHeaderLayout.js"></script>
-    <script src="Scripts/LogPlotSeriesHeaderLayout.js"></script>
+	<script src="Scripts/LogPlotLayoutCreator.js"></script>
+	<script src="Scripts/LogPlotHeaderLayout.js"></script>
+	<script src="Scripts/LogPlotSeriesHeaderLayout.js"></script>
 </head>
 <body>
-    <div class="pure-g">
-        <div class="pure-u-1-3"> ... </div>
-        <div class="pure-u-1-3"> ... </div>
-        <div class="pure-u-1-3"> ... </div>
-    </div>
-    <div class="pure-g">
+	<div class="pure-g">
+		<div class="pure-u-1-3"> ... </div>
+		<div class="pure-u-1-3"> ... </div>
+		<div class="pure-u-1-3"> ... </div>
+	</div>
+	<div class="pure-g">
 
-        <div class="pure-u-2-5 "> one </div>
-        <div class="pure-u-3-5 "> two </div>
+		<div class="pure-u-2-5 "> one </div>
+		<div class="pure-u-3-5 "> two </div>
 
-    </div>
+	</div>
 
 
 <!-- WV uses tables for zones:-->
 <table>
-    <tr>
-        <td id="tdZone1" width="600px">
-            <div id="zone1">
+	<tr>
+		<td id="tdZone1" width="600px">
+			<div id="zone1">
 
-                <!-- LP will be created here in zone 1 -->
-                <!-- ReSharper disable once UnusedParameter -->
-                <script>
-                    var getHtmlForImage = function(url) {
-                        return $("<img src='" + url + "' class='stretch-image' />");
-                    };
+				<!-- LP will be created here in zone 1 -->
+				<!-- ReSharper disable once UnusedParameter -->
+				<script>
+					var getHtmlForImage = function(url) {
+						return $("<img src='" + url + "' class='stretch-image' />");
+					};
 
-                    $(document).ready(function () {
-                        var headerConfigDefault = {
-                            showHeader: true,
-                            position: JsApiLogPlotHeaderPosition.Top,
-                            showName: true,
-                            showUom: true,
-                            showMetadataIndicators: true,
-                            showSnapshotValue: false,
-                            showScaleIntervals: false,
-                            minHeight: 60
-                        };
+					$(document).ready(function () {
+						var headerConfigDefault = {
+							showHeader: true,
+							position: JsApiLogPlotHeaderPosition.Top,
+							showName: true,
+							showUom: true,
+							showMetadataIndicators: true,
+							showSnapshotValue: false,
+							showScaleIntervals: false,
+							minHeight: 60
+						};
 
-                        var headerConfigAllOn = {
-                            showHeader: true,
-                            position: JsApiLogPlotHeaderPosition.TopAndBottom,
-                            showName: true,
-                            showUom: true,
-                            showMetadataIndicators: true,
-                            showSnapshotValue: true,
-                            showScaleIntervals: true,
-                            minHeight: 60
-                        };
+						var headerConfigAllOn = {
+							showHeader: true,
+							position: JsApiLogPlotHeaderPosition.TopAndBottom,
+							showName: true,
+							showUom: true,
+							showMetadataIndicators: true,
+							showSnapshotValue: true,
+							showScaleIntervals: true,
+							minHeight: 60
+						};
 
-                        var headerConfigAllOnExceptMetadata = {
-                            showHeader: true,
-                            position: JsApiLogPlotHeaderPosition.TopAndBottom,
-                            showName: true,
-                            showUom: true,
-                            showMetadataIndicators: false,
-                            showSnapshotValue: true,
-                            showScaleIntervals: true,
-                            minHeight: 60
-                        };
+						var headerConfigAllOnExceptMetadata = {
+							showHeader: true,
+							position: JsApiLogPlotHeaderPosition.TopAndBottom,
+							showName: true,
+							showUom: true,
+							showMetadataIndicators: false,
+							showSnapshotValue: true,
+							showScaleIntervals: true,
+							minHeight: 60
+						};
 
-                        var headerConfigDefaultsOff = {
-                            showHeader: true,
-                            position: JsApiLogPlotHeaderPosition.TopAndBottom,
-                            showName: false,
-                            showUom: false,
-                            showMetadataIndicators: false,
-                            showSnapshotValue: true,
-                            showScaleIntervals: true,
-                            minHeight: 60
-                        };
+						var headerConfigDefaultsOff = {
+							showHeader: true,
+							position: JsApiLogPlotHeaderPosition.TopAndBottom,
+							showName: false,
+							showUom: false,
+							showMetadataIndicators: false,
+							showSnapshotValue: true,
+							showScaleIntervals: true,
+							minHeight: 60
+						};
 
-                        var headerConfigMicro = {
-                            showHeader: true,
-                            position: JsApiLogPlotHeaderPosition.Top,
-                            showName: false,
-                            showUom: false,
-                            showMetadataIndicators: false,
-                            showSnapshotValue: false,
-                            showScaleIntervals: false,
-                            minHeight: 60
-                        };
+						var headerConfigMicro = {
+							showHeader: true,
+							position: JsApiLogPlotHeaderPosition.Top,
+							showName: false,
+							showUom: false,
+							showMetadataIndicators: false,
+							showSnapshotValue: false,
+							showScaleIntervals: false,
+							minHeight: 60
+						};
 
-                        var headerConfigMicroWithValue = {
-                            showHeader: true,
-                            position: JsApiLogPlotHeaderPosition.Top,
-                            showName: false,
-                            showUom: false,
-                            showMetadataIndicators: false,
-                            showSnapshotValue: true,
-                            showScaleIntervals: false,
-                            minHeight: 60
-                        };
-                        
-                        var headerConfigMicroWithMetadata = {
-                            showHeader: true,
-                            position: JsApiLogPlotHeaderPosition.Top,
-                            showName: false,
-                            showUom: false,
-                            showMetadataIndicators: true,
-                            showSnapshotValue: false,
-                            showScaleIntervals: false,
-                            minHeight: 60
-                        };
+						var headerConfigMicroWithValue = {
+							showHeader: true,
+							position: JsApiLogPlotHeaderPosition.Top,
+							showName: false,
+							showUom: false,
+							showMetadataIndicators: false,
+							showSnapshotValue: true,
+							showScaleIntervals: false,
+							minHeight: 60
+						};
+						
+						var headerConfigMicroWithMetadata = {
+							showHeader: true,
+							position: JsApiLogPlotHeaderPosition.Top,
+							showName: false,
+							showUom: false,
+							showMetadataIndicators: true,
+							showSnapshotValue: false,
+							showScaleIntervals: false,
+							minHeight: 60
+						};
 
-                        var headerLayoutCreator = new LogPlotHeaderLayout(headerConfigDefault);
-                        var callback = {
-                            fireOnResizeLayout: function () {
-                                headerLayoutCreator.onResizeLayout();
-                            }
-                        };
+						var headerLayoutCreator = new LogPlotHeaderLayout(headerConfigDefault);
+						var callback = {
+							fireOnResizeLayout: function () {
+								headerLayoutCreator.onResizeLayout();
+							}
+						};
 
-                        var layout = new LogPlotLayoutCreator('zone1', callback);
-                        var columnCount = 7,
-                            rulerPosition = 1,
-                            initialWidth = 1200,
-                            initialHeight = 700;
-                        layout.construct(columnCount, rulerPosition, initialWidth, initialHeight);
+						var layout = new LogPlotLayoutCreator('zone1', callback);
+						var columnCount = 7,
+							rulerPosition = 1,
+							initialWidth = 1200,
+							initialHeight = 700;
+						layout.construct(columnCount, rulerPosition, initialWidth, initialHeight);
 
-                        //populate the layout so we have something to look at:
-                        layout.getHeaderDivForRuler().html(getHtmlForImage('images/wv_lp_ruler_heading.png'));
-                        layout.getMainDivForRuler().html(getHtmlForImage('images/wv_lp_ruler_main.png'));
+						//populate the layout so we have something to look at:
+						layout.getHeaderDivForRuler().html(getHtmlForImage('images/wv_lp_ruler_heading.png'));
+						layout.getMainDivForRuler().html(getHtmlForImage('images/wv_lp_ruler_main.png'));
 
-                        var seriesInColumn = [
-                            //TODO refactor to a LogPlotHeaderSerie class
-                            {
-                                Id: 0,
-                                Name: "r1s"
-                            },
-                            {
-                                Id: 1,
-                                Name: "at"
-                            },
-                            {
-                                Id: 2,
-                                Name: "sin_1s"
-                            }
-                        ];
-                        var maxSeriesInColumn = 3;
+						var seriesInColumn = [
+							//TODO refactor to a LogPlotHeaderSerie class
+							{
+								Id: 0,
+								Name: "r1s"
+							},
+							{
+								Id: 1,
+								Name: "at"
+							},
+							{
+								Id: 2,
+								Name: "sin_1s"
+							}
+						];
+						var maxSeriesInColumn = 3;
 
-                        var perSeriesHeaderConfigs = [
-                            null, //use default
-                            headerConfigAllOn,
-						    headerConfigAllOnExceptMetadata,
-						    headerConfigDefaultsOff,
-						    headerConfigMicro,
-						    headerConfigMicroWithValue,
-                            headerConfigMicroWithMetadata
-                        ];
+						var perSeriesHeaderConfigs = [
+							null, //use default
+							headerConfigAllOn,
+							headerConfigAllOnExceptMetadata,
+							headerConfigDefaultsOff,
+							headerConfigMicro,
+							headerConfigMicroWithValue,
+							headerConfigMicroWithMetadata
+						];
 
-                        for (var c = 1; c < columnCount; c++) {
-                            //make 1 column with less series:
-                            if (c === columnCount - 1) {
-                                seriesInColumn.pop();
-                            }
+						for (var c = 1; c < columnCount; c++) {
+							//make 1 column with less series:
+							if (c === columnCount - 1) {
+								seriesInColumn.pop();
+							}
 
-                            layout.getHeaderDivForColumn(c).html(headerLayoutCreator.getHtmlForColumnHeader(c, seriesInColumn, maxSeriesInColumn, perSeriesHeaderConfigs[c-1]));
-                            layout.getMainDivForColumn(c).html(getHtmlForImage("images/wv_lp_column" + c + "_main.png"));
-                            layout.getValueAxisDivForColumn(c).html(headerLayoutCreator.getHtmlForColumnFooter(c, seriesInColumn, maxSeriesInColumn, perSeriesHeaderConfigs[c - 1]));
-                        }
-                    });
-                </script>
+							headerLayoutCreator.constructColumnHeader(layout.getHeaderDivForColumn(c), seriesInColumn, maxSeriesInColumn, perSeriesHeaderConfigs[c - 1]);
+							layout.getMainDivForColumn(c).html(getHtmlForImage("images/wv_lp_column" + c + "_main.png"));
+							headerLayoutCreator.constructColumnFooter(layout.getValueAxisDivForColumn(c), seriesInColumn, maxSeriesInColumn, perSeriesHeaderConfigs[c - 1]);
+						}
+					});
+				</script>
 
-                <style>
-                    #vertical {
-                        margin: 0 auto;
-                    }
+				<style>
+					#vertical {
+						margin: 0 auto;
+					}
 
-                    .pane-content {
-                        padding: 0 10px;
-                    }
+					.pane-content {
+						padding: 0 10px;
+					}
 
-                    .stretch-image {
-                        margin: 0;
-                        height: 99%;
-                        width: 100%;
-                    }
+					.stretch-image {
+						margin: 0;
+						height: 99%;
+						width: 100%;
+					}
 
-                    .dropTargetEntered {
-                        border: cyan solid 2px;
-                        -ms-border-radius: 10px;
-                        border-radius: 10px;
-                    }
+					.dropTargetEntered {
+						border: cyan solid 2px;
+						-ms-border-radius: 10px;
+						border-radius: 10px;
+					}
 
-                    .draggableOnDrag {
-                        border: yellow solid 2px;
-                        -ms-border-radius: 10px;
-                        border-radius: 10px;
-                        background-color: #03a9f4;
-                        -webkit-box-shadow: 0 3px 10px #000000, 0 3px 10px #000000;
-                        -ms-box-shadow: 0 3px 10px #000000, 0 3px 10px #000000;
-                        box-shadow: 0 3px 10px #000000, 0 3px 10px #000000;
-                    }
-                </style>
-            </div>
-        </td>
-    </tr>
+					.draggableOnDrag {
+						border: yellow solid 2px;
+						-ms-border-radius: 10px;
+						border-radius: 10px;
+						background-color: #03a9f4;
+						-webkit-box-shadow: 0 3px 10px #000000, 0 3px 10px #000000;
+						-ms-box-shadow: 0 3px 10px #000000, 0 3px 10px #000000;
+						box-shadow: 0 3px 10px #000000, 0 3px 10px #000000;
+					}
+				</style>
+			</div>
+		</td>
+	</tr>
 </table>
 
 </body>

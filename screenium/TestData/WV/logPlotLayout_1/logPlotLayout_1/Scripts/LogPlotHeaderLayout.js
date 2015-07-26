@@ -94,6 +94,33 @@ var LogPlotHeaderLayout = function (config) {
 /**
  * @function
  */
+LogPlotHeaderLayout.prototype.constructColumnHeader = function (headerContainerDiv, seriesInColumn, maxSeriesInColumn, seriesHeaderConfig) {
+    headerContainerDiv.html(this._getHtmlForColumnHeader(seriesInColumn, maxSeriesInColumn, seriesHeaderConfig));
+    this._cacheColumnHeaderParts(headerContainerDiv, seriesInColumn);
+};
+/**
+ * @function
+ */
+LogPlotHeaderLayout.prototype.constructColumnFooter = function (footerContainerDiv, seriesInColumn, maxSeriesInColumn, seriesHeaderConfig) {
+    footerContainerDiv.html(this._getHtmlForColumnHeader(seriesInColumn, maxSeriesInColumn, seriesHeaderConfig));
+    this._cacheColumnFooterParts(footerContainerDiv, seriesInColumn);
+};
+
+/**
+ * @function
+ */
+LogPlotHeaderLayout.prototype._cacheColumnHeaderParts = function (headerContainerDiv, seriesInColumn) {
+    //TODO find the part divs and cache them (required for tooltips optimization)
+};
+/**
+ * @function
+ */
+LogPlotHeaderLayout.prototype._cacheColumnFooterParts = function (headerContainerDiv, seriesInColumn) {
+    //TODO find the part divs and cache them (required for tooltips optimization)
+};
+/**
+ * @function
+ */
 LogPlotHeaderLayout.prototype._getHeaderLayoutPropertyName = function (isAtTop) {
     return isAtTop ? "headerLayoutAtTop" : "headerLayoutAtBottom";
 };
@@ -157,14 +184,14 @@ LogPlotHeaderLayout.prototype._getHtmlForColumn = function (seriesInColumn, isAt
 /**
  * @function 
  */
-LogPlotHeaderLayout.prototype.getHtmlForColumnHeader = function (columnId, seriesInColumn, maxSeriesInColumn, perSeriesHeaderConfig) {
+LogPlotHeaderLayout.prototype._getHtmlForColumnHeader = function (seriesInColumn, maxSeriesInColumn, perSeriesHeaderConfig) {
     return this._getHtmlForColumn(seriesInColumn, true, maxSeriesInColumn, perSeriesHeaderConfig);
 };
 
 /**
  * @function 
  */
-LogPlotHeaderLayout.prototype.getHtmlForColumnFooter = function (columnId, seriesInColumn, maxSeriesInColumn, perSeriesHeaderConfig) {
+LogPlotHeaderLayout.prototype.getHtmlForColumnFooter = function (seriesInColumn, maxSeriesInColumn, perSeriesHeaderConfig) {
     return this._getHtmlForColumn(seriesInColumn, false, maxSeriesInColumn, perSeriesHeaderConfig);
 };
 
