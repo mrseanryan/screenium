@@ -48,6 +48,9 @@ LogPlotSeriesHeaderLayout.prototype.getInitialHtml = function () {
     if (!strategyHtml) {
         throw 'invalid operation';
     }
+
+    html += "</div>";
+
     return html;
 };
 /** @function
@@ -58,6 +61,7 @@ LogPlotSeriesHeaderLayout.prototype.getInitialEmptyHtml = function () {
     html += "<div class='logPlotHeaderSerieCell'>";
     //TODO refactor - extract CSS
     html += "<div class='pure-g pure-g-valign-fix'  style='height: 100%;   border: solid 1px blue;' >";
+    html += "</div>";
     html += "</div>";
 
     return html;

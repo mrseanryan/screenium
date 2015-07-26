@@ -23,7 +23,7 @@ LogPlotHeaderLayoutPartsCreator.prototype.createDivHtmlForValueAxis = function (
 /** @function
 */
 LogPlotHeaderLayoutPartsCreator.prototype.createDivHtmlForValue = function () {
-    return "<div class='logPlotValue logPlotHeaderLargeText logPlotHeaderCenteredText logPlotHeaderAutoTruncatedText'>123.45</div>"
+    return "<div class='logPlotValue logPlotHeaderLargeText logPlotHeaderCenteredText logPlotHeaderAutoTruncatedText'>123.456789</div>"
 };
 /** @function
 */
@@ -33,7 +33,7 @@ LogPlotHeaderLayoutPartsCreator.prototype.createDivHtmlForName = function () {
 /** @function
 */
 LogPlotHeaderLayoutPartsCreator.prototype.createDivHtmlForUnits = function () {
-    return "<div class='logPlotSerieUnits logPlotHeaderAutoTruncatedText'>[u]</div>";
+    return "<div class='logPlotSerieUnits logPlotHeaderAutoTruncatedText logPlotHeaderTextAlignRight'>[u]</div>";
 };
 /** @function
 */

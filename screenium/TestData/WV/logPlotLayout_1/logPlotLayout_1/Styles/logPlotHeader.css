@@ -15,8 +15,8 @@ html, button, input, select, textarea,
   font-family: Verdana; 
   font-size:8pt; 
 
-  margin: 1px;
-  padding: 2px;
+  /*margin: 1px;
+  padding: 2px;*/
   /*border: solid darkgray 1px;*/
   height: 100%;
   padding-bottom: 1px;
@@ -48,7 +48,12 @@ html, button, input, select, textarea,
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
+
+  min-width: 0;
 }
 .logPlotHeaderHidden {
     display: none;
+}
+.logPlotHeaderTextAlignRight {
+    text-align: right;
 }

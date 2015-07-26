@@ -141,10 +141,11 @@ LogPlotHeaderLayout.prototype._getHtmlForColumn = function (seriesInColumn, isAt
     var html = "";
     var perSerieHeight = 100 / maxSeriesInColumn; //calc height%
 
-    var htmlTableStart = "<table style='width:100%; height:"+perSerieHeight+"%; padding-bottom: 1px;'>";
-    var htmlRowStart = "<tr><td style='height:100%;'>";
-    var htmlRowEnd = "</td></tr>";
-    var htmlTableEnd = "</table>";
+    //table causes resize of purecss divs to malfunction - so just using divs
+    var htmlTableStart = "<div style='width:100%; height:"+perSerieHeight+"%; padding-bottom: 1px;'>";
+    var htmlRowStart = "<div style='height:100%;'>";
+    var htmlRowEnd = "</div>";
+    var htmlTableEnd = "</div>";
 
     var countOfSeriesThisColumn = 0;
     for (var serie in seriesInColumn) {
