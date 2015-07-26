@@ -28,12 +28,12 @@ LogPlotHeaderLayoutPartsCreator.prototype.createDivHtmlForValue = function () {
 /** @function
 */
 LogPlotHeaderLayoutPartsCreator.prototype.createDivHtmlForName = function () {
-    return "<div class='logPlotSerieName'>{name}</div>";
+    return "<div class='logPlotSerieName logPlotHeaderAutoTruncatedText'>{name}</div>";
 };
 /** @function
 */
 LogPlotHeaderLayoutPartsCreator.prototype.createDivHtmlForUnits = function () {
-    return "<div class='logPlotSerieUnits'>[u]</div>";
+    return "<div class='logPlotSerieUnits logPlotHeaderAutoTruncatedText'>[u]</div>";
 };
 /** @function
 */
