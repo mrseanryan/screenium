@@ -21,30 +21,7 @@ var LogPlotSeriesHeaderLayout = function (isAtTop, serieId, serieName, headerCon
     this._layoutStrategy = layoutFactory.create();
 };
 
-LogPlotSeriesHeaderLayout.prototype._getHtmlForNameValueUnits = function () {
-    return "<div class='pure-g pure-g-valign-fix' style='height: calc(100% - (" + this._getHeightOfValueAxis() + "px));'>" +
-            "<div id='nameDiv' class='pure-u-4-24 logPlotHeaderSmallText logPlotHeaderAutoTruncatedText'>" + this._serieName + "</div>" +
-            //TODO make value font take 100% of height
-            "<div id='snapshotValueDiv' class='pure-u-18-24 logPlotHeaderCenteredText logPlotHeaderLargeText logPlotHeaderAutoTruncatedText' style='height: 100%;'>" + this._getHtmlForValue() + "</div>" +
-            "<div id='unitsDiv' class='pure-u-2-24 logPlotHeaderSmallText' >[C]</div>" +
-            "</div>";
-};
-LogPlotSeriesHeaderLayout.prototype._getHtmlForValue = function() {
-    var html = "123.45";
-    return html;
-};
-//tried SVG but does not really scale :(
-LogPlotSeriesHeaderLayout.prototype._getHtmlForValueSvg = function () {
-    var html = "<svg width='100%' height='100%'" +
-    "style='border:none;'" +
-    "xmlns='http://www.w3.org/2000/svg' preserveAspectRatio='xMinYMin meet'>" +
-    "<g>" +
-        "<text y='12.5%' textLength='436' lengthAdjust='spacingAndGlyphs' transform='scale(1,3)'>{value}</text>" +
-    "</g>" +
-    "</svg>";
 
-    return html;
-};
 LogPlotSeriesHeaderLayout.prototype.getInitialHtml = function () {
     //TODO refactor to take in a div, add the HTML, and then cache the divs for each part
     //TODO add accessors and use them to set the values etc.
@@ -62,49 +39,19 @@ LogPlotSeriesHeaderLayout.prototype.getInitialHtml = function () {
 
     html += "<div class='logPlotHeaderSerieCell'>";
 
-    //TODO refactor - extract fun
-    //TODO refactor - extract CSS
-
     var hasTopRow = this._config.getShowName() || this._config.getShowUom() || this._config.getShowSnapshotValue();
 
     var strategyHtml = this._layoutStrategy.createLayoutHtml();
 
     html += strategyHtml;
 
-
     if (!strategyHtml) {
-        //TODO move this HTML stuff down into the strategies ...
-
-        //if we have a top row, then put the metadata indicators on that row (so that value axis has full width)
-        if (hasTopRow) {
-            html += "<div class='logPlotHeaderSerieCellTopBox'>";
-            html += "<div class='pure-g pure-g-valign-fix ' >" +
-                "<div class='pure-u-20-24' style='height: 100%; min-height: 25px;'>" + this._getHtmlForNameValueUnits() + "</div>" +
-                "<div class='pure-u-4-24' style='height: 100%;'><div class='logPlotMetaDataIndicators'><div>B</div><div>L</div><div>F</div></div></div>"
-                + "</div>";
-
-            html += "<div class='pure-g pure-g-valign-fix' >" +
-                "<div class='pure-u-24-24' style='height: 100%; min-height: 25px;'>" + this._getHtmlForValueAxis() + "</div>" +
-                "</div>";
-
-            html += "</div>";
-        } else {
-            //put meta data indicators on same row as value axis:
-            if (this._config.getShowMetadataIndicators()) {
-                html += "<div class='pure-g pure-g-valign-fix logPlotHeaderSerieCellTopBox' >" +
-                    "<div class='pure-u-20-24' style='height: 100%; min-height: 25px;'>" + this._getHtmlForValueAxis() + "</div>" +
-                    "<div class='pure-u-4-24' style='height: 100%;'><div class='logPlotMetaDataIndicators'><div>B</div><div>L</div><div>F</div></div></div>";
-                html += "</div>";
-            } else {
-                //value axis only:
-                html += "<div class='pure-g pure-g-valign-fix logPlotHeaderSerieCellTopBox' >" +
-                    "<div class='pure-u-24-24' style='height: 100%; min-height: 25px;'>" + this._getHtmlForValueAxis() + "</div>";
-                html += "</div>";
-            }
-        }
+        throw 'invalid operation';
     }
     return html;
 };
+/** @function
+*/
 LogPlotSeriesHeaderLayout.prototype.getInitialEmptyHtml = function () {
     var html = "";
 
@@ -115,10 +62,7 @@ LogPlotSeriesHeaderLayout.prototype.getInitialEmptyHtml = function () {
 
     return html;
 };
-LogPlotSeriesHeaderLayout.prototype._getHtmlForValueAxis = function () {
-    //TODO refactor - extract CSS
-    return "<div style='width:100%; height:" + this._getHeightOfValueAxis() + "px; border: solid black 1px;   margin-top: -5px; ' >{value axis here}</div>";
-};
+
 
 LogPlotSeriesHeaderLayout.prototype._getHeightOfValueAxis = function () {
     return 37;

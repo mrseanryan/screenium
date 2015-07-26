@@ -139,12 +139,13 @@ LogPlotHeaderLayout.prototype._getHtmlForColumn = function (seriesInColumn, isAt
     }
 
     var html = "";
-    var htmlTableStart = "<table style='width:100%; height:100%; padding-bottom: 1px;'>";
-    var htmlRowStart = "<tr><td style='height:" + (100/maxSeriesInColumn) + "%;'>"; //calc height%
+    var perSerieHeight = 100 / maxSeriesInColumn; //calc height%
+
+    var htmlTableStart = "<table style='width:100%; height:"+perSerieHeight+"%; padding-bottom: 1px;'>";
+    var htmlRowStart = "<tr><td style='height:100%;'>";
     var htmlRowEnd = "</td></tr>";
     var htmlTableEnd = "</table>";
 
-    html += htmlTableStart;
     var countOfSeriesThisColumn = 0;
     for (var serie in seriesInColumn) {
         if (seriesInColumn.hasOwnProperty(serie)) {
@@ -154,9 +155,11 @@ LogPlotHeaderLayout.prototype._getHtmlForColumn = function (seriesInColumn, isAt
             //TODO review is OO but is this needed?
             serie[headerLayoutProp] = new LogPlotSeriesHeaderLayout(isAtTop, serie.Id, serie.Name, activeConfig);
 
+            html += htmlTableStart;
             html += htmlRowStart;
             html += serie[headerLayoutProp].getInitialHtml();
             html += htmlRowEnd;
+            html += htmlTableEnd;
 
             countOfSeriesThisColumn++;
         }
@@ -170,14 +173,14 @@ LogPlotHeaderLayout.prototype._getHtmlForColumn = function (seriesInColumn, isAt
     };
     var dummyHeaderLayout = new LogPlotSeriesHeaderLayout(isAtTop, dummySerie.Id, dummySerie.Name, activeConfig);
     while (countOfSeriesThisColumn < maxSeriesInColumn) {
+        html += htmlTableStart;
         html += htmlRowStart;
         html += dummyHeaderLayout.getInitialEmptyHtml();
         html += htmlRowEnd;
+        html += htmlTableEnd;
 
         countOfSeriesThisColumn++;
     }
-
-    html += htmlTableEnd;
 
     return html;
 };
