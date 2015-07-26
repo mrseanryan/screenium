@@ -20,7 +20,11 @@ LogPlotHeaderLayoutPartsCreator.prototype.createDivHtmlForMetadata = function ()
 LogPlotHeaderLayoutPartsCreator.prototype.createDivHtmlForValueAxis = function () {
     return "<div class='logPlotValueAxis'>{value axis here!}</div>"
 };
-
+/** @function
+*/
+LogPlotHeaderLayoutPartsCreator.prototype.createDivHtmlForValue = function () {
+    return "<div class='logPlotValue logPlotHeaderLargeText logPlotHeaderCenteredText logPlotHeaderAutoTruncatedText'>123.45</div>"
+};
 /** @function
 */
 LogPlotHeaderLayoutPartsCreator.prototype.createDivHtmlForName = function () {
@@ -63,6 +67,11 @@ LogPlotHeaderLayoutPartsCreator.prototype.findDivHtmlForMetadata = function (con
 */
 LogPlotHeaderLayoutPartsCreator.prototype.findDivHtmlForValueAxis = function () {
     this._findAndCheckDiv(container, '.logPlotValueAxis');
+};
+/** @function
+*/
+LogPlotHeaderLayoutPartsCreator.prototype.findDivHtmlForValue = function () {
+    this._findAndCheckDiv(container, '.logPlotValue');
 };
 
 /** @function
