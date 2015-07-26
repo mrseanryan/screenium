@@ -13,7 +13,7 @@ var LogPlotHeaderLayoutPartsCreator = function (config) {
 */
 LogPlotHeaderLayoutPartsCreator.prototype.createDivHtmlForMetadata = function () {
     //TODO could use grid for the 2x2 layout
-    return "<div class='logPlotMetaDataIndicators'>"+"<div>b</div><div>l</div>"+"</div>"
+    return "<div class='logPlotMetaDataIndicators'>"+"<div>bl</div>"+"</div>"
 };
 /** @function
 */
