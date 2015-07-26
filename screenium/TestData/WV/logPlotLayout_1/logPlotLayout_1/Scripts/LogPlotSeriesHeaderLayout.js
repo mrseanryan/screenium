@@ -1,4 +1,6 @@
-﻿/**
+﻿/// <reference path="LogPlotHeaderLayoutStrategy.js" />
+/// <reference path="LogPlotHeaderLayoutPartsCreator.js" />
+/**
  * @constructor 
  * @description Create the layout for the header of 1 series.
  * Can be arranged to be suitable for Top or Bottom position.
@@ -14,7 +16,7 @@ var LogPlotSeriesHeaderLayout = function (isAtTop, serieId, serieName, headerCon
     this._serieName = serieName;
     this._config = headerConfig;
 
-    this._partsCreator = new LogPlotHeaderLayoutPartsCreator();
+    this._partsCreator = new LogPlotHeaderLayoutPartsCreator(headerConfig);
     var layoutFactory = new LogPlotHeaderLayoutStrategyFactory(headerConfig, isAtTop, this._partsCreator);
     this._layoutStrategy = layoutFactory.create();
 };
@@ -65,35 +67,40 @@ LogPlotSeriesHeaderLayout.prototype.getInitialHtml = function () {
 
     var hasTopRow = this._config.getShowName() || this._config.getShowUom() || this._config.getShowSnapshotValue();
 
-    html += this._layoutStrategy.createLayoutHtml();
+    var strategyHtml = this._layoutStrategy.createLayoutHtml();
 
-    //TODO move this HTML stuff down into the strategies ...
+    html += strategyHtml;
 
-    //if we have a top row, then put the metadata indicators on that row (so that value axis has full width)
-    if (hasTopRow) {
-        html += "<div class='logPlotHeaderSerieCellTopBox'>";
-        html += "<div class='pure-g pure-g-valign-fix ' >" +
-            "<div class='pure-u-20-24' style='height: 100%; min-height: 25px;'>" + this._getHtmlForNameValueUnits() + "</div>" +
-            "<div class='pure-u-4-24' style='height: 100%;'><div class='logPlotMetaDataIndicators'><div>B</div><div>L</div><div>F</div></div></div>"
-            + "</div>";
 
-        html += "<div class='pure-g pure-g-valign-fix' >" +
-            "<div class='pure-u-24-24' style='height: 100%; min-height: 25px;'>" + this._getHtmlForValueAxis() + "</div>" +
-            "</div>";
+    if (!strategyHtml) {
+        //TODO move this HTML stuff down into the strategies ...
 
-        html += "</div>";
-    } else {
-        //put meta data indicators on same row as value axis:
-        if(this._config.getShowMetadataIndicators()) {
-            html += "<div class='pure-g pure-g-valign-fix logPlotHeaderSerieCellTopBox' >" +
-                "<div class='pure-u-20-24' style='height: 100%; min-height: 25px;'>" + this._getHtmlForValueAxis() + "</div>" +
-                "<div class='pure-u-4-24' style='height: 100%;'><div class='logPlotMetaDataIndicators'><div>B</div><div>L</div><div>F</div></div></div>";
+        //if we have a top row, then put the metadata indicators on that row (so that value axis has full width)
+        if (hasTopRow) {
+            html += "<div class='logPlotHeaderSerieCellTopBox'>";
+            html += "<div class='pure-g pure-g-valign-fix ' >" +
+                "<div class='pure-u-20-24' style='height: 100%; min-height: 25px;'>" + this._getHtmlForNameValueUnits() + "</div>" +
+                "<div class='pure-u-4-24' style='height: 100%;'><div class='logPlotMetaDataIndicators'><div>B</div><div>L</div><div>F</div></div></div>"
+                + "</div>";
+
+            html += "<div class='pure-g pure-g-valign-fix' >" +
+                "<div class='pure-u-24-24' style='height: 100%; min-height: 25px;'>" + this._getHtmlForValueAxis() + "</div>" +
+                "</div>";
+
             html += "</div>";
         } else {
-            //value axis only:
-            html += "<div class='pure-g pure-g-valign-fix logPlotHeaderSerieCellTopBox' >" +
-                "<div class='pure-u-24-24' style='height: 100%; min-height: 25px;'>" + this._getHtmlForValueAxis() + "</div>";
-            html += "</div>";
+            //put meta data indicators on same row as value axis:
+            if (this._config.getShowMetadataIndicators()) {
+                html += "<div class='pure-g pure-g-valign-fix logPlotHeaderSerieCellTopBox' >" +
+                    "<div class='pure-u-20-24' style='height: 100%; min-height: 25px;'>" + this._getHtmlForValueAxis() + "</div>" +
+                    "<div class='pure-u-4-24' style='height: 100%;'><div class='logPlotMetaDataIndicators'><div>B</div><div>L</div><div>F</div></div></div>";
+                html += "</div>";
+            } else {
+                //value axis only:
+                html += "<div class='pure-g pure-g-valign-fix logPlotHeaderSerieCellTopBox' >" +
+                    "<div class='pure-u-24-24' style='height: 100%; min-height: 25px;'>" + this._getHtmlForValueAxis() + "</div>";
+                html += "</div>";
+            }
         }
     }
     return html;

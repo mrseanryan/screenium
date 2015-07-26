@@ -86,17 +86,6 @@
 							minHeight: 60
 						};
 
-						var headerConfigDefaultsOff = {
-							showHeader: true,
-							position: JsApiLogPlotHeaderPosition.TopAndBottom,
-							showName: false,
-							showUom: false,
-							showMetadataIndicators: false,
-							showSnapshotValue: true,
-							showScaleIntervals: true,
-							minHeight: 60
-						};
-
 						var headerConfigMicro = {
 							showHeader: true,
 							position: JsApiLogPlotHeaderPosition.Top,
@@ -118,7 +107,18 @@
 							showScaleIntervals: false,
 							minHeight: 60
 						};
-						
+
+						var headerConfigMicroWithValueAndIntervals = {
+						    showHeader: true,
+						    position: JsApiLogPlotHeaderPosition.TopAndBottom,
+						    showName: false,
+						    showUom: false,
+						    showMetadataIndicators: false,
+						    showSnapshotValue: true,
+						    showScaleIntervals: true,
+						    minHeight: 60
+						};
+
 						var headerConfigMicroWithMetadata = {
 							showHeader: true,
 							position: JsApiLogPlotHeaderPosition.Top,
@@ -138,7 +138,7 @@
 						};
 
 						var layout = new LogPlotLayoutCreator('zone1', callback);
-						var columnCount = 7,
+						var columnCount = 1 + 7,
 							rulerPosition = 1,
 							initialWidth = 1200,
 							initialHeight = 700;
@@ -166,13 +166,13 @@
 						var maxSeriesInColumn = 3;
 
 						var perSeriesHeaderConfigs = [
+                    		headerConfigMicroWithMetadata,
 							null, //use default
 							headerConfigAllOn,
 							headerConfigAllOnExceptMetadata,
-							headerConfigDefaultsOff,
 							headerConfigMicro,
 							headerConfigMicroWithValue,
-							headerConfigMicroWithMetadata
+							headerConfigMicroWithValueAndIntervals
 						];
 
 						for (var c = 1; c < columnCount; c++) {
