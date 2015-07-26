@@ -41,13 +41,31 @@ var LogPlotHeaderLayoutStrategyNameUnitMetadataNoValueAtTop = function (_partsCr
 /** @function
 */
 LogPlotHeaderLayoutStrategyNameUnitMetadataNoValueAtTop.prototype.createLayoutHtml = function () {
+    var html = '';
+    var heightOfValueAxis = this._partsCreator.getHeightOfValueAxis();
+
+    html += "<div class='pure-g pure-g-valign-fix logPlotHeaderSerieCellTopBox' >";
+    var metaDataWidth = this._partsCreator.getMetaDataWidth();
+
     //TODO handle on/off:
     //this._config.getShowName
-    //this._config.getShowUom
     //this._config.getShowMetadataIndicators
+    //this._config.getShowUom
 
-    //this._partsCreator
-    return "TODO 4";
+    if (this._config.getShowName() && this._config.getShowMetadataIndicators() && this._config.getShowUom()) {
+        html += "<div class='pure-u-20-24' style='width: calc(83.333% - " + metaDataWidth + "px); '>" + this._partsCreator.createDivHtmlForName() + "</div>" +
+        "<div style='width:" + metaDataWidth + "px; height: 100%; float: right;'>" + this._partsCreator.createDivHtmlForMetadata() + "</div>" +
+        "<div class='pure-u-4-24' style='float: right;'>" + this._partsCreator.createDivHtmlForUnits() + "</div>";
+    } else {
+        throw 'not impl';
+    }
+
+    //[value axis]
+    html += "<div class='pure-g pure-g-valign-fix logPlotHeaderSerieCellTopBox' >" +
+        "<div class='pure-u-24-24' style='height: " + heightOfValueAxis + "px; min-height: " + heightOfValueAxis + "px;'>" + this._partsCreator.createDivHtmlForValueAxis() + "</div>";
+    html += "</div>";
+
+    return html;
 };
 
 /** @function

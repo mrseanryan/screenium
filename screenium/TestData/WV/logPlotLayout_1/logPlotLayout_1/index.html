@@ -86,6 +86,17 @@
 							minHeight: 60
 						};
 
+						var headerConfigAllOnExceptValue = {
+						    showHeader: true,
+						    position: JsApiLogPlotHeaderPosition.TopAndBottom,
+						    showName: true,
+						    showUom: true,
+						    showMetadataIndicators: true,
+						    showSnapshotValue: false,
+						    showScaleIntervals: false,
+						    minHeight: 60
+						};
+
 						var headerConfigMicro = {
 							showHeader: true,
 							position: JsApiLogPlotHeaderPosition.Top,
@@ -138,7 +149,19 @@
 						};
 
 						var layout = new LogPlotLayoutCreator('zone1', callback);
-						var columnCount = 1 + 7,
+
+						var perSeriesHeaderConfigs = [
+                            headerConfigAllOnExceptValue,
+                            headerConfigMicroWithMetadata,
+                            null, //use default
+                            headerConfigAllOn,
+                            headerConfigAllOnExceptMetadata,
+                            headerConfigMicro,
+                            headerConfigMicroWithValue,
+                            headerConfigMicroWithValueAndIntervals
+						];
+
+					    var columnCount = 1 + perSeriesHeaderConfigs.length,
 							rulerPosition = 1,
 							initialWidth = 1200,
 							initialHeight = 700;
@@ -164,16 +187,6 @@
 							}
 						];
 						var maxSeriesInColumn = 3;
-
-						var perSeriesHeaderConfigs = [
-                    		headerConfigMicroWithMetadata,
-							null, //use default
-							headerConfigAllOn,
-							headerConfigAllOnExceptMetadata,
-							headerConfigMicro,
-							headerConfigMicroWithValue,
-							headerConfigMicroWithValueAndIntervals
-						];
 
 						for (var c = 1; c < columnCount; c++) {
 							//make 1 column with less series:

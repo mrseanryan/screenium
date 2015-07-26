@@ -155,7 +155,7 @@ LogPlotHeaderLayout.prototype._getHtmlForColumn = function (seriesInColumn, isAt
             serie[headerLayoutProp] = new LogPlotSeriesHeaderLayout(isAtTop, serie.Id, serie.Name, activeConfig);
 
             html += htmlRowStart;
-            html += serie.headerLayoutAtTop.getInitialHtml();
+            html += serie[headerLayoutProp].getInitialHtml();
             html += htmlRowEnd;
 
             countOfSeriesThisColumn++;
