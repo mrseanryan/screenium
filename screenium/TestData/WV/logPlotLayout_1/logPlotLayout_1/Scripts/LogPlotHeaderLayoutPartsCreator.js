@@ -13,6 +13,8 @@ var LogPlotHeaderLayoutPartsCreator = function (config, headerContainerDiv, seri
     //we later use the combination of headerContainerDiv + serieId to find the container div for this series.
     this._headerContainerDiv = headerContainerDiv;
     this._serieId = serieId;
+
+    this._cachedDivs = [];
 };
 /**
  * @function
@@ -61,7 +63,10 @@ LogPlotHeaderLayoutPartsCreator.prototype.getHeightOfValueAxis = function () {
 /** @function
 */
 LogPlotHeaderLayoutPartsCreator.prototype._findAndCheckDiv = function (selector) {
-    //TODO xxx perf - cache the jQuery object by selector (especially for tooltips)
+    //performance - cache the jQuery object by selector (especially for tooltips)
+    if(this._cachedDivs[selector]) {
+        return this._cachedDivs[selector];
+    }
 
     this._serieContainerDiv = this._serieContainerDiv || this._headerContainerDiv.find('#'+this.getIdOfSerieDiv());
     if(this._serieContainerDiv.length === 0) {
@@ -78,6 +83,9 @@ LogPlotHeaderLayoutPartsCreator.prototype._findAndCheckDiv = function (selector)
     if (found.length > 1) {
         throw 'found more than 1 matching div!';
     }
+
+    this._cachedDivs[selector] = found;
+
     return found;
 };
 /** @function
