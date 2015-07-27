@@ -1,11 +1,9 @@
-﻿//TODO rename LogPlotHeaderLayoutStrategy* to be LogPlotSeriesHeaderLayoutStrategy*
-
-/// <reference path="LogPlotHeaderLayoutPartsCreator.js" />
+﻿/// <reference path="LogPlotHeaderLayoutPartsCreator.js" />
 
 /**
  * @constructor
  */
-var LogPlotHeaderLayoutStrategySupport = {
+var LogPlotSeriesHeaderLayoutStrategySupport = {
 
 };
 /**
@@ -13,7 +11,7 @@ var LogPlotHeaderLayoutStrategySupport = {
  * @description null object pattern - add empty divs for the parts that are not showing,
  * to avoid having null checks all over the log plot view :)
  */
-LogPlotHeaderLayoutStrategySupport.createEmptyDivHtml = function (innerHtml) {
+LogPlotSeriesHeaderLayoutStrategySupport.createEmptyDivHtml = function (innerHtml) {
     var hiddenClass = 'logPlotHeaderHidden';
     var emptyValueDiv = "<div class='" + hiddenClass + "' >" + innerHtml + "</div>";
     return emptyValueDiv;
@@ -22,7 +20,7 @@ LogPlotHeaderLayoutStrategySupport.createEmptyDivHtml = function (innerHtml) {
 /** @function
 * @description Factory to create the appropriate layout strategy for the given config.
 */
-var LogPlotHeaderLayoutStrategyFactory = function (seriesHeaderConfig, isAtTop, partsCreator) {
+var LogPlotSeriesHeaderLayoutStrategyFactory = function (seriesHeaderConfig, isAtTop, partsCreator) {
     if (!seriesHeaderConfig || typeof isAtTop === 'undefined' || !partsCreator) {
         throw 'bad args!';
     }
@@ -32,18 +30,18 @@ var LogPlotHeaderLayoutStrategyFactory = function (seriesHeaderConfig, isAtTop, 
     this._partsCreator = partsCreator;
 };
 
-LogPlotHeaderLayoutStrategyFactory.prototype.create = function () {
+LogPlotSeriesHeaderLayoutStrategyFactory.prototype.create = function () {
     //name/unit/metadata NO value
     if ((this._config.getShowName() || this._config.getShowUom()) && !this._config.getShowSnapshotValue()) {
-        return this._isAtTop ? new LogPlotHeaderLayoutStrategyNameUnitMetadataNoValueAtTop(this._partsCreator, this._config) : new LogPlotHeaderLayoutStrategyNameUnitMetadataNoValueAtBottom(this._partsCreator, this._config);
+        return this._isAtTop ? new LogPlotSeriesHeaderLayoutStrategyNameUnitMetadataNoValueAtTop(this._partsCreator, this._config) : new LogPlotSeriesHeaderLayoutStrategyNameUnitMetadataNoValueAtBottom(this._partsCreator, this._config);
     }
 
     //name/unit With Value
     if (this._config.getShowSnapshotValue()) {
-        return this._isAtTop ? new LogPlotHeaderLayoutStrategyNameUnitWithValueAtTop(this._partsCreator, this._config) : new LogPlotHeaderLayoutStrategyNameUnitWithValueAtBottom(this._partsCreator, this._config);
+        return this._isAtTop ? new LogPlotSeriesHeaderLayoutStrategyNameUnitWithValueAtTop(this._partsCreator, this._config) : new LogPlotSeriesHeaderLayoutStrategyNameUnitWithValueAtBottom(this._partsCreator, this._config);
     }
     //metadata only
-    return new LogPlotHeaderLayoutStrategyMetadataOnly(this._partsCreator, this._config);
+    return new LogPlotSeriesHeaderLayoutStrategyMetadataOnly(this._partsCreator, this._config);
 };
 
 /** @function
@@ -51,13 +49,13 @@ LogPlotHeaderLayoutStrategyFactory.prototype.create = function () {
 * [name][Md12/34][unit]
 * [value axis]
 */
-var LogPlotHeaderLayoutStrategyNameUnitMetadataNoValueAtTop = function (partsCreator, config) {
+var LogPlotSeriesHeaderLayoutStrategyNameUnitMetadataNoValueAtTop = function (partsCreator, config) {
     this._partsCreator = partsCreator;
     this._config = config;
 };
 /** @function
 */
-LogPlotHeaderLayoutStrategyNameUnitMetadataNoValueAtTop.prototype.createLayoutHtml = function () {
+LogPlotSeriesHeaderLayoutStrategyNameUnitMetadataNoValueAtTop.prototype.createLayoutHtml = function () {
     var html;
 
     var result = this._createLayoutHtmlRows();
@@ -70,7 +68,7 @@ LogPlotHeaderLayoutStrategyNameUnitMetadataNoValueAtTop.prototype.createLayoutHt
 };
 /** @function
 */
-LogPlotHeaderLayoutStrategyNameUnitMetadataNoValueAtTop.prototype._createLayoutHtmlRows = function () {
+LogPlotSeriesHeaderLayoutStrategyNameUnitMetadataNoValueAtTop.prototype._createLayoutHtmlRows = function () {
     if (!this._partsCreator || !this._config) {
         throw 'bad args!';
     }
@@ -133,7 +131,7 @@ LogPlotHeaderLayoutStrategyNameUnitMetadataNoValueAtTop.prototype._createLayoutH
         "<div class='" + unitClass + "' style='" + unitWidth + ";'>" + this._partsCreator.createDivHtmlForUnits() + "</div>";
 
     //null object pattern - also add an empty value div:
-    var emptyValueDiv = LogPlotHeaderLayoutStrategySupport.createEmptyDivHtml(this._partsCreator.createDivHtmlForValue());
+    var emptyValueDiv = LogPlotSeriesHeaderLayoutStrategySupport.createEmptyDivHtml(this._partsCreator.createDivHtmlForValue());
     result.nameUnitMetadataRow = metadataRow + emptyValueDiv;
 
     //[value axis]
@@ -153,18 +151,18 @@ LogPlotHeaderLayoutStrategyNameUnitMetadataNoValueAtTop.prototype._createLayoutH
 * [value axis]
 * [name][Md12/34][unit]
 */
-var LogPlotHeaderLayoutStrategyNameUnitMetadataNoValueAtBottom = function (partsCreator, config) {
+var LogPlotSeriesHeaderLayoutStrategyNameUnitMetadataNoValueAtBottom = function (partsCreator, config) {
     if (!partsCreator || !config) {
         throw 'bad args!';
     }
     this._partsCreator = partsCreator;
     this._config = config;
 };
-LogPlotHeaderLayoutStrategyNameUnitMetadataNoValueAtBottom.prototype = new LogPlotHeaderLayoutStrategyNameUnitMetadataNoValueAtTop();
-LogPlotHeaderLayoutStrategyNameUnitMetadataNoValueAtBottom.prototype.constructor = LogPlotHeaderLayoutStrategyNameUnitMetadataNoValueAtBottom;
+LogPlotSeriesHeaderLayoutStrategyNameUnitMetadataNoValueAtBottom.prototype = new LogPlotSeriesHeaderLayoutStrategyNameUnitMetadataNoValueAtTop();
+LogPlotSeriesHeaderLayoutStrategyNameUnitMetadataNoValueAtBottom.prototype.constructor = LogPlotSeriesHeaderLayoutStrategyNameUnitMetadataNoValueAtBottom;
 /** @function
 */
-LogPlotHeaderLayoutStrategyNameUnitMetadataNoValueAtBottom.prototype.createLayoutHtml = function () {
+LogPlotSeriesHeaderLayoutStrategyNameUnitMetadataNoValueAtBottom.prototype.createLayoutHtml = function () {
     var html;
 
     var result = this._createLayoutHtmlRows();
@@ -183,14 +181,14 @@ LogPlotHeaderLayoutStrategyNameUnitMetadataNoValueAtBottom.prototype.createLayou
 [value][Md12/34]
 [value axis]
 */
-var LogPlotHeaderLayoutStrategyNameUnitWithValueAtTop = function (partsCreator, config) {
+var LogPlotSeriesHeaderLayoutStrategyNameUnitWithValueAtTop = function (partsCreator, config) {
     this._partsCreator = partsCreator;
     this._config = config;
 };
 
 /** @function
 */
-LogPlotHeaderLayoutStrategyNameUnitWithValueAtTop.prototype.createLayoutHtml = function () {
+LogPlotSeriesHeaderLayoutStrategyNameUnitWithValueAtTop.prototype.createLayoutHtml = function () {
     var html;
 
     var result = this._createLayoutHtmlRows();
@@ -212,7 +210,7 @@ LogPlotHeaderLayoutStrategyNameUnitWithValueAtTop.prototype.createLayoutHtml = f
 };
 /** @function
 */
-LogPlotHeaderLayoutStrategyNameUnitWithValueAtTop.prototype._createLayoutHtmlRows = function () {
+LogPlotSeriesHeaderLayoutStrategyNameUnitWithValueAtTop.prototype._createLayoutHtmlRows = function () {
     if (!this._partsCreator || !this._config) {
         throw 'bad args!';
     }
@@ -244,8 +242,8 @@ LogPlotHeaderLayoutStrategyNameUnitWithValueAtTop.prototype._createLayoutHtmlRow
         nameClass = hiddenClass;
         unitClass = "pure-u-24-24";
     } else if (!this._config.getShowName() && !this._config.getShowUom()) {
-        var emptyNameDiv = LogPlotHeaderLayoutStrategySupport.createEmptyDivHtml(this._partsCreator.createDivHtmlForName());
-        var emptyUnitsDiv = LogPlotHeaderLayoutStrategySupport.createEmptyDivHtml(this._partsCreator.createDivHtmlForUnits());
+        var emptyNameDiv = LogPlotSeriesHeaderLayoutStrategySupport.createEmptyDivHtml(this._partsCreator.createDivHtmlForName());
+        var emptyUnitsDiv = LogPlotSeriesHeaderLayoutStrategySupport.createEmptyDivHtml(this._partsCreator.createDivHtmlForUnits());
         nameUnitRow = emptyNameDiv + emptyUnitsDiv;
     } else {
         throw 'invalid operation';
@@ -304,15 +302,15 @@ LogPlotHeaderLayoutStrategyNameUnitWithValueAtTop.prototype._createLayoutHtmlRow
 [value][Md12/34]
 [name][unit]
 */
-var LogPlotHeaderLayoutStrategyNameUnitWithValueAtBottom = function (partsCreator, config) {
+var LogPlotSeriesHeaderLayoutStrategyNameUnitWithValueAtBottom = function (partsCreator, config) {
     this._partsCreator = partsCreator;
     this._config = config;
 };
-LogPlotHeaderLayoutStrategyNameUnitWithValueAtBottom.prototype = new LogPlotHeaderLayoutStrategyNameUnitWithValueAtTop();
-LogPlotHeaderLayoutStrategyNameUnitWithValueAtBottom.prototype.constructor = LogPlotHeaderLayoutStrategyNameUnitWithValueAtBottom;
+LogPlotSeriesHeaderLayoutStrategyNameUnitWithValueAtBottom.prototype = new LogPlotSeriesHeaderLayoutStrategyNameUnitWithValueAtTop();
+LogPlotSeriesHeaderLayoutStrategyNameUnitWithValueAtBottom.prototype.constructor = LogPlotSeriesHeaderLayoutStrategyNameUnitWithValueAtBottom;
 /** @function
 */
-LogPlotHeaderLayoutStrategyNameUnitWithValueAtBottom.prototype.createLayoutHtml = function () {
+LogPlotSeriesHeaderLayoutStrategyNameUnitWithValueAtBottom.prototype.createLayoutHtml = function () {
     var html;
 
     var result = this._createLayoutHtmlRows();
@@ -337,7 +335,7 @@ LogPlotHeaderLayoutStrategyNameUnitWithValueAtBottom.prototype.createLayoutHtml 
 * @description metadata only:
 * [value axis][Md12/34]
 */
-var LogPlotHeaderLayoutStrategyMetadataOnly = function (partsCreator, config) {
+var LogPlotSeriesHeaderLayoutStrategyMetadataOnly = function (partsCreator, config) {
     if (!partsCreator || !config) {
         throw 'bad args!';
     }
@@ -346,7 +344,7 @@ var LogPlotHeaderLayoutStrategyMetadataOnly = function (partsCreator, config) {
 };
 /** @function
 */
-LogPlotHeaderLayoutStrategyMetadataOnly.prototype.createLayoutHtml = function () {
+LogPlotSeriesHeaderLayoutStrategyMetadataOnly.prototype.createLayoutHtml = function () {
     var html = '';
     var heightOfValueAxis = this._partsCreator.getHeightOfValueAxis();
     if (this._config.getShowMetadataIndicators()) {
@@ -362,13 +360,13 @@ LogPlotHeaderLayoutStrategyMetadataOnly.prototype.createLayoutHtml = function ()
             "<div class='pure-u-24-24' style='height: " + heightOfValueAxis + "px; min-height: " + heightOfValueAxis + "px;'>" + this._partsCreator.createDivHtmlForValueAxis() + "</div>";
         html += "</div>";
         //null object pattern - add empty divs for the parts that are not showing:
-        var emptyMetadataDiv = LogPlotHeaderLayoutStrategySupport.createEmptyDivHtml(this._partsCreator.createDivHtmlForMetadata());
+        var emptyMetadataDiv = LogPlotSeriesHeaderLayoutStrategySupport.createEmptyDivHtml(this._partsCreator.createDivHtmlForMetadata());
         html += emptyMetadataDiv;
     }
 
-    var emptyValueDiv = LogPlotHeaderLayoutStrategySupport.createEmptyDivHtml(this._partsCreator.createDivHtmlForValue());
-    var emptyNameDiv = LogPlotHeaderLayoutStrategySupport.createEmptyDivHtml(this._partsCreator.createDivHtmlForName());
-    var emptyUnitsDiv = LogPlotHeaderLayoutStrategySupport.createEmptyDivHtml(this._partsCreator.createDivHtmlForUnits());
+    var emptyValueDiv = LogPlotSeriesHeaderLayoutStrategySupport.createEmptyDivHtml(this._partsCreator.createDivHtmlForValue());
+    var emptyNameDiv = LogPlotSeriesHeaderLayoutStrategySupport.createEmptyDivHtml(this._partsCreator.createDivHtmlForName());
+    var emptyUnitsDiv = LogPlotSeriesHeaderLayoutStrategySupport.createEmptyDivHtml(this._partsCreator.createDivHtmlForUnits());
     html += emptyValueDiv + emptyNameDiv + emptyUnitsDiv;
 
     return html;

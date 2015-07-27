@@ -1,5 +1,5 @@
-﻿/// <reference path="LogPlotHeaderLayoutStrategy.js" />
-/// <reference path="LogPlotHeaderLayoutPartsCreator.js" />
+﻿/// <reference path="LogPlotHeaderLayoutPartsCreator.js" />
+/// <reference path="LogPlotSeriesHeaderLayoutStrategy.js" />
 /**
  * @constructor 
  * @description Create the layout for the header of 1 series.
@@ -17,7 +17,7 @@ var LogPlotSeriesHeaderLayout = function (isAtTop, serieId, serieName, headerCon
     this._config = headerConfig;
 
     this._partsCreator = new LogPlotHeaderLayoutPartsCreator(headerConfig, headerContainerDiv, serieId);
-    var layoutFactory = new LogPlotHeaderLayoutStrategyFactory(headerConfig, isAtTop, this._partsCreator);
+    var layoutFactory = new LogPlotSeriesHeaderLayoutStrategyFactory(headerConfig, isAtTop, this._partsCreator);
     this._layoutStrategy = layoutFactory.create();
 };
 /**
