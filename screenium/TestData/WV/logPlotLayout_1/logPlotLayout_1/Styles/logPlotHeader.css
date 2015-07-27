@@ -45,12 +45,17 @@ html, button, input, select, textarea,
     text-align: center;
 }
 .logPlotHeaderAutoTruncatedText {
-  text-overflow: ellipsis;
+    -moz-text-overflow: ellipsis;
+    text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
-
-  min-width: 0;
+    -moz-min-width: 0;
+    -ms-min-width: 0;
+    -o-min-width: 0;
+    -webkit-min-width: 0;
+    min-width: 0;
 }
+
 .logPlotHeaderHidden {
     display: none;
 }

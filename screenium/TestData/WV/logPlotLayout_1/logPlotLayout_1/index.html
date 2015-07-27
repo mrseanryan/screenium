@@ -34,7 +34,6 @@
 			<div id="zone1">
 
 				<!-- LP will be created here in zone 1 -->
-				<!-- ReSharper disable once UnusedParameter -->
 				<script>
 					var getHtmlForImage = function(url) {
 						return $("<img src='" + url + "' class='stretch-image' />");
@@ -129,42 +128,43 @@
 						];
 						var maxSeriesInColumn = 3;
 
-					    for(var c = 1; c < columnCount; c++) {
-					        var seriesThisColumn = cloneObject(seriesInColumn);
+						for(var c = 1; c < columnCount; c++) {
+							var seriesThisColumn = cloneObject(seriesInColumn);
 
-					        //give unique ids:
-					        for(var s = 0; s < seriesThisColumn.length; s++) {
-					            seriesThisColumn[s].Id += c * 100;
-					        }
+							//give unique ids:
+							for(var s = 0; s < seriesThisColumn.length; s++) {
+								seriesThisColumn[s].Id += c * 100;
+							}
 
-					        //make 1 column with less series:
-					        if(c === columnCount - 1) {
-					            seriesThisColumn.pop();
-					        }
+							//make 1 column with less series:
+							if(c === columnCount - 1) {
+								seriesThisColumn.pop();
+							}
 
-					        headerLayoutCreator.constructColumnHeader(layout.getHeaderDivForColumn(c), seriesThisColumn, maxSeriesInColumn, perSeriesHeaderConfigs[c - 1]);
-					        layout.getMainDivForColumn(c).html(getHtmlForImage("images/wv_lp_column" + c + "_main.png"));
-					        headerLayoutCreator.constructColumnFooter(layout.getValueAxisDivForColumn(c), seriesThisColumn, maxSeriesInColumn, perSeriesHeaderConfigs[c - 1]);
+							headerLayoutCreator.constructColumnHeader(layout.getHeaderDivForColumn(c), seriesThisColumn, maxSeriesInColumn, perSeriesHeaderConfigs[c - 1]);
+							layout.getMainDivForColumn(c).html(getHtmlForImage("images/wv_lp_column" + c + "_main.png"));
+							headerLayoutCreator.constructColumnFooter(layout.getValueAxisDivForColumn(c), seriesThisColumn, maxSeriesInColumn, perSeriesHeaderConfigs[c - 1]);
 
-					        //test that we can ALWAYS set some content, like the LogPlotView would:
-					        var firstSerieThisColumn = seriesThisColumn[0];
+							//test that we can ALWAYS set some content, like the LogPlotView would:
+							var firstSerieThisColumn = seriesThisColumn[0];
 
-					        var serieParts = headerLayoutCreator.getSerieParts(firstSerieThisColumn, true);
+							var serieParts = headerLayoutCreator.getSerieParts(firstSerieThisColumn, true);
 
-					        var newValue = (1000 * firstSerieThisColumn.Id) + 654.321;
-					        serieParts.findDivHtmlForValue().html(newValue);
+							var newValue = (1000 * firstSerieThisColumn.Id) + 654.321;
+							serieParts.findDivHtmlForValue().html(newValue);
 
-					        var newName = 'serie ' + firstSerieThisColumn.Id;
-					        serieParts.findDivHtmlForName().html(newName);
+							var newName = 'serie ' + firstSerieThisColumn.Id;
+							serieParts.findDivHtmlForName().html(newName);
 
-					        var newMetadata = firstSerieThisColumn.Id.toString().substr(0, 2);
-					        serieParts.findDivHtmlForMetadata().html(newMetadata);
+							//TODO new class LogPlotSeriesHeaderMetadataLayout
+							var newMetadata = firstSerieThisColumn.Id.toString().substr(0, 2);
+							serieParts.findDivHtmlForMetadata().html(newMetadata);
 
-					        var newUnits = '[' + firstSerieThisColumn.Id + ']';
-					        serieParts.findDivHtmlForUnits().html(newUnits);
+							var newUnits = '[' + firstSerieThisColumn.Id + ']';
+							serieParts.findDivHtmlForUnits().html(newUnits);
 
-					        var valueAxis = '{va' + firstSerieThisColumn.Id + '}';
-					        serieParts.findDivHtmlForValueAxis().html(valueAxis);
+							var valueAxis = '{va' + firstSerieThisColumn.Id + '}';
+							serieParts.findDivHtmlForValueAxis().html(valueAxis);
 						}
 					});
 				</script>

@@ -51,9 +51,9 @@ LogPlotHeaderLayoutStrategyFactory.prototype.create = function () {
 * [name][Md12/34][unit]
 * [value axis]
 */
-var LogPlotHeaderLayoutStrategyNameUnitMetadataNoValueAtTop = function (_partsCreator, _config) {
-    this._partsCreator = _partsCreator;
-    this._config = _config
+var LogPlotHeaderLayoutStrategyNameUnitMetadataNoValueAtTop = function (partsCreator, config) {
+    this._partsCreator = partsCreator;
+    this._config = config;
 };
 /** @function
 */
@@ -153,12 +153,12 @@ LogPlotHeaderLayoutStrategyNameUnitMetadataNoValueAtTop.prototype._createLayoutH
 * [value axis]
 * [name][Md12/34][unit]
 */
-var LogPlotHeaderLayoutStrategyNameUnitMetadataNoValueAtBottom = function (_partsCreator, _config) {
-    if (!_partsCreator || !_config) {
+var LogPlotHeaderLayoutStrategyNameUnitMetadataNoValueAtBottom = function (partsCreator, config) {
+    if (!partsCreator || !config) {
         throw 'bad args!';
     }
-    this._partsCreator = _partsCreator;
-    this._config = _config
+    this._partsCreator = partsCreator;
+    this._config = config;
 };
 LogPlotHeaderLayoutStrategyNameUnitMetadataNoValueAtBottom.prototype = new LogPlotHeaderLayoutStrategyNameUnitMetadataNoValueAtTop();
 LogPlotHeaderLayoutStrategyNameUnitMetadataNoValueAtBottom.prototype.constructor = LogPlotHeaderLayoutStrategyNameUnitMetadataNoValueAtBottom;
@@ -183,9 +183,9 @@ LogPlotHeaderLayoutStrategyNameUnitMetadataNoValueAtBottom.prototype.createLayou
 [value][Md12/34]
 [value axis]
 */
-var LogPlotHeaderLayoutStrategyNameUnitWithValueAtTop = function (_partsCreator, _config) {
-    this._partsCreator = _partsCreator;
-    this._config = _config
+var LogPlotHeaderLayoutStrategyNameUnitWithValueAtTop = function (partsCreator, config) {
+    this._partsCreator = partsCreator;
+    this._config = config;
 };
 
 /** @function
@@ -304,9 +304,9 @@ LogPlotHeaderLayoutStrategyNameUnitWithValueAtTop.prototype._createLayoutHtmlRow
 [value][Md12/34]
 [name][unit]
 */
-var LogPlotHeaderLayoutStrategyNameUnitWithValueAtBottom = function (_partsCreator, _config) {
-    this._partsCreator = _partsCreator;
-    this._config = _config
+var LogPlotHeaderLayoutStrategyNameUnitWithValueAtBottom = function (partsCreator, config) {
+    this._partsCreator = partsCreator;
+    this._config = config;
 };
 LogPlotHeaderLayoutStrategyNameUnitWithValueAtBottom.prototype = new LogPlotHeaderLayoutStrategyNameUnitWithValueAtTop();
 LogPlotHeaderLayoutStrategyNameUnitWithValueAtBottom.prototype.constructor = LogPlotHeaderLayoutStrategyNameUnitWithValueAtBottom;
@@ -337,12 +337,12 @@ LogPlotHeaderLayoutStrategyNameUnitWithValueAtBottom.prototype.createLayoutHtml 
 * @description metadata only:
 * [value axis][Md12/34]
 */
-var LogPlotHeaderLayoutStrategyMetadataOnly = function (_partsCreator, _config) {
-    if (!_partsCreator || !_config) {
+var LogPlotHeaderLayoutStrategyMetadataOnly = function (partsCreator, config) {
+    if (!partsCreator || !config) {
         throw 'bad args!';
     }
-    this._partsCreator = _partsCreator;
-    this._config = _config
+    this._partsCreator = partsCreator;
+    this._config = config;
 };
 /** @function
 */
