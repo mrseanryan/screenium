@@ -5,9 +5,9 @@
  * @description Create the layout for the header of 1 series.
  * Can be arranged to be suitable for Top or Bottom position.
  */
-var LogPlotSeriesHeaderLayout = function (isAtTop, serieId, serieName, headerConfig) {
+var LogPlotSeriesHeaderLayout = function (isAtTop, serieId, serieName, headerConfig, headerContainerDiv) {
     if (typeof isAtTop === "undefined" || typeof serieId === "undefined" ||
-        typeof serieName === "undefined" || typeof headerConfig === "undefined") {
+        typeof serieName === "undefined" || typeof headerConfig === "undefined" || !headerContainerDiv) {
         throw "bad args!";
     }
 
@@ -16,12 +16,19 @@ var LogPlotSeriesHeaderLayout = function (isAtTop, serieId, serieName, headerCon
     this._serieName = serieName;
     this._config = headerConfig;
 
-    this._partsCreator = new LogPlotHeaderLayoutPartsCreator(headerConfig);
+    this._partsCreator = new LogPlotHeaderLayoutPartsCreator(headerConfig, headerContainerDiv, serieId);
     var layoutFactory = new LogPlotHeaderLayoutStrategyFactory(headerConfig, isAtTop, this._partsCreator);
     this._layoutStrategy = layoutFactory.create();
 };
-
-
+/**
+ * @function 
+ */
+LogPlotSeriesHeaderLayout.prototype.getParts = function () {
+    return this._partsCreator;
+};
+/**
+ * @function 
+ */
 LogPlotSeriesHeaderLayout.prototype.getInitialHtml = function () {
     //TODO refactor to take in a div, add the HTML, and then cache the divs for each part
     //TODO add accessors and use them to set the values etc.
@@ -37,9 +44,7 @@ LogPlotSeriesHeaderLayout.prototype.getInitialHtml = function () {
 
     var html = "";
 
-    html += "<div class='logPlotHeaderSerieCell'>";
-
-    var hasTopRow = this._config.getShowName() || this._config.getShowUom() || this._config.getShowSnapshotValue();
+    html += "<div id='" + this._partsCreator.getIdOfSerieDiv() + "' class='logPlotHeaderSerieCell'>";
 
     var strategyHtml = this._layoutStrategy.createLayoutHtml();
 

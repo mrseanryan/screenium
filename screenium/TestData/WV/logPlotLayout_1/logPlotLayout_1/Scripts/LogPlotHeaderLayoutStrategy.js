@@ -1,6 +1,24 @@
 ﻿//TODO rename LogPlotHeaderLayoutStrategy* to be LogPlotSeriesHeaderLayoutStrategy*
 
 /// <reference path="LogPlotHeaderLayoutPartsCreator.js" />
+
+/**
+ * @constructor
+ */
+var LogPlotHeaderLayoutStrategySupport = {
+
+};
+/**
+ * @function 
+ * @description null object pattern - add empty divs for the parts that are not showing,
+ * to avoid having null checks all over the log plot view :)
+ */
+LogPlotHeaderLayoutStrategySupport.createEmptyDivHtml = function (innerHtml) {
+    var hiddenClass = 'logPlotHeaderHidden';
+    var emptyValueDiv = "<div class='" + hiddenClass + "' >" + innerHtml + "</div>";
+    return emptyValueDiv;
+};
+
 /** @function
 * @description Factory to create the appropriate layout strategy for the given config.
 */
@@ -114,7 +132,9 @@ LogPlotHeaderLayoutStrategyNameUnitMetadataNoValueAtTop.prototype._createLayoutH
         metaDataDiv +
         "<div class='" + unitClass + "' style='" + unitWidth + ";'>" + this._partsCreator.createDivHtmlForUnits() + "</div>";
 
-    result.nameUnitMetadataRow = metadataRow;
+    //null object pattern - also add an empty value div:
+    var emptyValueDiv = LogPlotHeaderLayoutStrategySupport.createEmptyDivHtml(this._partsCreator.createDivHtmlForValue());
+    result.nameUnitMetadataRow = metadataRow + emptyValueDiv;
 
     //[value axis]
     var valueAxisDiv = "<div class='pure-g pure-g-valign-fix' >" +
@@ -222,10 +242,11 @@ LogPlotHeaderLayoutStrategyNameUnitWithValueAtTop.prototype._createLayoutHtmlRow
         unitClass = hiddenClass;
     } else if (!this._config.getShowName() && this._config.getShowUom()) {
         nameClass = hiddenClass;
-        nameWidth = "0px";
         unitClass = "pure-u-24-24";
     } else if (!this._config.getShowName() && !this._config.getShowUom()) {
-        nameUnitRow = ' '; //empty HTML
+        var emptyNameDiv = LogPlotHeaderLayoutStrategySupport.createEmptyDivHtml(this._partsCreator.createDivHtmlForName());
+        var emptyUnitsDiv = LogPlotHeaderLayoutStrategySupport.createEmptyDivHtml(this._partsCreator.createDivHtmlForUnits());
+        nameUnitRow = emptyNameDiv + emptyUnitsDiv;
     } else {
         throw 'invalid operation';
     }
@@ -340,7 +361,15 @@ LogPlotHeaderLayoutStrategyMetadataOnly.prototype.createLayoutHtml = function ()
         html += "<div class='pure-g pure-g-valign-fix logPlotHeaderSerieCellTopBox' >" +
             "<div class='pure-u-24-24' style='height: " + heightOfValueAxis + "px; min-height: " + heightOfValueAxis + "px;'>" + this._partsCreator.createDivHtmlForValueAxis() + "</div>";
         html += "</div>";
+        //null object pattern - add empty divs for the parts that are not showing:
+        var emptyMetadataDiv = LogPlotHeaderLayoutStrategySupport.createEmptyDivHtml(this._partsCreator.createDivHtmlForMetadata());
+        html += emptyMetadataDiv;
     }
+
+    var emptyValueDiv = LogPlotHeaderLayoutStrategySupport.createEmptyDivHtml(this._partsCreator.createDivHtmlForValue());
+    var emptyNameDiv = LogPlotHeaderLayoutStrategySupport.createEmptyDivHtml(this._partsCreator.createDivHtmlForName());
+    var emptyUnitsDiv = LogPlotHeaderLayoutStrategySupport.createEmptyDivHtml(this._partsCreator.createDivHtmlForUnits());
+    html += emptyValueDiv + emptyNameDiv + emptyUnitsDiv;
 
     return html;
 };

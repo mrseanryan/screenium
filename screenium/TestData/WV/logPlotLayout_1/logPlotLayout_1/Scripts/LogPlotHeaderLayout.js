@@ -95,33 +95,18 @@ var LogPlotHeaderLayout = function (config) {
  * @function
  */
 LogPlotHeaderLayout.prototype.constructColumnHeader = function (headerContainerDiv, seriesInColumn, maxSeriesInColumn, seriesHeaderConfig) {
-    headerContainerDiv.html(this._getHtmlForColumnHeader(seriesInColumn, maxSeriesInColumn, seriesHeaderConfig));
-    this._cacheColumnHeaderParts(headerContainerDiv, seriesInColumn);
+    headerContainerDiv.html(this._getHtmlForColumnHeader(headerContainerDiv, seriesInColumn, maxSeriesInColumn, seriesHeaderConfig));
 };
 /**
  * @function
  */
 LogPlotHeaderLayout.prototype.constructColumnFooter = function (footerContainerDiv, seriesInColumn, maxSeriesInColumn, seriesHeaderConfig) {
-    footerContainerDiv.html(this._getHtmlForColumnFooter(seriesInColumn, maxSeriesInColumn, seriesHeaderConfig));
-    this._cacheColumnFooterParts(footerContainerDiv, seriesInColumn);
-};
-
-/**
- * @function
- */
-LogPlotHeaderLayout.prototype._cacheColumnHeaderParts = function (headerContainerDiv, seriesInColumn) {
-    //TODO find the part divs and cache them (required for tooltips optimization)
+    footerContainerDiv.html(this._getHtmlForColumnFooter(footerContainerDiv, seriesInColumn, maxSeriesInColumn, seriesHeaderConfig));
 };
 /**
  * @function
  */
-LogPlotHeaderLayout.prototype._cacheColumnFooterParts = function (headerContainerDiv, seriesInColumn) {
-    //TODO find the part divs and cache them (required for tooltips optimization)
-};
-/**
- * @function
- */
-LogPlotHeaderLayout.prototype._getHeaderLayoutPropertyName = function (isAtTop) {
+LogPlotHeaderLayout.prototype.getHeaderLayoutPropertyName = function (isAtTop) {
     return isAtTop ? "headerLayoutAtTop" : "headerLayoutAtBottom";
 };
 /**
@@ -131,7 +116,7 @@ LogPlotHeaderLayout.prototype._getHeaderLayoutPropertyName = function (isAtTop) 
  * perSeriesHeaderConfig - optional param used for testing the various combinations of settings.
  * if null, then we use the common header config (this._config).
  */
-LogPlotHeaderLayout.prototype._getHtmlForColumn = function (seriesInColumn, isAtTop, maxSeriesInColumn, perSeriesHeaderConfig) {
+LogPlotHeaderLayout.prototype._getHtmlForColumn = function (containerDiv, seriesInColumn, isAtTop, maxSeriesInColumn, perSeriesHeaderConfig) {
     var activeConfig = perSeriesHeaderConfig ? perSeriesHeaderConfig : this._config;
     if (!activeConfig.isDecorated) {
         var configDecorator = new LogPlotHeaderLayoutDecorator(activeConfig);
@@ -153,9 +138,9 @@ LogPlotHeaderLayout.prototype._getHtmlForColumn = function (seriesInColumn, isAt
         if (seriesInColumn.hasOwnProperty(serie)) {
             serie = seriesInColumn[serie];
 
-            var headerLayoutProp = this._getHeaderLayoutPropertyName(isAtTop);
-            //TODO review is OO but is this needed?
-            serie[headerLayoutProp] = new LogPlotSeriesHeaderLayout(isAtTop, serie.Id, serie.Name, activeConfig);
+            var headerLayoutProp = this.getHeaderLayoutPropertyName(isAtTop);
+
+            serie[headerLayoutProp] = new LogPlotSeriesHeaderLayout(isAtTop, serie.Id, serie.Name, activeConfig, containerDiv);
 
             html += htmlTableStart;
             html += htmlRowStart;
@@ -168,12 +153,11 @@ LogPlotHeaderLayout.prototype._getHtmlForColumn = function (seriesInColumn, isAt
     }
 
     //if this column has less series than others, then add some empty boxes:
-    //TODO refactor to a LogPlotHeaderSerie class
     var dummySerie = {
         Id: -1,
         Name: ""
     };
-    var dummyHeaderLayout = new LogPlotSeriesHeaderLayout(isAtTop, dummySerie.Id, dummySerie.Name, activeConfig);
+    var dummyHeaderLayout = new LogPlotSeriesHeaderLayout(isAtTop, dummySerie.Id, dummySerie.Name, activeConfig, containerDiv);
     while (countOfSeriesThisColumn < maxSeriesInColumn) {
         html += htmlTableStart;
         html += htmlRowStart;
@@ -189,15 +173,15 @@ LogPlotHeaderLayout.prototype._getHtmlForColumn = function (seriesInColumn, isAt
 /**
  * @function 
  */
-LogPlotHeaderLayout.prototype._getHtmlForColumnHeader = function (seriesInColumn, maxSeriesInColumn, perSeriesHeaderConfig) {
-    return this._getHtmlForColumn(seriesInColumn, true, maxSeriesInColumn, perSeriesHeaderConfig);
+LogPlotHeaderLayout.prototype._getHtmlForColumnHeader = function (containerDiv, seriesInColumn, maxSeriesInColumn, perSeriesHeaderConfig) {
+    return this._getHtmlForColumn(containerDiv, seriesInColumn, true, maxSeriesInColumn, perSeriesHeaderConfig);
 };
 
 /**
  * @function 
  */
-LogPlotHeaderLayout.prototype._getHtmlForColumnFooter = function (seriesInColumn, maxSeriesInColumn, perSeriesHeaderConfig) {
-    return this._getHtmlForColumn(seriesInColumn, false, maxSeriesInColumn, perSeriesHeaderConfig);
+LogPlotHeaderLayout.prototype._getHtmlForColumnFooter = function (containerDiv, seriesInColumn, maxSeriesInColumn, perSeriesHeaderConfig) {
+    return this._getHtmlForColumn(containerDiv, seriesInColumn, false, maxSeriesInColumn, perSeriesHeaderConfig);
 };
 
 /**
@@ -206,8 +190,8 @@ LogPlotHeaderLayout.prototype._getHtmlForColumnFooter = function (seriesInColumn
 LogPlotHeaderLayout.prototype.onResizeLayout = function(seriesInColumn) {
     //tell each of the series header layouts, to resize:
 
-    var headerAtTop = this._getHeaderLayoutPropertyName(true);
-    var headerAtBottom = this._getHeaderLayoutPropertyName(false);
+    var headerAtTop = this.getHeaderLayoutPropertyName(true);
+    var headerAtBottom = this.getHeaderLayoutPropertyName(false);
 
     for (var serie in seriesInColumn) {
         if (seriesInColumn.hasOwnProperty(serie)) {
