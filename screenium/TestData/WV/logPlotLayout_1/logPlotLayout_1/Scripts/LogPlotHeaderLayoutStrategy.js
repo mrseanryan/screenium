@@ -1,4 +1,6 @@
-﻿/// <reference path="LogPlotHeaderLayoutPartsCreator.js" />
+﻿//TODO rename LogPlotHeaderLayoutStrategy* to be LogPlotSeriesHeaderLayoutStrategy*
+
+/// <reference path="LogPlotHeaderLayoutPartsCreator.js" />
 /** @function
 * @description Factory to create the appropriate layout strategy for the given config.
 */
