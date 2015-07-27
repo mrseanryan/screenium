@@ -203,6 +203,8 @@ LogPlotHeaderLayoutStrategyNameUnitWithValueAtTop.prototype._createLayoutHtmlRow
     result.begin = "<div class='pure-g pure-g-valign-fix logPlotHeaderSerieCellTopBox' >";
     var metaDataWidth = this._partsCreator.getMetaDataWidth();
 
+    //TODO swap metadata and unit (so unit is beside the value)
+
     //TODO refactor extract fun
 
     var nameClass;
@@ -232,8 +234,6 @@ LogPlotHeaderLayoutStrategyNameUnitWithValueAtTop.prototype._createLayoutHtmlRow
         "<div class='" + unitClass + "' style='" + unitWidth + ";'>" + this._partsCreator.createDivHtmlForUnits() + "</div>";
 
     result.nameUnitRow = nameUnitRow;
-
-    //TODO problems when column is narrow - think issue is with value + elippsis ?
 
     //TODO refactor extract fun
 

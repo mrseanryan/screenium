@@ -142,6 +142,7 @@ LogPlotHeaderLayout.prototype._getHtmlForColumn = function (seriesInColumn, isAt
     var perSerieHeight = 100 / maxSeriesInColumn; //calc height%
 
     //table causes resize of purecss divs to malfunction - so just using divs
+    //TODO fix min height of row
     var htmlTableStart = "<div style='width:100%; height:"+perSerieHeight+"%; padding-bottom: 1px;'>";
     var htmlRowStart = "<div style='height:100%;'>";
     var htmlRowEnd = "</div>";
