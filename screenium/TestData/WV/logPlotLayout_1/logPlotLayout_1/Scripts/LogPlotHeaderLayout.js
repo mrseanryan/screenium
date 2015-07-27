@@ -106,9 +106,18 @@ LogPlotHeaderLayout.prototype.constructColumnFooter = function (footerContainerD
 /**
  * @function
  */
-LogPlotHeaderLayout.prototype.getHeaderLayoutPropertyName = function (isAtTop) {
+LogPlotHeaderLayout.prototype._getHeaderLayoutPropertyName = function (isAtTop) {
     return isAtTop ? "headerLayoutAtTop" : "headerLayoutAtBottom";
 };
+/**
+ * @function
+ */
+LogPlotHeaderLayout.prototype.getSerieParts = function(serie, isAtTop) {
+    var serieHeaderLayout = serie[this._getHeaderLayoutPropertyName(isAtTop)];
+    var serieParts = serieHeaderLayout.getParts();
+    return serieParts;
+};
+
 /**
  * @function
  * @description Build the HTML for header for one column (at Top or at Bottom).
@@ -138,7 +147,7 @@ LogPlotHeaderLayout.prototype._getHtmlForColumn = function (containerDiv, series
         if (seriesInColumn.hasOwnProperty(serie)) {
             serie = seriesInColumn[serie];
 
-            var headerLayoutProp = this.getHeaderLayoutPropertyName(isAtTop);
+            var headerLayoutProp = this._getHeaderLayoutPropertyName(isAtTop);
 
             serie[headerLayoutProp] = new LogPlotSeriesHeaderLayout(isAtTop, serie.Id, serie.Name, activeConfig, containerDiv);
 
@@ -190,8 +199,8 @@ LogPlotHeaderLayout.prototype._getHtmlForColumnFooter = function (containerDiv, 
 LogPlotHeaderLayout.prototype.onResizeLayout = function(seriesInColumn) {
     //tell each of the series header layouts, to resize:
 
-    var headerAtTop = this.getHeaderLayoutPropertyName(true);
-    var headerAtBottom = this.getHeaderLayoutPropertyName(false);
+    var headerAtTop = this._getHeaderLayoutPropertyName(true);
+    var headerAtBottom = this._getHeaderLayoutPropertyName(false);
 
     for (var serie in seriesInColumn) {
         if (seriesInColumn.hasOwnProperty(serie)) {

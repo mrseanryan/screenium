@@ -63,7 +63,7 @@ LogPlotHeaderLayoutPartsCreator.prototype.getHeightOfValueAxis = function () {
 /** @function
 */
 LogPlotHeaderLayoutPartsCreator.prototype._findAndCheckDiv = function (selector) {
-    //performance - cache the jQuery object by selector (especially for tooltips)
+    //performance - cache the jQuery object by selector (important for tooltips)
     if(this._cachedDivs[selector]) {
         return this._cachedDivs[selector];
     }

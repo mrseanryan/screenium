@@ -148,9 +148,8 @@
 
 					        //test that we can ALWAYS set some content, like the LogPlotView would:
 					        var firstSerieThisColumn = seriesThisColumn[0];
-					        //TODO xxx refactor for simpler code -> var serieParts = headerLayoutCreator.getSerieParts(firstSerieThisColumn, true)
-					        var seriesHeaderLayout = firstSerieThisColumn[headerLayoutCreator.getHeaderLayoutPropertyName(true)];
-					        var serieParts = seriesHeaderLayout.getParts();
+
+					        var serieParts = headerLayoutCreator.getSerieParts(firstSerieThisColumn, true);
 
 					        var newValue = (1000 * firstSerieThisColumn.Id) + 654.321;
 					        serieParts.findDivHtmlForValue().html(newValue);
