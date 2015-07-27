@@ -43,13 +43,9 @@ LogPlotHeaderLayoutStrategyNameUnitMetadataNoValueAtTop.prototype.createLayoutHt
     var html;
 
     var result = this._createLayoutHtmlRows();
-
     html = result.begin;
-
     html += result.nameUnitMetadataRow;
-
     html += result.valueAxisRow;
-
     html += result.end;
 
     return html;
@@ -60,6 +56,8 @@ LogPlotHeaderLayoutStrategyNameUnitMetadataNoValueAtTop.prototype._createLayoutH
     if (!this._partsCreator || !this._config) {
         throw 'bad args!';
     }
+    //note: without-value strategy is the most complex - 7 different possible configs!
+    //TODO review can we refactor to break the code down ...
 
     var heightOfValueAxis = this._partsCreator.getHeightOfValueAxis();
 

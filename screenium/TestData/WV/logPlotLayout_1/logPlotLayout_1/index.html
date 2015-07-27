@@ -40,190 +40,51 @@
 						return $("<img src='" + url + "' class='stretch-image' />");
 					};
 
+					var LogPlotHeaderConfig = function (showName, showUom, showMetadataIndicators, showSnapshotValue) {
+						this.showHeader = true;
+						this.position = JsApiLogPlotHeaderPosition.TopAndBottom;
+						this.showName = showName;
+						this.showUom = showUom;
+						this.showMetadataIndicators = showMetadataIndicators;
+						this.showSnapshotValue = showSnapshotValue;
+						this.showScaleIntervals = true;
+						this.minHeight = 60;
+					};
+
+					/** @function
+					* @description Auto-generate configs so we can more easily test the various permutations.
+					*/
+					var generateSeriesHeaderConfigs = function(defaultConfig, isWithValue) {
+						var configs = [];
+						configs.push(defaultConfig);
+
+						var properties = [
+							'showName',
+							'showUom',
+							'showMetadataIndicators'
+						];
+
+						var configCount = Math.pow(2, properties.length);
+						for (var i = 0; i < configCount; i++) {
+							var config = new LogPlotHeaderConfig(false, false, false, isWithValue);
+							for (var p = 0; p < properties.length; p++) {
+							
+								//is this property ON for this config:
+								if (i & Math.pow(2,p)) {
+									config[properties[p]] = true;
+								}
+							}
+							configs.push(config);
+						};
+
+						return configs;
+					};
+
 					$(document).ready(function () {
-						var headerConfigDefault = {
-							showHeader: true,
-							position: JsApiLogPlotHeaderPosition.Top,
-							showName: true,
-							showUom: true,
-							showMetadataIndicators: true,
-							showSnapshotValue: false,
-							showScaleIntervals: false,
-							minHeight: 60
-						};
+						var defaultHeaderConfig = new LogPlotHeaderConfig(true, true, true, false);
+						defaultHeaderConfig.position = JsApiLogPlotHeaderPosition.Top;
 
-						var headerConfigAllOn = {
-							showHeader: true,
-							position: JsApiLogPlotHeaderPosition.TopAndBottom,
-							showName: true,
-							showUom: true,
-							showMetadataIndicators: true,
-							showSnapshotValue: true,
-							showScaleIntervals: true,
-							minHeight: 60
-						};
-
-						var headerConfigAllOnExceptMetadata = {
-							showHeader: true,
-							position: JsApiLogPlotHeaderPosition.TopAndBottom,
-							showName: true,
-							showUom: true,
-							showMetadataIndicators: false,
-							showSnapshotValue: true,
-							showScaleIntervals: true,
-							minHeight: 60
-						};
-
-						//note: without-value strategy is the most complex - 7 different possible configs!
-						var headerConfigAllOnExceptValue7 = headerConfigDefault;
-						var headerConfigAllOnExceptValue6 = {
-							showHeader: true,
-							position: JsApiLogPlotHeaderPosition.TopAndBottom,
-							showName: true,
-							showUom: true,
-							showMetadataIndicators: false,
-							showSnapshotValue: false,
-							showScaleIntervals: false,
-							minHeight: 60
-						};
-						var headerConfigAllOnExceptValue5 = {
-							showHeader: true,
-							position: JsApiLogPlotHeaderPosition.TopAndBottom,
-							showName: true,
-							showUom: false,
-							showMetadataIndicators: true,
-							showSnapshotValue: false,
-							showScaleIntervals: false,
-							minHeight: 60
-						}; var headerConfigAllOnExceptValue4 = {
-							showHeader: true,
-							position: JsApiLogPlotHeaderPosition.TopAndBottom,
-							showName: true,
-							showUom: false,
-							showMetadataIndicators: false,
-							showSnapshotValue: false,
-							showScaleIntervals: false,
-							minHeight: 60
-						}; var headerConfigAllOnExceptValue3 = {
-							showHeader: true,
-							position: JsApiLogPlotHeaderPosition.TopAndBottom,
-							showName: false,
-							showUom: true,
-							showMetadataIndicators: true,
-							showSnapshotValue: false,
-							showScaleIntervals: false,
-							minHeight: 60
-						}; 
-						var headerConfigAllOnExceptValue2 = {
-							showHeader: true,
-							position: JsApiLogPlotHeaderPosition.TopAndBottom,
-							showName: false,
-							showUom: true,
-							showMetadataIndicators: false,
-							showSnapshotValue: false,
-							showScaleIntervals: false,
-							minHeight: 60
-						}; 
-						var headerConfigAllOnExceptValue1 = {
-							showHeader: true,
-							position: JsApiLogPlotHeaderPosition.TopAndBottom,
-							showName: false,
-							showUom: false,
-							showMetadataIndicators: true,
-							showSnapshotValue: false,
-							showScaleIntervals: false,
-							minHeight: 60
-						};
-						
-						var headerConfigMicro = {
-							showHeader: true,
-							position: JsApiLogPlotHeaderPosition.Top,
-							showName: false,
-							showUom: false,
-							showMetadataIndicators: false,
-							showSnapshotValue: false,
-							showScaleIntervals: false,
-							minHeight: 60
-						};
-
-						var headerConfigMicroWithValue = {
-							showHeader: true,
-							position: JsApiLogPlotHeaderPosition.Top,
-							showName: false,
-							showUom: false,
-							showMetadataIndicators: false,
-							showSnapshotValue: true,
-							showScaleIntervals: false,
-							minHeight: 60
-						};
-
-						var headerConfigMicroWithValueAndIntervals = {
-							showHeader: true,
-							position: JsApiLogPlotHeaderPosition.TopAndBottom,
-							showName: false,
-							showUom: false,
-							showMetadataIndicators: false,
-							showSnapshotValue: true,
-							showScaleIntervals: true,
-							minHeight: 60
-						};
-
-						var headerConfigMicroWithMetadata = headerConfigAllOnExceptValue1;
-						
-						//TODO rationalise the configs - just order by binary counting...
-						//TODO include these additional configs so we cover all settings:
-						var headerConfigAdditional1 = {
-							showHeader: true,
-							position: JsApiLogPlotHeaderPosition.Top,
-							showName: false,
-							showUom: false,
-							showMetadataIndicators: true,
-							showSnapshotValue: true,
-							showScaleIntervals: false,
-							minHeight: 60
-						};
-						var headerConfigAdditional2 = {
-							showHeader: true,
-							position: JsApiLogPlotHeaderPosition.Top,
-							showName: false,
-							showUom: true,
-							showMetadataIndicators: false,
-							showSnapshotValue: true,
-							showScaleIntervals: false,
-							minHeight: 60
-						};
-						var headerConfigAdditional3 = {
-							showHeader: true,
-							position: JsApiLogPlotHeaderPosition.Top,
-							showName: false,
-							showUom: true,
-							showMetadataIndicators: true,
-							showSnapshotValue: true,
-							showScaleIntervals: false,
-							minHeight: 60
-						};
-						var headerConfigAdditional4 = {
-							showHeader: true,
-							position: JsApiLogPlotHeaderPosition.Top,
-							showName: true,
-							showUom: false,
-							showMetadataIndicators: false,
-							showSnapshotValue: true,
-							showScaleIntervals: false,
-							minHeight: 60
-						};
-						var headerConfigAdditional5 = {
-							showHeader: true,
-							position: JsApiLogPlotHeaderPosition.Top,
-							showName: true,
-							showUom: false,
-							showMetadataIndicators: true,
-							showSnapshotValue: true,
-							showScaleIntervals: false,
-							minHeight: 60
-						};
-
-						var headerLayoutCreator = new LogPlotHeaderLayout(headerConfigDefault);
+						var headerLayoutCreator = new LogPlotHeaderLayout(defaultHeaderConfig);
 						var callback = {
 							fireOnResizeLayout: function () {
 								headerLayoutCreator.onResizeLayout();
@@ -232,30 +93,11 @@
 
 						var layout = new LogPlotLayoutCreator('zone1', callback);
 						
-						var perSeriesHeaderConfigsWithoutValue = [
-							headerConfigAllOnExceptValue7,
-							headerConfigAllOnExceptValue6,
-							headerConfigAllOnExceptValue5,
-							headerConfigAllOnExceptValue4,
-							headerConfigAllOnExceptValue3,
-							headerConfigAllOnExceptValue2,
-							headerConfigAllOnExceptValue1
-						];
-						var perSeriesHeaderConfigsWithValue = [
-							headerConfigAllOnExceptValue7,
-							headerConfigMicroWithMetadata,
-							null, //use default
-							headerConfigAllOn,
-							headerConfigAllOnExceptMetadata,
-							headerConfigMicro,
-							headerConfigMicroWithValue,
-							headerConfigMicroWithValueAndIntervals
-						];
 						//TESTING:
 						//We only width for so many columns, so need to split the test cases.
 						//To test WITHOUT value, then comment out the second line:
-						var perSeriesHeaderConfigs = perSeriesHeaderConfigsWithoutValue;
-						perSeriesHeaderConfigs = perSeriesHeaderConfigsWithValue;
+						var perSeriesHeaderConfigs = generateSeriesHeaderConfigs(defaultHeaderConfig, false);
+						perSeriesHeaderConfigs = generateSeriesHeaderConfigs(defaultHeaderConfig, true);
 
 						var columnCount = 1 + perSeriesHeaderConfigs.length,
 							rulerPosition = 1,
