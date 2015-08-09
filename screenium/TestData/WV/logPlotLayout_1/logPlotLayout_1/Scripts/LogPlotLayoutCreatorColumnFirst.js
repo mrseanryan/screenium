@@ -102,15 +102,15 @@ LogPlotLayoutCreator.prototype._getVerticalSplitterHtmlForColumn = function (col
 
     html += "<div id='" + this._getVerticalSplitterIdForColumn(columnId) + "' style='height: 100%; width: 100%;'>";
 
-    html += "<div id='"+this._getColumnSplitterHeaderPaneId(columnPrefix)+ "' class='header-row-pane'>";
+    html += "<div id='"+this._getColumnSplitterHeaderPaneId(columnPrefix)+ "'>";
     html += createDiv(columnId, 'header');
     html += "</div>";
 
-    html += "<div id='" + this._getColumnSplitterMainPaneId(columnPrefix) + "' class='main-row-pane'>";
+    html += "<div id='" + this._getColumnSplitterMainPaneId(columnPrefix) + "'>";
     html += createDiv(columnId, 'main');
     html += "</div>";
 
-    html += "<div id='" + this._getColumnSplitterFooterPaneId(columnPrefix) + "' class='footer-row-pane'>";
+    html += "<div id='" + this._getColumnSplitterFooterPaneId(columnPrefix) + "'>";
     html += createDiv(columnId, 'footer');
     html += "</div>";
 
