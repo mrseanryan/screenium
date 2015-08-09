@@ -15,11 +15,11 @@ var LogPlotLayoutCreator = function (containerDivId, callback) {
     this._columnPrefixes = [];
 
     this._rowSuffixes = [
-        '-pane-heading', '-pane-footer'
+        '-pane-header', '-pane-footer'
     ];
 
     this._rowSuffixesIncludingMain = [
-        '-pane-heading', '-pane-footer', '-pane-main'
+        '-pane-header', '-pane-footer', '-pane-main'
     ];
 };
 
@@ -372,7 +372,7 @@ LogPlotLayoutCreator.prototype._makeColumnDraggable = function (columnPrefix) {
         setCursorAsDragging();
     };
     var getColumnPrefixFromDragDrop = function (id) {
-        id = id.split('-')[0];
+        id = id.split('-')[1];
         return id;
     };
     var restoreMouseAndUi = function (draggableId, dropTargetId) {
@@ -443,11 +443,12 @@ LogPlotLayoutCreator.prototype._makeColumnDraggable = function (columnPrefix) {
         restoreMouseAndUi(draggableId, dropTargetId);
     }
 
-    var dragDropId = columnPrefix + '-pane-heading';
+    var columnId = this._getColumnIdFromPrefix(columnPrefix);
+    var dragDropDiv = this.getHeaderDivForColumn(columnId);
 
-    self._containerDiv.find("#" + dragDropId).kendoDraggable({
+    dragDropDiv.kendoDraggable({
         hint: function () {
-            return self._containerDiv.find("#" + dragDropId).clone();
+            return $("<div style='width:100px; height:500px; border:dashed 1px black;' />");
         },
         drag: draggableOnDrag,
         dragstart: draggableOnDragStart,
@@ -455,7 +456,7 @@ LogPlotLayoutCreator.prototype._makeColumnDraggable = function (columnPrefix) {
         cursorOffset: { top: 10, left: 10 }
     });
 
-    self._containerDiv.find("#" + dragDropId).kendoDropTarget({
+    dragDropDiv.kendoDropTarget({
         dragenter: droptargetOnDragEnter,
         dragleave: droptargetOnDragLeave,
         drop: droptargetOnDrop
@@ -470,8 +471,9 @@ LogPlotLayoutCreator.prototype._swapColumnContents = function (sourceColumnPrefi
     for (var rowSuffix in this._rowSuffixesIncludingMain) {
         if (this._rowSuffixesIncludingMain.hasOwnProperty(rowSuffix)) {
             rowSuffix = this._rowSuffixesIncludingMain[rowSuffix];
-            var sourcePaneId = sourceColumnPrefix + rowSuffix;
-            var targetPaneId = targetColumnPrefix + rowSuffix;
+
+            var sourcePaneId = "columnFirst-"+ sourceColumnPrefix + rowSuffix;
+            var targetPaneId = "columnFirst-" + targetColumnPrefix + rowSuffix;
 
             var sourceDiv = this._containerDiv.find('#' + sourcePaneId);
             var destDiv = this._containerDiv.find('#' + targetPaneId);
