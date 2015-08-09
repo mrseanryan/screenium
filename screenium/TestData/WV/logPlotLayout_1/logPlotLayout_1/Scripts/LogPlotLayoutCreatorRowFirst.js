@@ -7,10 +7,15 @@ var LogPlotLayoutCreator = function (containerDivId, callback) {
     this._containerDiv = $('#' + containerDivId);
 
     this._columnCount = 0;
-    this._mainVerticalSplitter = null;
-    this._headingsHorizontalSplitter = null;
-    this._mainHorizontalSplitter = null;
-    this._footersHorizontalSplitter = null;
+
+    this._columnIdToVerticalSplitter = null;
+
+    this._horizontalSplitter = null;
+
+    //this._mainVerticalSplitter = null;
+    //this._headingsHorizontalSplitter = null;
+    //this._mainHorizontalSplitter = null;
+    //this._footersHorizontalSplitter = null;
 
     this._columnPrefixes = [];
 
