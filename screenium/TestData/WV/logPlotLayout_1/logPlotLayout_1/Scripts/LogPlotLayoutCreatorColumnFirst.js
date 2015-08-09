@@ -65,7 +65,7 @@ LogPlotLayoutCreator.prototype._createMainDivs = function () {
     var plotDiv = $("<!--LP control: width and height-->" + 
     "<div id='logPlot' style='border: solid 1px black; height: " + this._initialHeight + "px; width: " + this._initialWidth + "px;'>" +
         this._getHorizontalSplitterHtml() +
-        this._getColumnVerticalSplitterHtml() +
+        this._getColumnVerticalSplitterHtml() + //TODO legacy remove
         "<div id='verticalSpaceAtBottom' style='height: 15px;'>&nbsp;</div>" + 
     "</div>");
 
@@ -111,20 +111,32 @@ LogPlotLayoutCreator.prototype._getVerticalSplitterHtmlForColumn = function (col
 
     html += "<div id='" + this._getVerticalSplitterIdForColumn(columnId) + "' style='height: 100%; width: 100%;'>";
 
-    html += "<div class='header-row-pane'>";
+    html += "<div id='"+this._getColumnSplitterHeaderPaneId(columnPrefix)+ "' class='header-row-pane'>";
     html += createDiv(columnId, 'header');
     html += "</div>";
 
-    html += "<div class='main-row-pane'>";
+    html += "<div id='" + this._getColumnSplitterMainPaneId(columnPrefix) + "' class='main-row-pane'>";
     html += createDiv(columnId, 'main');
     html += "</div>";
 
-    html += "<div class='footer-row-pane'>";
+    html += "<div id='" + this._getColumnSplitterFooterPaneId(columnPrefix) + "' class='footer-row-pane'>";
     html += createDiv(columnId, 'footer');
     html += "</div>";
 
     html += "</div>";
     return html;
+};
+
+LogPlotLayoutCreator.prototype._getColumnSplitterHeaderPaneId = function (columnPrefix) {
+    return "splitter-header-pane-" + columnPrefix;
+};
+
+LogPlotLayoutCreator.prototype._getColumnSplitterMainPaneId = function (columnPrefix) {
+    return "splitter-main-pane-" + columnPrefix;
+};
+
+LogPlotLayoutCreator.prototype._getColumnSplitterFooterPaneId = function (columnPrefix) {
+    return "splitter-footer-pane-" + columnPrefix;
 };
 
 LogPlotLayoutCreator.prototype._getVerticalSplitterIdForColumn = function (columnId) {
@@ -227,8 +239,71 @@ LogPlotLayoutCreator.prototype._createColumnPrefixes = function (rulerPosition) 
     this._columnPrefixes.splice(rulerPosition, 0, "column" + 0);
 };
 
-LogPlotLayoutCreator.prototype._createVerticalSplitterAtDiv = function (containerDiv, id) {
-    id = id || 'vertical';
+LogPlotLayoutCreator.prototype._createVerticalSplitterAtDiv = function (containerDiv, columnId) {
+    var self = this;
+
+    var splitterDivId = this._getVerticalSplitterIdForColumn(columnId);
+
+    var splitterDiv = containerDiv.find("#" + splitterDivId);
+    if (splitterDiv.length !== 1) {
+        throw "could not find the vertical splitter div!";
+    }
+
+    splitterDiv.kendoSplitter({
+        orientation: "vertical",
+        panes: [
+            { collapsible: true, resizable: false, size: "300px" }, //headings
+            { collapsible: false, resizable: true }, //main
+            { collapsible: true, resizable: false, size: "300px" } //footer
+        ],
+        expand: function (e) {
+            self._onExpandColumnVerticalSplitter(e, this, columnId);
+        },
+        collapse: function (e) {
+            self._onCollapseColumnVerticalSplitter(e, this, columnId);
+        }
+    });
+};
+
+LogPlotLayoutCreator.prototype._onExpandColumnVerticalSplitter = function (e, elem, columnId) {
+    console.log("expanded :: Pane <b>#" + e.pane.id + "</b> from splitter <b>#" + elem.element[0].id + "</b> expanded");
+
+    var isHeader = (e.pane.id.indexOf('header') >= 0);
+    this._setOtherColumnsAsExpanded(columnId, isHeader, true);
+};
+
+LogPlotLayoutCreator.prototype._onCollapseColumnVerticalSplitter = function (e, elem, columnId) {
+    console.log("collapsed :: Pane <b>#" + e.pane.id + "</b> from splitter <b>#" + elem.element[0].id + "</b> collapsed");
+
+    var isHeader = (e.pane.id.indexOf('header') >= 0);
+    this._setOtherColumnsAsExpanded(columnId, isHeader, false);
+};
+
+LogPlotLayoutCreator.prototype._setOtherColumnsAsExpanded = function(columnId, isHeader, isExpanded) {
+    var getPaneIdFun = isHeader ? '_getColumnSplitterHeaderPaneId' : '_getColumnSplitterFooterPaneId';
+    getPaneIdFun = this[getPaneIdFun];
+
+    //tell the other columns to expand/collapse their splitter:
+    for (var otherColumnPrefix in this._columnPrefixes) {
+        if (this._columnPrefixes.hasOwnProperty(otherColumnPrefix)) {
+            otherColumnPrefix = this._columnPrefixes[otherColumnPrefix];
+            var otherColumnId = this._getColumnIdFromPrefix(otherColumnPrefix);
+            if (otherColumnId !== columnId) {
+                var splitter = this._getVerticalSplitterForColumn(otherColumnId);
+                splitter.toggle('#' + getPaneIdFun(otherColumnPrefix), isExpanded);
+            }
+        }
+    }
+};
+
+LogPlotLayoutCreator.prototype._getVerticalSplitterForColumn = function (columnId) {
+    var splitterDivId = this._getVerticalSplitterIdForColumn(columnId);
+    var splitter = this._containerDiv.find('#' + splitterDivId).data('kendoSplitter');
+    return splitter;
+};
+
+LogPlotLayoutCreator.prototype._createVerticalSplitterAtDivLegacy = function (containerDiv) {
+    var id = 'vertical';
     var splitterDiv = containerDiv.find("#" + id);
     if (splitterDiv.length !== 1) {
         throw "could not find the vertical splitter div!";
@@ -280,12 +355,9 @@ LogPlotLayoutCreator.prototype._createKendoSplitters = function () {
         if (this._columnPrefixes.hasOwnProperty(column)) {
             column = this._columnPrefixes[column];
             var columnId = this._getColumnIdFromPrefix(column);
-            this._createVerticalSplitterAtDiv(horizSplitterDiv, this._getVerticalSplitterIdForColumn(columnId));
+            this._createVerticalSplitterAtDiv(horizSplitterDiv, columnId);
         }
     }
-
-    //TODO wire up collapse/expand events for each vertical splitter
-    //xxx
 
     return; //xxx
     //TODO dead code ...
@@ -328,7 +400,7 @@ LogPlotLayoutCreator.prototype._createKendoSplitters = function () {
 LogPlotLayoutCreator.prototype._createKendoSplittersLegacy = function () {
     var self = this;
 
-    this._createVerticalSplitterAtDiv(this._containerDiv);
+    this._createVerticalSplitterAtDivLegacy(this._containerDiv);
 
     this._mainVerticalSplitter = this._containerDiv.find("#vertical").data("kendoSplitter");
 
@@ -624,6 +696,7 @@ LogPlotLayoutCreator.prototype._adjustPaneSizes = function () {
 };
 
 LogPlotLayoutCreator.prototype._getPane = function (id) {
+    //TODO could cache to optimize
     return this._containerDiv.find('#' + id).data('pane');
 };
 
