@@ -12,11 +12,6 @@ var LogPlotLayoutCreator = function (containerDivId, callback) {
 
     this._horizontalSplitter = null;
 
-    //this._mainVerticalSplitter = null;
-    //this._headingsHorizontalSplitter = null;
-    //this._mainHorizontalSplitter = null;
-    //this._footersHorizontalSplitter = null;
-
     this._columnPrefixes = [];
 
     this._rowSuffixes = [
@@ -43,8 +38,6 @@ LogPlotLayoutCreator.prototype.construct = function (columnCount, rulerPosition,
 
     this._createKendoSplitters();
 
-    this._createKendoSplittersLegacy();
-
     //jQuery resizable:
     this._containerDiv.find('#logPlot').resizable({
         //handles: "e"
@@ -55,8 +48,6 @@ LogPlotLayoutCreator.prototype.construct = function (columnCount, rulerPosition,
 
 LogPlotLayoutCreator.prototype._createDivs = function () {
     this._createMainDivs();
-
-    this._createDivsInColumns();
 };
 
 LogPlotLayoutCreator.prototype._createMainDivs = function () {
@@ -65,7 +56,6 @@ LogPlotLayoutCreator.prototype._createMainDivs = function () {
     var plotDiv = $("<!--LP control: width and height-->" + 
     "<div id='logPlot' style='border: solid 1px black; height: " + this._initialHeight + "px; width: " + this._initialWidth + "px;'>" +
         this._getHorizontalSplitterHtml() +
-        this._getColumnVerticalSplitterHtml() + //TODO legacy remove
         "<div id='verticalSpaceAtBottom' style='height: 15px;'>&nbsp;</div>" + 
     "</div>");
 
@@ -142,51 +132,6 @@ LogPlotLayoutCreator.prototype._getColumnSplitterFooterPaneId = function (column
 
 LogPlotLayoutCreator.prototype._getVerticalSplitterIdForColumn = function (columnId) {
     return "verticalSplitter-column-" + columnId;
-};
-
-//TODO legacy remove
-LogPlotLayoutCreator.prototype._getColumnVerticalSplitterHtml = function () {
-    return "<div id='vertical' style='height: 97%; width: 99%;'>" +
-            "<div id='header-row-pane'>" +
-                "<div id='horizontal-headings' style='height: 100%; width: 100%;'>" +
-                "</div>" +
-            "</div>" +
-            "<div id='main-row-pane'>" +
-                "<div id='horizontal-main' style='height: 100%; width: 100%;'>" +
-                "</div>" +
-            "</div>" +
-            "<div id='footer-row-pane'>" +
-                "<div id='horizontal-footers' style='height: 100%; width: 100%;'>" +
-                "</div>" +
-            "</div>" +
-        "</div>";
-};
-
-//TODO legacy remove
-LogPlotLayoutCreator.prototype._createDivsInColumns = function() {
-    for (var column in this._columnPrefixes) {
-        if (this._columnPrefixes.hasOwnProperty(column)) {
-            column = this._columnPrefixes[column];
-            this._createDivsInColumn(column);
-        }
-    }
-};
-//TODO legacy remove
-LogPlotLayoutCreator.prototype._createDivsInColumn = function (columnPrefix) {
-    var createDiv = function (columnId, paneType) {
-        return $("<div id='column" + columnId + "-pane-" + paneType + "'></div>");
-    };
-
-    var columnId = this._getColumnIdFromPrefix(columnPrefix);
-
-    var div = createDiv(columnId, 'heading');
-    div.appendTo(this._containerDiv.find("#horizontal-headings"));
-
-    div = createDiv(columnId, 'main');
-    div.appendTo(this._containerDiv.find("#horizontal-main"));
-
-    div = createDiv(columnId, 'footer');
-    div.appendTo(this._containerDiv.find("#horizontal-footers"));
 };
 
 LogPlotLayoutCreator.prototype.getHeaderDivForRuler = function () {
@@ -303,27 +248,6 @@ LogPlotLayoutCreator.prototype._getVerticalSplitterForColumn = function (columnI
     return splitter;
 };
 
-LogPlotLayoutCreator.prototype._createVerticalSplitterAtDivLegacy = function (containerDiv) {
-    var id = 'vertical';
-    var splitterDiv = containerDiv.find("#" + id);
-    if (splitterDiv.length !== 1) {
-        throw "could not find the vertical splitter div!";
-    }
-
-    splitterDiv.kendoSplitter({
-        orientation: "vertical",
-        panes: [
-            { collapsible: true, resizable: false, size: "300px" }, //headings
-            { collapsible: false, resizable: true }, //main
-            { collapsible: true, resizable: false, size: "300px" } //footer
-        ]//,
-        // ReSharper disable once UnusedParameter
-        //resize: function (e) {
-        //    //self._fireOnResizeLayout();
-        //}
-    });
-};
-
 LogPlotLayoutCreator.prototype._createKendoSplitters = function () {
     var self = this;
 
@@ -359,85 +283,6 @@ LogPlotLayoutCreator.prototype._createKendoSplitters = function () {
             this._createVerticalSplitterAtDiv(horizSplitterDiv, columnId);
         }
     }
-
-    return; //xxx
-    //TODO dead code ...
-
-    options = {
-        panes: []
-    };
-    this._addColumnPaneOptions(options.panes, { collapsible: false, resizable: false, scrollable: false });
-
-    this._containerDiv.find("#horizontal-headings").kendoSplitter(options);
-    this._headingsHorizontalSplitter = this._containerDiv.find("#horizontal-headings").data("kendoSplitter");
-
-    options = {
-        panes: [],
-        expand: function (e) {
-            self._onExpandMainHorizontal(e, this);
-        },
-        collapse: function (e) {
-            self._onCollapseMainHorizontal(e, this);
-        },
-        contentload: function (e) {
-            self._onContentLoadMainHorizontal(e, this);
-        },
-        resize: function (e) {
-            self._onResizeMainHorizontal(e, this);
-        }
-    };
-    this._addColumnPaneOptions(options.panes, { collapsible: true, scrollable: false });
-    this._containerDiv.find("#horizontal-main").kendoSplitter(options);
-    this._mainHorizontalSplitter = this._containerDiv.find("#horizontal-main").data('kendoSplitter');
-
-    options = {
-        panes: []
-    };
-    this._addColumnPaneOptions(options.panes, { collapsible: false, resizable: false, scrollable: false });
-    this._containerDiv.find("#horizontal-footers").kendoSplitter(options);
-    this._footersHorizontalSplitter = this._containerDiv.find("#horizontal-footers").data('kendoSplitter');
-};
-
-LogPlotLayoutCreator.prototype._createKendoSplittersLegacy = function () {
-    var self = this;
-
-    this._createVerticalSplitterAtDivLegacy(this._containerDiv);
-
-    this._mainVerticalSplitter = this._containerDiv.find("#vertical").data("kendoSplitter");
-
-    var options = {
-        panes: []
-    };
-    this._addColumnPaneOptions(options.panes, { collapsible: false, resizable: false, scrollable: false });
-
-    this._containerDiv.find("#horizontal-headings").kendoSplitter(options);
-    this._headingsHorizontalSplitter = this._containerDiv.find("#horizontal-headings").data("kendoSplitter");
-
-    options = {
-        panes: [],
-        expand: function(e) {
-            self._onExpandMainHorizontal(e, this);
-        },
-        collapse: function(e) {
-            self._onCollapseMainHorizontal(e, this);
-        },
-        contentload: function(e) {
-            self._onContentLoadMainHorizontal(e, this);
-        },
-        resize: function(e) {
-            self._onResizeMainHorizontal(e, this);
-        }
-    };
-    this._addColumnPaneOptions(options.panes, { collapsible: true, scrollable: false });
-    this._containerDiv.find("#horizontal-main").kendoSplitter(options);
-    this._mainHorizontalSplitter = this._containerDiv.find("#horizontal-main").data('kendoSplitter');
-
-    options = {
-        panes: []
-    };
-    this._addColumnPaneOptions(options.panes, { collapsible: false, resizable: false, scrollable: false });
-    this._containerDiv.find("#horizontal-footers").kendoSplitter(options);
-    this._footersHorizontalSplitter = this._containerDiv.find("#horizontal-footers").data('kendoSplitter');
 };
 
 LogPlotLayoutCreator.prototype._fireOnResizeLayout = function() {
@@ -645,57 +490,6 @@ LogPlotLayoutCreator.prototype._swapChildrenOfDivs = function (sourceDiv, destDi
     destChildren.appendTo(sourceDiv);
 };
 
-/**adjust the pane sizes, after some resize event.
-*unfortunately, kendo ui does not always provide the pane object that was resized.
-*so, this function adjusts ALL panes, taking Main as the authority.
-*/
-LogPlotLayoutCreator.prototype._adjustPaneSizes = function () {
-    var self = this;
-
-    var authorityPaneSuffix = '-pane-main';
-
-    var rowSuffixToSplitter = [];
-
-    //using Null Object to handle edge cases during control creation (where 1 or more row splitters not yet created)
-    var nullObjectSplitter = {
-        size: function () {
-        }
-    };
-
-    rowSuffixToSplitter[this._rowSuffixes[0]] = this._headingsHorizontalSplitter ? this._headingsHorizontalSplitter : nullObjectSplitter;
-    rowSuffixToSplitter[this._rowSuffixes[1]] = this._footersHorizontalSplitter ? this._footersHorizontalSplitter : nullObjectSplitter;
-
-    var resizeOtherPanesInColumn = function (columnPrefix) {
-        var authorityPaneId = columnPrefix + authorityPaneSuffix;
-        var authorityPane = self._getPane(authorityPaneId);
-        var size = authorityPane.size;
-        if (authorityPane.collapsed) {
-            size = 0;
-        }
-        if (typeof (size) === 'undefined') {
-            //bug in kendo ui?
-            size = self._containerDiv.find('#' + authorityPaneId).width();
-        }
-
-        for (var rowSuffix in self._rowSuffixes) {
-            if (self._rowSuffixes.hasOwnProperty(rowSuffix)) {
-                rowSuffix = self._rowSuffixes[rowSuffix];
-                var targetPaneId = columnPrefix + rowSuffix;
-
-                var splitter = rowSuffixToSplitter[rowSuffix];
-                splitter.size('#' + targetPaneId, size);
-            }
-        }
-    };
-
-    for (var columnPrefix in this._columnPrefixes) {
-        if (this._columnPrefixes.hasOwnProperty(columnPrefix)) {
-            columnPrefix = this._columnPrefixes[columnPrefix];
-            resizeOtherPanesInColumn(columnPrefix);
-        }
-    }
-};
-
 LogPlotLayoutCreator.prototype._getPane = function (id) {
     //TODO could cache to optimize
     return this._containerDiv.find('#' + id).data('pane');
@@ -703,7 +497,6 @@ LogPlotLayoutCreator.prototype._getPane = function (id) {
 
 LogPlotLayoutCreator.prototype._onResizeMainHorizontal = function(e, elem) {
     console.log("Resized :: Splitter <b>#" + elem.element[0].id + "</b>");
-    this._adjustPaneSizes();
 
     this._fireOnResizeLayout();
 };
