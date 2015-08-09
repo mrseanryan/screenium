@@ -92,8 +92,8 @@ LogPlotLayoutCreator.prototype._getColumnIdFromPrefix = function (columnPrefix) 
 
 LogPlotLayoutCreator.prototype._getVerticalSplitterHtmlForColumn = function (columnPrefix) {
     var createDiv = function (columnId, paneType) {
-        //TODO 15.2 set height to 100%
-        return "<div id='columnFirst-column" + columnId + "-pane-" + paneType + "' style='height: 97%; width: 100%;'></div>";
+        //TODO 15.2 set height to 100%, width 100% (fixed already in WV via padding)
+        return "<div id='columnFirst-column" + columnId + "-pane-" + paneType + "' style='height: 97%; width: 99%;'></div>";
     };
 
     var columnId = this._getColumnIdFromPrefix(columnPrefix);
