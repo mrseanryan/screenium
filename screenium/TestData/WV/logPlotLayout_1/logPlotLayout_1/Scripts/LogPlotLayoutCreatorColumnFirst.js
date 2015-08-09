@@ -102,7 +102,8 @@ LogPlotLayoutCreator.prototype._getColumnIdFromPrefix = function (columnPrefix) 
 
 LogPlotLayoutCreator.prototype._getVerticalSplitterHtmlForColumn = function (columnPrefix) {
     var createDiv = function (columnId, paneType) {
-        return "<div id='columnFirst-column" + columnId + "-pane-" + paneType + "' style='height: 100%; width: 100%;'></div>";
+        //TODO 15.2 set height to 100%
+        return "<div id='columnFirst-column" + columnId + "-pane-" + paneType + "' style='height: 97%; width: 100%;'></div>";
     };
 
     var columnId = this._getColumnIdFromPrefix(columnPrefix);
@@ -195,8 +196,8 @@ LogPlotLayoutCreator.prototype.getHeaderDivForRuler = function () {
 /** get the div element for the Header of the given column
 */
 LogPlotLayoutCreator.prototype.getHeaderDivForColumn = function (columnId) {
-    var div = this._containerDiv.find("#column" + columnId + "-pane-heading");
-    if(div.length !== 1) {
+    var div = this._containerDiv.find("#columnFirst-column" + columnId + "-pane-header");
+    if (div.length !== 1) {
         throw 'problem finding the column header div!';
     }
     return div;
@@ -210,7 +211,7 @@ LogPlotLayoutCreator.prototype.getMainDivForRuler = function () {
 /** get the div element for the main display (main plot canvas) of the given column
 */
 LogPlotLayoutCreator.prototype.getMainDivForColumn = function (columnId) {
-    var div = this._containerDiv.find("#column" + columnId + "-pane-main");
+    var div = this._containerDiv.find("#columnFirst-column"+columnId+"-pane-main");
     if (div.length !== 1) {
         throw 'problem finding the column main div!';
     }
@@ -220,7 +221,7 @@ LogPlotLayoutCreator.prototype.getMainDivForColumn = function (columnId) {
 /** get the div element for the value axis of the given column
 */
 LogPlotLayoutCreator.prototype.getValueAxisDivForColumn = function (columnId) {
-    var div = this._containerDiv.find("#column" + columnId + "-pane-footer");
+    var div = this._containerDiv.find("#columnFirst-column" + columnId + "-pane-footer");
     if (div.length !== 1) {
         throw 'problem finding the column footer div!';
     }
