@@ -38,12 +38,25 @@ LogPlotLayoutCreator.prototype.construct = function (columnCount, rulerPosition,
 
     this._createKendoSplitters();
 
-    //jQuery resizable:
-    this._containerDiv.find('#logPlot').resizable({
-        //handles: "e"
-    });
+    this._addResizeHandling();
 
     this._makeColumnsDraggable();
+};
+
+LogPlotLayoutCreator.prototype._addResizeHandling = function () {
+    var self = this;
+    $(document).ready(function () {
+        var resizeMainVerticalSplitter = function () {
+            console.log('resizeMainVerticalSplitter()');
+            self._horizontalSplitter.resize();
+        };
+        //fix initial height:
+        setTimeout(resizeMainVerticalSplitter(), 5000);
+
+        //handle when user resizes the zone:
+        //using detect-element-resize
+        addResizeListener(self._containerDiv[0], resizeMainVerticalSplitter);
+    });
 };
 
 LogPlotLayoutCreator.prototype._createDivs = function () {
@@ -54,7 +67,7 @@ LogPlotLayoutCreator.prototype._createMainDivs = function () {
     //initialWidth, initialHeight
 
     var plotDiv = $("<!--LP control: width and height-->" + 
-    "<div id='logPlot' style='border: solid 1px black; height: " + this._initialHeight + "px; width: " + this._initialWidth + "px;'>" +
+    "<div id='logPlot' style='overflow:hidden; border: solid 1px black; height: 100%; width: 100%;'>" +
         this._getHorizontalSplitterHtml() +
         "<div id='verticalSpaceAtBottom' style='height: 15px;'>&nbsp;</div>" + 
     "</div>");
@@ -198,9 +211,9 @@ LogPlotLayoutCreator.prototype._createVerticalSplitterAtDiv = function (containe
     splitterDiv.kendoSplitter({
         orientation: "vertical",
         panes: [
-            { collapsible: true, resizable: false, size: "300px" }, //headings
+            { collapsible: true, resizable: false, size: "200px" }, //headings
             { collapsible: false, resizable: true }, //main
-            { collapsible: true, resizable: false, size: "300px" } //footer
+            { collapsible: true, collapsed:true, resizable: false, size: "200px" } //footer
         ],
         expand: function (e) {
             self._onExpandColumnVerticalSplitter(e, this, columnId);

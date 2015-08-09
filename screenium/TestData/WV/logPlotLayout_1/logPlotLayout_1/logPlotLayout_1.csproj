@@ -77,6 +77,7 @@
     <Content Include="index_old_row_first.html" />
     <Content Include="index.html" />
     <Content Include="readme.txt" />
+    <Content Include="Scripts\External\detect-element-resize.js" />
     <Content Include="Scripts\External\gridster.net.v0.5.6-0\dist\jquery.gridster.css" />
     <Content Include="Scripts\External\gridster.net.v0.5.6-0\dist\jquery.gridster.js" />
     <Content Include="Scripts\External\gridster.net.v0.5.6-0\dist\jquery.gridster.min.css" />

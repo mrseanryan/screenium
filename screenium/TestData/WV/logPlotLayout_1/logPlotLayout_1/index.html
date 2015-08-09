@@ -11,10 +11,11 @@
 
 	<link rel="stylesheet" href="http://yui.yahooapis.com/combo?pure/0.6.0/base-min.css&pure/0.6.0/grids-min.css&pure/0.6.0/grids-responsive-min.css">
 	<link href="Styles/logPlotHeader.css" rel="stylesheet" />
-
+    
 	<!--=== JAVASCRIPT ========================================================-->
 	<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
 	<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+    <script src="Scripts/External/detect-element-resize.js"></script>
 
 	<script src="http://cdn.kendostatic.com/2015.2.624/js/kendo.all.min.js"></script>
 	<!--<script src="http://cdn.kendostatic.com/2015.2.624/js/kendo.timezones.min.js"></script>-->
@@ -28,182 +29,182 @@
 <body>
 
 <!-- WV uses tables for zones:-->
-<table>
-	<tr>
-		<td id="tdZone1" width="600px">
-			<div id="zone1">
+    <table style='width:100%;' >
+        <tr>
+            <td id="tdZone1">
+                <div id="zone1" style="width:98%; height:95vh;">
 
-				<!-- LP will be created here in zone 1 -->
-				<script>
-					var getHtmlForImage = function(url) {
-						return $("<img src='" + url + "' class='stretch-image' />");
-					};
+                    <!-- LP will be created here in zone 1 -->
+                    <script>
+                        var getHtmlForImage = function (url) {
+                            return $("<img src='" + url + "' class='stretch-image' />");
+                        };
 
-					var cloneObject = function(obj) {
-						return JSON.parse(JSON.stringify(obj));
-					}
+                        var cloneObject = function (obj) {
+                            return JSON.parse(JSON.stringify(obj));
+                        }
 
-					var LogPlotHeaderConfig = function (showName, showUom, showMetadataIndicators, showSnapshotValue) {
-						this.showHeader = true;
-						this.position = JsApiLogPlotHeaderPosition.TopAndBottom;
-						this.showName = showName;
-						this.showUom = showUom;
-						this.showMetadataIndicators = showMetadataIndicators;
-						this.showSnapshotValue = showSnapshotValue;
-						this.showScaleIntervals = true;
-						this.minHeight = 60;
-					};
+                        var LogPlotHeaderConfig = function (showName, showUom, showMetadataIndicators, showSnapshotValue) {
+                            this.showHeader = true;
+                            this.position = JsApiLogPlotHeaderPosition.TopAndBottom;
+                            this.showName = showName;
+                            this.showUom = showUom;
+                            this.showMetadataIndicators = showMetadataIndicators;
+                            this.showSnapshotValue = showSnapshotValue;
+                            this.showScaleIntervals = true;
+                            this.minHeight = 60;
+                        };
 
-					/** @function
-					* @description Auto-generate configs so we can more easily test the various permutations.
-					*/
-					var generateSeriesHeaderConfigs = function(defaultConfig, isWithValue) {
-						var configs = [];
-						configs.push(defaultConfig);
+                        /** @function
+                        * @description Auto-generate configs so we can more easily test the various permutations.
+                        */
+                        var generateSeriesHeaderConfigs = function (defaultConfig, isWithValue) {
+                            var configs = [];
+                            configs.push(defaultConfig);
 
-						var properties = [
-							'showName',
-							'showUom',
-							'showMetadataIndicators'
-						];
+                            var properties = [
+                                'showName',
+                                'showUom',
+                                'showMetadataIndicators'
+                            ];
 
-						var configCount = Math.pow(2, properties.length);
-						for (var i = 0; i < configCount; i++) {
-							var config = new LogPlotHeaderConfig(false, false, false, isWithValue);
-							for (var p = 0; p < properties.length; p++) {
-							
-								//is this property ON for this config:
-								if (i & Math.pow(2,p)) {
-									config[properties[p]] = true;
-								}
-							}
-							configs.push(config);
-						};
+                            var configCount = Math.pow(2, properties.length);
+                            for (var i = 0; i < configCount; i++) {
+                                var config = new LogPlotHeaderConfig(false, false, false, isWithValue);
+                                for (var p = 0; p < properties.length; p++) {
 
-						return configs;
-					};
+                                    //is this property ON for this config:
+                                    if (i & Math.pow(2, p)) {
+                                        config[properties[p]] = true;
+                                    }
+                                }
+                                configs.push(config);
+                            };
 
-					$(document).ready(function () {
-						var defaultHeaderConfig = new LogPlotHeaderConfig(true, true, true, false);
-						defaultHeaderConfig.position = JsApiLogPlotHeaderPosition.Top;
+                            return configs;
+                        };
 
-						var headerLayoutCreator = new LogPlotHeaderLayout(defaultHeaderConfig);
-						var callback = {
-							fireOnResizeLayout: function () {
-								headerLayoutCreator.onResizeLayout();
-							}
-						};
+                        $(document).ready(function () {
+                            var defaultHeaderConfig = new LogPlotHeaderConfig(true, true, true, false);
+                            defaultHeaderConfig.position = JsApiLogPlotHeaderPosition.Top;
 
-						var layout = new LogPlotLayoutCreator('zone1', callback);
-						
-						//TESTING:
-						//We only width for so many columns, so need to split the test cases.
-						//To test WITHOUT value, then comment out the second line:
-						var perSeriesHeaderConfigs = generateSeriesHeaderConfigs(defaultHeaderConfig, false);
-						perSeriesHeaderConfigs = generateSeriesHeaderConfigs(defaultHeaderConfig, true);
+                            var headerLayoutCreator = new LogPlotHeaderLayout(defaultHeaderConfig);
+                            var callback = {
+                                fireOnResizeLayout: function () {
+                                    headerLayoutCreator.onResizeLayout();
+                                }
+                            };
 
-						var columnCount = 1 + perSeriesHeaderConfigs.length,
-							rulerPosition = 1,
-							initialWidth = 1200,
-							initialHeight = 700;
-						layout.construct(columnCount, rulerPosition, initialWidth, initialHeight);
+                            var layout = new LogPlotLayoutCreator('zone1', callback);
 
-						//populate the layout so we have something to look at:
-						layout.getHeaderDivForRuler().html(getHtmlForImage('images/wv_lp_ruler_heading.png'));
-						layout.getMainDivForRuler().html(getHtmlForImage('images/wv_lp_ruler_main.png'));
+                            //TESTING:
+                            //We only width for so many columns, so need to split the test cases.
+                            //To test WITHOUT value, then comment out the second line:
+                            var perSeriesHeaderConfigs = generateSeriesHeaderConfigs(defaultHeaderConfig, false);
+                            perSeriesHeaderConfigs = generateSeriesHeaderConfigs(defaultHeaderConfig, true);
 
-						var seriesInColumn = [
-							{
-								Id: 0,
-								Name: "r1s"
-							},
-							{
-								Id: 1,
-								Name: "at"
-							},
-							{
-								Id: 2,
-								Name: "sin_1s"
-							}
-						];
-						var maxSeriesInColumn = 3;
+                            var columnCount = 1 + perSeriesHeaderConfigs.length,
+                                rulerPosition = 1,
+                                initialWidth = 1200,
+                                initialHeight = 700;
+                            layout.construct(columnCount, rulerPosition, initialWidth, initialHeight);
 
-						for(var c = 1; c < columnCount; c++) {
-							var seriesThisColumn = cloneObject(seriesInColumn);
+                            //populate the layout so we have something to look at:
+                            layout.getHeaderDivForRuler().html(getHtmlForImage('images/wv_lp_ruler_heading.png'));
+                            layout.getMainDivForRuler().html(getHtmlForImage('images/wv_lp_ruler_main.png'));
 
-							//give unique ids:
-							for(var s = 0; s < seriesThisColumn.length; s++) {
-								seriesThisColumn[s].Id += c * 100;
-							}
+                            var seriesInColumn = [
+                                {
+                                    Id: 0,
+                                    Name: "r1s"
+                                },
+                                {
+                                    Id: 1,
+                                    Name: "at"
+                                },
+                                {
+                                    Id: 2,
+                                    Name: "sin_1s"
+                                }
+                            ];
+                            var maxSeriesInColumn = 3;
 
-							//make 1 column with less series:
-							if(c === columnCount - 1) {
-								seriesThisColumn.pop();
-							}
+                            for (var c = 1; c < columnCount; c++) {
+                                var seriesThisColumn = cloneObject(seriesInColumn);
 
-							headerLayoutCreator.constructColumnHeader(layout.getHeaderDivForColumn(c), seriesThisColumn, maxSeriesInColumn, perSeriesHeaderConfigs[c - 1]);
-							layout.getMainDivForColumn(c).html(getHtmlForImage("images/wv_lp_column" + c + "_main.png"));
-							headerLayoutCreator.constructColumnFooter(layout.getValueAxisDivForColumn(c), seriesThisColumn, maxSeriesInColumn, perSeriesHeaderConfigs[c - 1]);
+                                //give unique ids:
+                                for (var s = 0; s < seriesThisColumn.length; s++) {
+                                    seriesThisColumn[s].Id += c * 100;
+                                }
 
-							//test that we can ALWAYS set some content, like the LogPlotView would:
-							var firstSerieThisColumn = seriesThisColumn[0];
+                                //make 1 column with less series:
+                                if (c === columnCount - 1) {
+                                    seriesThisColumn.pop();
+                                }
 
-							var serieParts = headerLayoutCreator.getSerieParts(firstSerieThisColumn, true);
+                                headerLayoutCreator.constructColumnHeader(layout.getHeaderDivForColumn(c), seriesThisColumn, maxSeriesInColumn, perSeriesHeaderConfigs[c - 1]);
+                                layout.getMainDivForColumn(c).html(getHtmlForImage("images/wv_lp_column" + c + "_main.png"));
+                                headerLayoutCreator.constructColumnFooter(layout.getValueAxisDivForColumn(c), seriesThisColumn, maxSeriesInColumn, perSeriesHeaderConfigs[c - 1]);
 
-							var newValue = (1000 * firstSerieThisColumn.Id) + 654.321;
-							serieParts.findDivHtmlForValue().html(newValue);
+                                //test that we can ALWAYS set some content, like the LogPlotView would:
+                                var firstSerieThisColumn = seriesThisColumn[0];
 
-							var newName = 'serie ' + firstSerieThisColumn.Id;
-							serieParts.findDivHtmlForName().html(newName);
+                                var serieParts = headerLayoutCreator.getSerieParts(firstSerieThisColumn, true);
 
-							//TODO new class LogPlotSeriesHeaderMetadataLayout
-							var newMetadata = firstSerieThisColumn.Id.toString().substr(0, 2);
-							serieParts.findDivHtmlForMetadata().html(newMetadata);
+                                var newValue = (1000 * firstSerieThisColumn.Id) + 654.321;
+                                serieParts.findDivHtmlForValue().html(newValue);
 
-							var newUnits = '[' + firstSerieThisColumn.Id + ']';
-							serieParts.findDivHtmlForUnits().html(newUnits);
+                                var newName = 'serie ' + firstSerieThisColumn.Id;
+                                serieParts.findDivHtmlForName().html(newName);
 
-							var valueAxis = '{va' + firstSerieThisColumn.Id + '}';
-							serieParts.findDivHtmlForValueAxis().html(valueAxis);
-						}
-					});
-				</script>
+                                //TODO new class LogPlotSeriesHeaderMetadataLayout
+                                var newMetadata = firstSerieThisColumn.Id.toString().substr(0, 2);
+                                serieParts.findDivHtmlForMetadata().html(newMetadata);
 
-				<style>
-					#vertical {
-						margin: 0 auto;
-					}
+                                var newUnits = '[' + firstSerieThisColumn.Id + ']';
+                                serieParts.findDivHtmlForUnits().html(newUnits);
 
-					/*.pane-content {
-						padding: 0 10px;
-					}*/
+                                var valueAxis = '{va' + firstSerieThisColumn.Id + '}';
+                                serieParts.findDivHtmlForValueAxis().html(valueAxis);
+                            }
+                        });
+                    </script>
 
-					.stretch-image {
-						margin: 0;
-						height: 99%;
-						width: 100%;
-					}
+                    <style>
+                            #vertical {
+                                margin: 0 auto;
+                            }
 
-					.dropTargetEntered {
-						border: cyan solid 2px;
-						-ms-border-radius: 10px;
-						border-radius: 10px;
-					}
+                            /*.pane-content {
+                            padding: 0 10px;
+                        }*/
 
-					.draggableOnDrag {
-						border: yellow solid 2px;
-						-ms-border-radius: 10px;
-						border-radius: 10px;
-						background-color: #03a9f4;
-						-webkit-box-shadow: 0 3px 10px #000000, 0 3px 10px #000000;
-						-ms-box-shadow: 0 3px 10px #000000, 0 3px 10px #000000;
-						box-shadow: 0 3px 10px #000000, 0 3px 10px #000000;
-					}
-				</style>
-			</div>
-		</td>
-	</tr>
-</table>
+                            .stretch-image {
+                                margin: 0;
+                                height: 99%;
+                                width: 100%;
+                            }
+
+                            .dropTargetEntered {
+                                border: cyan solid 2px;
+                                -ms-border-radius: 10px;
+                                border-radius: 10px;
+                            }
+
+                            .draggableOnDrag {
+                                border: yellow solid 2px;
+                                -ms-border-radius: 10px;
+                                border-radius: 10px;
+                                background-color: #03a9f4;
+                                -webkit-box-shadow: 0 3px 10px #000000, 0 3px 10px #000000;
+                                -ms-box-shadow: 0 3px 10px #000000, 0 3px 10px #000000;
+                                box-shadow: 0 3px 10px #000000, 0 3px 10px #000000;
+                            }
+                    </style>
+                </div>
+            </td>
+        </tr>
+    </table>
 
 </body>
 </html>
