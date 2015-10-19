@@ -8,7 +8,7 @@ namespace screenium
     class ArgsProcessor
     {
         //example cmd line:
-        //screenium <testDetails.csv> <testName>|ALL <reportOutput.html> [-rost => r = run, o = leave browser Open, s = Save new snapshot images, t = self Test]
+        //screenium <testDetails.csv> <testName>|ALL <reportOutput.html> <OPTIONS>
 
         internal enum Args
         {
@@ -22,7 +22,7 @@ namespace screenium
         internal enum Options
         {
             Run,
-            OpenAfterRun,
+            KeepOpenAfterRun,
             Save,
             TestSelf
         }
@@ -66,6 +66,14 @@ namespace screenium
             foreach (var arg in dictArgsToPos.Keys)
             {
                 sb.Append("<" + arg + "> ");
+            }
+
+            sb.AppendLine("");
+            sb.AppendLine("Options: ");
+            var chToOption = BuildOptionMap();
+            foreach (var ch in chToOption.Keys)
+            {
+                sb.AppendLine("-" + ch + " = " + chToOption[ch].ToString());
             }
 
             return sb.ToString();

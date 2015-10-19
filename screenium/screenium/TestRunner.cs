@@ -7,7 +7,7 @@ namespace screenium
     {
         internal void RunTests(List<TestDescription> testsToRun, ArgsProcessor argProc)
         {
-            if (argProc.IsOptionOn(ArgsProcessor.Options.OpenAfterRun) ||
+            if (argProc.IsOptionOn(ArgsProcessor.Options.KeepOpenAfterRun) ||
                 argProc.IsOptionOn(ArgsProcessor.Options.Save))
             {
                 //TODO implement me
