@@ -18,10 +18,12 @@ OK - add args
 OK - add test BAT files
 OK - make test sites
 OK - read from CSV file
-xx - fire up test sites
+OK - fire up test sites
   design pattern: Page Object and Page Factory
   https://code.google.com/p/selenium/wiki/PageFactory
 
+xx - save screenshot to temp location
+  
 xx - saving screenshots (-s) (with prompt for Y)
 xx - comparing against saved screenshots
 xx - output report page that lists actual images side-by-side
