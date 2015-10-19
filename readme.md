@@ -15,8 +15,9 @@ version: 2.46.0
 nuget: WebDriver.Support
 
 - ChromeDriver
-version: 2.16
-http://chromedriver.storage.googleapis.com/index.html?path=2.16/
+version: 2.20 [but its best to use the latest one!]
+https://sites.google.com/a/chromium.org/chromedriver/downloads
+http://chromedriver.storage.googleapis.com/index.html
 
 references
 ==========

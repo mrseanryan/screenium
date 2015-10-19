@@ -6,14 +6,14 @@ screenium <testDetails.csv> <testName>|ALL <reportOutput.html> [-o = leave brows
 
 testDetails.csv:
 ================
-testName, testDescription, divId, urlPrefix, urlQuery1, urlQuery2, urlQuery3
+testName, testDescription, divSelector, urlPrefix, urlQuery1, urlQuery2, urlQuery3
 
-xx - fire up chrome
-xx - look at args parsing code in SplashScreen app
-xx - make console, return code
+OK - fire up chrome
+OK - look at args parsing code in SplashScreen app
+OK - make console, return code
 xx - add args
 xx - add test BAT files
-xx - make test sites
+OK - make test sites
 xx - fire up test sites
   design pattern: Page Object and Page Factory
   https://code.google.com/p/selenium/wiki/PageFactory
@@ -28,6 +28,7 @@ report:
 xx - overall result as red/green bar
 xx - list of failed/passing tests with red/green
 xx - links to detail section: expected, actual images side-by-side
+xx - combine images via XOR, with highlighted diff in yellow
 
 example URLs
 ============

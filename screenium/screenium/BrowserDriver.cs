@@ -7,7 +7,6 @@ namespace screenium
 {
     class BrowserDriver
     {
-
         internal void TestChrome()
         {
             IWebDriver driver = new ChromeDriver();
