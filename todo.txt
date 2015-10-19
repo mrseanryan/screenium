@@ -6,20 +6,27 @@ screenium <testDetails.csv> <testName>|ALL <reportOutput.html> [-o = leave brows
 
 testDetails.csv:
 ================
+testName, testDescription, divSelector, URL
+
+LATER:
 testName, testDescription, divSelector, urlPrefix, urlQuery1, urlQuery2, urlQuery3
 
 OK - fire up chrome
 OK - look at args parsing code in SplashScreen app
 OK - make console, return code
-xx - add args
-xx - add test BAT files
+OK - add args
+OK - add test BAT files
 OK - make test sites
+OK - read from CSV file
 xx - fire up test sites
   design pattern: Page Object and Page Factory
   https://code.google.com/p/selenium/wiki/PageFactory
 
 xx - saving screenshots (-s) (with prompt for Y)
 xx - comparing against saved screenshots
+xx - output report page that lists actual images side-by-side
+xx - combine images via XOR, with highlighted diff in yellow
+
 xx - report from x.partial.template.html templates -> html
 xx - improve report
 

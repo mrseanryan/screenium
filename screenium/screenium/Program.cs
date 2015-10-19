@@ -1,5 +1,6 @@
 ﻿
 using System;
+using System.Collections.Generic;
 namespace screenium
 {
     class Program
@@ -21,6 +22,14 @@ namespace screenium
                     Log("Running self test ...");
                     BrowserDriver driver = new BrowserDriver();
                     driver.TestChrome();
+                }
+
+                List<TestDescription> tests;
+                {
+                    var reader = new CsvReader();
+                    var path = argProc.GetArg(ArgsProcessor.Args.CSV_FILE_PATH);
+                    tests = reader.ReadFromFilePath(path);
+                    Log(string.Format("Read {0} tests from CSV file {1}", tests.Count, path));
                 }
 
                 throw new NotImplementedException();

@@ -1,2 +1,2 @@
-testName, testDescription, divSelector, urlPrefix, urlQuery1, urlQuery2, urlQuery3
-Google home page, Test using the Google home page, #hplogo,,,,
+#testName, testDescription, divSelector, URL
+Google home page, Test using the Google home page, #hplogo,https://www.google.com
