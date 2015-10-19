@@ -38,7 +38,13 @@ namespace screenium
         {
             row.LineText = ReadLine();
             if (String.IsNullOrEmpty(row.LineText))
+            {
                 return false;
+            }
+            if (row.LineText.StartsWith("#"))
+            {
+                return true;
+            }
 
             int pos = 0;
             int rows = 0;

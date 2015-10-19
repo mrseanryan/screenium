@@ -24,15 +24,11 @@ namespace screenium
                     driver.TestChrome();
                 }
 
-                List<TestDescription> tests;
-                {
-                    var reader = new CsvReader();
-                    var path = argProc.GetArg(ArgsProcessor.Args.CSV_FILE_PATH);
-                    tests = reader.ReadFromFilePath(path);
-                    Log(string.Format("Read {0} tests from CSV file {1}", tests.Count, path));
-                }
+                List<TestDescription> testsToRun;
+                testsToRun = ReadTests(argProc);
 
-                throw new NotImplementedException();
+                var runner = new TestRunner();
+                runner.RunTests(testsToRun, argProc);
             }
             catch (Exception e)
             {
@@ -43,9 +39,23 @@ namespace screenium
             return 0;
         }
 
+        private static List<TestDescription> ReadTests(ArgsProcessor argProc)
+        {
+            List<TestDescription> testsToRun;
+            List<TestDescription> tests;
+            {
+                var reader = new CsvReader();
+                var path = argProc.GetArg(ArgsProcessor.Args.CSV_FILE_PATH);
+                tests = reader.ReadFromFilePath(path);
+                Log(string.Format("Read {0} tests from CSV file {1}", tests.Count, path));
+            }
+
+            testsToRun = TestDescription.GetTestsByName(tests, argProc.GetArg(ArgsProcessor.Args.TEST_NAME)); return testsToRun;
+        }
+
         private static void Log(string text)
         {
-            Console.WriteLine(text);
+            Outputter.Output(text);
         }
     }
 }

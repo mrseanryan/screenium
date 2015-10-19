@@ -13,18 +13,29 @@ namespace screenium
                 CsvRow row = new CsvRow();
                 while (reader.ReadRow(row))
                 {
+                    if (row.Count == 0)
+                    {
+                        continue;
+                    }
+
                     TestDescription test = new TestDescription()
                     {
-                        Name = row[0],
-                        Description = row[1],
-                        DivSelector = row[2],
-                        Url = row[3]
+                        Name = CleanText(row[0]),
+                        Description = CleanText(row[1]),
+                        DivSelector = CleanText(row[2]),
+                        Url = CleanText(row[3]),
+                        TitleContains = CleanText(row[4])
                     };
                     tests.Add(test);
                 }
             }
 
             return tests;
+        }
+
+        private string CleanText(string text)
+        {
+            return text.Trim();
         }
     }
 }

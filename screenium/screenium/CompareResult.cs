@@ -1,0 +1,7 @@
+﻿
+namespace screenium
+{
+    class CompareResult
+    {
+    }
+}

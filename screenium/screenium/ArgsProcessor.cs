@@ -15,6 +15,7 @@ namespace screenium
             CSV_FILE_PATH,
             TEST_NAME,
             OUTPUT_FILE_PATH,
+            IMAGES_DIR_PATH,
             OPTIONS
         };
 

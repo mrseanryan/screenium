@@ -1,2 +1,2 @@
-#testName, testDescription, divSelector, URL
-Google home page, Test using the Google home page, #hplogo,https://www.google.com
+#testName, testDescription, divSelector, URL, TitleContains
+Google home page, Test using the Google home page, #hplogo,https://www.google.com, Google
