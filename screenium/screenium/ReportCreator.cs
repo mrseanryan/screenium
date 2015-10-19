@@ -4,7 +4,7 @@ namespace screenium
 {
     class ReportCreator
     {
-        internal Report CreateReport(CompareResult compareResult, string outDirPath)
+        internal Report CreateReport(CompareResult compareResult, string filePath)
         {
             throw new NotImplementedException();
         }
