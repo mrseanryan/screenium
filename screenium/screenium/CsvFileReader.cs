@@ -2,6 +2,12 @@
 //
 //See the file license.txt for copying permission.
 
+//altered code, is now under MIT.
+//
+//original license:
+// licensed under The Code Project Open License (CPOL)
+//ref: http://www.codeproject.com/Articles/415732/Reading-and-Writing-CSV-Files-in-Csharp
+
 using System;
 using System.Collections.Generic;
 using System.IO;
