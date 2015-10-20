@@ -1,4 +1,8 @@
-﻿using OpenQA.Selenium;
+﻿//Copyright (c) 2015 Sean Ryan
+//
+//See the file license.txt for copying permission.
+
+using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Support.UI;
 using System;
@@ -68,6 +72,9 @@ namespace screenium
 
         internal void SaveDivImageToPath(string divSelector, string tempFilePath)
         {
+            //get screenshot of a particular element, via cropping:
+            //http://stackoverflow.com/questions/13832322/how-to-capture-the-screenshot-of-only-a-specific-element-using-selenium-webdrive
+
             throw new NotImplementedException();
         }
     }

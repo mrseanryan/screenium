@@ -1,3 +1,7 @@
+//Copyright (c) 2015 Sean Ryan
+//
+//See the file license.txt for copying permission.
+
 using System;
 using System.Collections.Generic;
 using System.Reflection;

@@ -22,8 +22,12 @@ OK - fire up test sites
   design pattern: Page Object and Page Factory
   https://code.google.com/p/selenium/wiki/PageFactory
 
+xx - add Query1, Query2, Query3
+xx - add delay arg: DelayInSeconds
 xx - save screenshot to temp location
-  
+get screenshot of a particular element, via cropping:
+http://stackoverflow.com/questions/13832322/how-to-capture-the-screenshot-of-only-a-specific-element-using-selenium-webdrive
+
 xx - saving screenshots (-s) (with prompt for Y)
 xx - comparing against saved screenshots
 xx - output report page that lists actual images side-by-side

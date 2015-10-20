@@ -3,7 +3,13 @@ screenium readme
 
 Screenium = a console tool for automated web site testing, via screenshots taken with Selenium WebDriver.
 
-dependencies
+License
+=======
+The MIT License (MIT)
+
+Copyright (c) 2015 Sean Ryan
+
+Dependencies
 ============
 - Visual Studio 2013
 - Chrome web browser
