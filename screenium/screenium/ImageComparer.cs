@@ -10,6 +10,8 @@ namespace screenium
     {
         internal CompareResult CompareImages(string actualImageFilePath, string expectedImageFilePath, string testName)
         {
+//image library (.NET wrapper) - Magick.NET
+			
 /* comparing:
 ImageComparer.Compare Method(Image, Image, Image)
 https://msdn.microsoft.com/en-us/library/hh135398.aspx

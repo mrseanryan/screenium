@@ -74,7 +74,25 @@ namespace screenium
         {
             //get screenshot of a particular element, via cropping:
             //http://stackoverflow.com/questions/13832322/how-to-capture-the-screenshot-of-only-a-specific-element-using-selenium-webdrive
+/*
+// Get html element and its location and dimensions:
+            IWebElement div = driver.FindElement(By.xxx));
+            Point location = div.Location;
+            Size logPlotSize = div.Size;
 
+            // Get page screenshot and save it in temp folder:
+            Screenshot pageScreenshot = ((ITakesScreenshot)driver).GetScreenshot();
+            pageScreenshot.SaveAsFile(tempPath, System.Drawing.Imaging.ImageFormat.Png);
+
+            // Load temp image as bitmap:
+            Bitmap tempBitmap = new Bitmap(tempPath);
+
+            // crop div page screenshot to the match the div:
+            RectangleF part = new RectangleF(logPlotLocation.X, logPlotLocation.Y, logPlotSize.Width, logPlotSize.Height);
+            Bitmap logPlotBitmap = tempBitmap.Clone(part, tempBitmap.PixelFormat);
+            logPlotBitmap.Save(referencePath, System.Drawing.Imaging.ImageFormat.Png);
+
+*/
             throw new NotImplementedException();
         }
     }
