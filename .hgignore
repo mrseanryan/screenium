@@ -21,4 +21,4 @@ _Chutzpah*
 TestRunSummary.xml
 
 #application:
-#images/*
+images/lp_*
