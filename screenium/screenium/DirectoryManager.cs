@@ -42,16 +42,15 @@ namespace screenium
             return filename + "." + extension;
         }
 
-        internal string GetTempImageFilePath(string testName)
+        internal string GetActualImageFilePath(string testName)
         {
-            var filePath = Path.GetFullPath(Path.Combine(Path.GetTempPath(), CreateFilenameFromTest(testName)));
+            var filePath = Path.GetFullPath(Path.Combine(imagesDirPath, CreateFilenameFromTest(testName) + "__actual." + extension));
             return filePath;
         }
 
-        //TODO rename to be GetActualImageFilePath
-        internal string GetTempImageFilePath(TestDescription test)
+        internal string GetActualImageFilePath(TestDescription test)
         {
-            return GetTempImageFilePath(test.Name);
+            return GetActualImageFilePath(test.Name);
         }
     }
 }

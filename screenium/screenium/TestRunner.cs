@@ -37,7 +37,7 @@ namespace screenium
                     }
                     else
                     {
-                        throw new InvalidOperationException("xxx");
+                        throw new InvalidOperationException("Not a support set of options");
                     }
                 }
             }
@@ -51,7 +51,7 @@ namespace screenium
         private static void CompareActualPageVersusExpected(ArgsProcessor argProc, DirectoryManager dirManager,
             TestDescription test, BrowserDriver driver)
         {
-            string tempFilePath = dirManager.GetTempImageFilePath(test);
+            string tempFilePath = dirManager.GetActualImageFilePath(test);
             driver.SaveDivImageToPath(test.DivSelector, tempFilePath);
 
             var comparer = new CustomImageComparer(argProc);
