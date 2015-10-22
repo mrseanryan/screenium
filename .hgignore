@@ -19,3 +19,6 @@ typescript-spike\TypeScriptHTMLApp1\Scripts\Tests\TestRunSummary.xml
 #chutzpah:
 _Chutzpah*
 TestRunSummary.xml
+
+#application:
+images/*
