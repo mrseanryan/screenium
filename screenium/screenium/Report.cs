@@ -7,5 +7,9 @@ namespace screenium
     class Report
     {
         internal string FilePath { get; set; }
+
+        internal CompareResult Result { get; set; }
+
+        internal TestDescription Test { get; set; }
     }
 }

@@ -23,5 +23,11 @@ namespace screenium
                 Output(ex.InnerException);
             }
         }
+
+        internal static void OutputEmphasised(string text)
+        {
+            Output(text);
+            Output(new string('=', text.Length));
+        }
     }
 }

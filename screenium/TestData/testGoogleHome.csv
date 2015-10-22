@@ -2,3 +2,7 @@
 Google search by image page, Test using the Google home page, #logo, http://www.google.com/search?q=cheese&biw=1348&bih=540&source=lnms&tbm=isch&sa=X,,,,Google
 #Google home page, Test using the Google home page, #hplogo,http://www.google.com,,,,Google
 #LP 1, Test Depth, #log1,http://localhost/Web//Default.aspx,?Rig=400&Private=130,,,demo lp
+#lp data import, #logPlot, http://nlwks-170/Web/(S(ez5v4apygeudkkoyimphnbcw))/Default.aspx?Rig=400&Private=167&importedTestData=hard_coded_testdata&realTimeTestData=hard_coded_testdata&spanStartInMeters=5&spanLengthInMeters=1000,,,,lp
+#lp template 1, #logPlot,http://nlwks-170/Web/(S(jurnatzl40icuvmzohqru4zz))/Default.aspx?Rig=400&Private=156&importedTestData=hard_coded_testdata&realTimeTestData=hard_coded_testdata&spanStartInSeconds=1433199600&spanLengthInSeconds=18000,,,,lp
+#LP advanced time, #logPlot,http://nlwks-170/Web/(S(rd20moqzyvtz2g4bp0fj1ucs))/Default.aspx?Rig=400&Shared=1&importedTestData=hard_coded_testdata&realTimeTestData=hard_coded_testdata&spanStartInSeconds=1433199600&spanLengthInSeconds=18000,,,,demo lp
+#LP advanced depth, #logPlot,http://nlwks-170/Web/(S(snlxdxpay325rjy0hoidspam))/Default.aspx?Rig=400&Private=130&importedTestData=hard_coded_testdata&realTimeTestData=hard_coded_testdata&spanStartInMeters=5&spanLengthInMeters=1000,,,,demo lp

@@ -4,7 +4,9 @@
 
 namespace screenium
 {
-    class CompareResult
+    enum CompareResult
     {
+        Similar,
+        Different
     }
 }

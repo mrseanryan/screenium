@@ -20,10 +20,14 @@ version: 2.46.0
 
 nuget: WebDriver.Support
 
-- ChromeDriver
+- ChromeDriver [is included in source code]
 version: 2.20 [but its best to use the latest one!]
 https://sites.google.com/a/chromium.org/chromedriver/downloads
 http://chromedriver.storage.googleapis.com/index.html
+
+- VS C++ 2015 Redistributable [for Image Magick.NET]
+x86 AND x64
+http://www.microsoft.com/en-us/download/details.aspx?id=48145
 
 references
 ==========
