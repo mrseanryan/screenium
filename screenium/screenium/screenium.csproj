@@ -60,6 +60,7 @@
     <Compile Include="ArgsProcessor.cs" />
     <Compile Include="BrowserDriver.cs" />
     <Compile Include="CompareResult.cs" />
+    <Compile Include="CompareResultDescription.cs" />
     <Compile Include="CsvFileReader.cs" />
     <Compile Include="CsvReader.cs" />
     <Compile Include="DirectoryManager.cs" />

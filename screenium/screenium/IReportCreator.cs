@@ -6,7 +6,7 @@ namespace screenium
 {
     interface IReportCreator
     {
-        Report CreateReport(TestDescription test, CompareResult compareResult, string filePath);
+        Report CreateReport(TestDescription test, CompareResultDescription compareResult, string filePath);
         void ShowReport(Report report);
     }
 }

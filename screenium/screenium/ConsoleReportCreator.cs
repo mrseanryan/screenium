@@ -8,7 +8,7 @@ namespace screenium
 {
     class ConsoleReportCreator : IReportCreator
     {
-        Report IReportCreator.CreateReport(TestDescription test, CompareResult compareResult, string filePath)
+        Report IReportCreator.CreateReport(TestDescription test, CompareResultDescription compareResult, string filePath)
         {
             var report = new Report
             {
@@ -26,7 +26,9 @@ namespace screenium
 
             Outputter.Output(report.Test.Name);
 
-            Outputter.Output("Result: " + report.Result);
+            Outputter.Output("Result: " + report.Result.Result);
+            Outputter.Output("Tolerance: " + report.Result.Tolerance);
+            Outputter.Output("Distortion: " + report.Result.Distortion);
         }
     }
 }

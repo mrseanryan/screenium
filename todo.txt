@@ -24,17 +24,19 @@ OK - fire up test sites
 
 xx - add Query1, Query2, Query3
 xx - add delay arg: DelayInSeconds
-xx - save screenshot to temp location
-get screenshot of a particular element, via cropping:
-http://stackoverflow.com/questions/13832322/how-to-capture-the-screenshot-of-only-a-specific-element-using-selenium-webdrive
+OK - save screenshot to temp location
+		get screenshot of a particular element, via cropping:
+		http://stackoverflow.com/questions/13832322/how-to-capture-the-screenshot-of-only-a-specific-element-using-selenium-webdrive
 
-xx - saving screenshots (-s) (with prompt for Y)
-xx - comparing against saved screenshots
+OK - saving screenshots (-s) (with prompt for Y)
+xx - add prompt Y for saving screenshots
+OK - comparing against saved screenshots
 xx - output report page that lists actual images side-by-side
-xx - combine images via XOR, with highlighted diff in yellow
+OK - combine images via XOR, with highlighted diff in yellow
 
 xx - report from x.partial.template.html templates -> html
 xx - improve report
+xx - try with WV LP
 
 report:
 =====

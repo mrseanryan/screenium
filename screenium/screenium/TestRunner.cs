@@ -33,7 +33,7 @@ namespace screenium
                     }
                     else if (argProc.IsOptionOn(ArgsProcessor.Options.Save))
                     {
-                        SaveActualPage(dirManager, test, driver);
+                        SaveExpectedPage(dirManager, test, driver);
                     }
                     else
                     {
@@ -43,8 +43,9 @@ namespace screenium
             }
         }
 
-        private void SaveActualPage(DirectoryManager dirManager, TestDescription test, BrowserDriver driver)
+        private void SaveExpectedPage(DirectoryManager dirManager, TestDescription test, BrowserDriver driver)
         {
+            Outputter.Output("Saving expected page for test: " + test.Name);
             driver.SaveDivImageToPath(test.DivSelector, dirManager.GetExpectedImageFilePath(test));
         }
 
@@ -55,7 +56,7 @@ namespace screenium
             driver.SaveDivImageToPath(test.DivSelector, tempFilePath);
 
             var comparer = new CustomImageComparer(argProc);
-            var compareResult = comparer.CompareImages(tempFilePath, dirManager.GetExpectedImageFilePath(test), test.Name, argProc);
+            var compareResult = comparer.CompareImages(tempFilePath, dirManager.GetExpectedImageFilePath(test), test.Name);
             var reporter = ReportCreatorFactory.Create();
 
             var report = reporter.CreateReport(test, compareResult, argProc.GetArg(ArgsProcessor.Args.OUTPUT_FILE_PATH));

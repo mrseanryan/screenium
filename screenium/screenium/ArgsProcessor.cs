@@ -20,6 +20,7 @@ namespace screenium
             TEST_NAME,
             OUTPUT_FILE_PATH,
             IMAGES_DIR_PATH,
+            DIFFERENCE_TOLERANCE,
             OPTIONS
         };
 
@@ -56,6 +57,11 @@ namespace screenium
         internal int GetArgAsInt(Args opt)
         {
             return Int32.Parse(GetArg(opt));
+        }
+
+        internal double GetArgAsDouble(Args opt)
+        {
+            return double.Parse(GetArg(opt));
         }
 
         internal string GetUsage()
