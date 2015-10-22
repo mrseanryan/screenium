@@ -3,6 +3,7 @@
 //See the file license.txt for copying permission.
 
 using System;
+using System.IO;
 
 namespace screenium
 {
@@ -17,12 +18,26 @@ namespace screenium
 
         internal string GetExpectedImageFilePath(TestDescription test)
         {
-            throw new NotImplementedException();
+            string filename = CreateFilenameFromTest(test.Name, "PNG");
+
+            return Path.Combine(imagesDirPath, filename);
         }
 
-        internal string GetTempFileName(TestDescription test)
+        private string CreateFilenameFromTest(string testName, string extension)
         {
-            throw new NotImplementedException();
+            string illegals = " ;/\\$.,<>";
+            string filename = testName;
+            foreach (char illegal in illegals)
+            {
+                filename = filename.Replace(illegal, '_');
+            }
+            return filename + "." + extension;
+        }
+
+        internal string GetTempFilePath(TestDescription test, string extension)
+        {
+            var filePath = Path.Combine(Path.GetTempPath(), CreateFilenameFromTest(test.Name, "PNG"));
+            return filePath;
         }
     }
 }

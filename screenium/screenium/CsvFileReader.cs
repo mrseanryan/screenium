@@ -46,14 +46,17 @@ namespace screenium
         /// <returns></returns>
         public bool ReadRow(CsvRow row)
         {
-            row.LineText = ReadLine();
-            if (String.IsNullOrEmpty(row.LineText))
+            while (true)
             {
-                return false;
-            }
-            if (row.LineText.StartsWith("#"))
-            {
-                return true;
+                row.LineText = ReadLine();
+                if (String.IsNullOrEmpty(row.LineText))
+                {
+                    return false;
+                }
+                if (!row.LineText.StartsWith("#"))
+                {
+                    break;
+                }
             }
 
             int pos = 0;

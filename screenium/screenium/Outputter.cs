@@ -12,5 +12,16 @@ namespace screenium
         {
             Console.WriteLine(text);
         }
+
+        internal static void Output(Exception ex)
+        {
+            Output(ex.Message);
+            Output(ex.StackTrace);
+
+            if (ex.InnerException != null)
+            {
+                Output(ex.InnerException);
+            }
+        }
     }
 }

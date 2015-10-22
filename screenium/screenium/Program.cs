@@ -22,30 +22,46 @@ namespace screenium
 
                 if (argProc.IsOptionOn(ArgsProcessor.Options.TestSelf))
                 {
-                    Log("Running self test ...");
-                    BrowserDriver driver = new BrowserDriver();
-                    driver.TestChrome();
+                    RunSelfTest();
                 }
-
-                List<TestDescription> testsToRun;
-                testsToRun = ReadTests(argProc);
-
-                var runner = new TestRunner();
-                runner.RunTests(testsToRun, argProc);
+                else
+                {
+                    RunTests(argProc);
+                }
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                System.Console.WriteLine(e.StackTrace + "\n" + e.Message);
+                Outputter.Output(ex);
                 return 2;
             }
 
             return 0;
         }
 
+        private static void RunTests(ArgsProcessor argProc)
+        {
+            List<TestDescription> testsToRun = ReadTests(argProc);
+
+            var runner = new TestRunner();
+            runner.RunTests(testsToRun, argProc);
+
+            Log("Finished running tests [OK]");
+        }
+
+        private static void RunSelfTest()
+        {
+            Log("Running self test ...");
+            using (BrowserDriver driver = new BrowserDriver())
+            {
+                driver.TestChrome();
+            }
+            Log("self test ran [OK]");
+        }
+
         private static List<TestDescription> ReadTests(ArgsProcessor argProc)
         {
             List<TestDescription> testsToRun;
-            List<TestDescription> tests;
+            List<TestDescription> tests; 
             {
                 var reader = new CsvReader();
                 var path = argProc.GetArg(ArgsProcessor.Args.CSV_FILE_PATH);
@@ -53,7 +69,8 @@ namespace screenium
                 Log(string.Format("Read {0} tests from CSV file {1}", tests.Count, path));
             }
 
-            testsToRun = TestDescription.GetTestsByName(tests, argProc.GetArg(ArgsProcessor.Args.TEST_NAME)); return testsToRun;
+            testsToRun = TestDescription.GetTestsByName(tests, argProc.GetArg(ArgsProcessor.Args.TEST_NAME)); 
+            return testsToRun;
         }
 
         private static void Log(string text)

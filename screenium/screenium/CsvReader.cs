@@ -22,13 +22,17 @@ namespace screenium
                         continue;
                     }
 
+                    int column = 0;
                     TestDescription test = new TestDescription()
                     {
-                        Name = CleanText(row[0]),
-                        Description = CleanText(row[1]),
-                        DivSelector = CleanText(row[2]),
-                        Url = CleanText(row[3]),
-                        TitleContains = CleanText(row[4])
+                        Name = CleanText(row[column++]),
+                        Description = CleanText(row[column++]),
+                        DivSelector = CleanText(row[column++]),
+                        Url = CleanText(row[column++]),
+                        Query1 = CleanText(row[column++]),
+                        Query2 = CleanText(row[column++]),
+                        Query3 = CleanText(row[column++]),
+                        TitleContains = CleanText(row[column++])
                     };
                     tests.Add(test);
                 }

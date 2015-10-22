@@ -11,8 +11,7 @@ namespace screenium
     {
         internal void RunTests(List<TestDescription> testsToRun, ArgsProcessor argProc)
         {
-            if (argProc.IsOptionOn(ArgsProcessor.Options.KeepOpenAfterRun) ||
-                argProc.IsOptionOn(ArgsProcessor.Options.Save))
+            if (argProc.IsOptionOn(ArgsProcessor.Options.KeepOpenAfterRun))
             {
                 //TODO implement me
                 throw new NotImplementedException();
@@ -22,24 +21,45 @@ namespace screenium
             {
                 Outputter.Output("Running test " + test.Name + " - " + test.Description);
 
-                //TODO add using
-                BrowserDriver driver = new BrowserDriver();
-                driver.OpenUrl(test.Url, test.DivSelector, test.TitleContains);
+                using (var driver = new BrowserDriver())
+                {
+                    driver.OpenUrl(test.Url, test.DivSelector, test.TitleContains);
 
-                var dirManager = new DirectoryManager(argProc);
+                    var dirManager = new DirectoryManager(argProc);
 
-                string tempFilePath;
-
-                tempFilePath = dirManager.GetTempFileName(test);
-                driver.SaveDivImageToPath(test.DivSelector, tempFilePath);
-
-                var comparer = new ImageComparer();
-                CompareResult compareResult = comparer.CompareImages(tempFilePath, dirManager.GetExpectedImageFilePath(test), test.Name);
-                ReportCreator reporter = new ReportCreator();
-
-                Report report = reporter.CreateReport(compareResult, argProc.GetArg(ArgsProcessor.Args.OUTPUT_FILE_PATH));
-                reporter.ShowReport(report);
+                    if (argProc.IsOptionOn(ArgsProcessor.Options.Run))
+                    {
+                        CompareActualPageVersusExpected(argProc, dirManager, test, driver);
+                    }
+                    else if (argProc.IsOptionOn(ArgsProcessor.Options.Save))
+                    {
+                        SaveActualPage(dirManager, test, driver);
+                    }
+                    else
+                    {
+                        throw new InvalidOperationException("xxx");
+                    }
+                }
             }
+        }
+
+        private void SaveActualPage(DirectoryManager dirManager, TestDescription test, BrowserDriver driver)
+        {
+            driver.SaveDivImageToPath(test.DivSelector, dirManager.GetExpectedImageFilePath(test));
+        }
+
+        private static void CompareActualPageVersusExpected(ArgsProcessor argProc, DirectoryManager dirManager,
+            TestDescription test, BrowserDriver driver)
+        {
+            string tempFilePath = dirManager.GetTempFilePath(test, "PNG");
+            driver.SaveDivImageToPath(test.DivSelector, tempFilePath);
+
+            var comparer = new ImageComparer();
+            var compareResult = comparer.CompareImages(tempFilePath, dirManager.GetExpectedImageFilePath(test), test.Name);
+            var reporter = new ReportCreator();
+
+            var report = reporter.CreateReport(compareResult, argProc.GetArg(ArgsProcessor.Args.OUTPUT_FILE_PATH));
+            reporter.ShowReport(report);
         }
     }
 }

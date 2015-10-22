@@ -1,2 +1,4 @@
-#testName, testDescription, divSelector, URL, TitleContains
-Google home page, Test using the Google home page, #hplogo,https://www.google.com, Google
+#testName, testDescription, divSelector, URL, Query1, Query2, Query3, TitleContains
+Google search by image page, Test using the Google home page, #logo, http://www.google.com/search?q=cheese&biw=1348&bih=540&source=lnms&tbm=isch&sa=X,,,,Google
+#Google home page, Test using the Google home page, #hplogo,http://www.google.com,,,,Google
+#LP 1, Test Depth, #log1,http://localhost/Web//Default.aspx,?Rig=400&Private=130,,,demo lp

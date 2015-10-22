@@ -2,7 +2,9 @@
 //
 //See the file license.txt for copying permission.
 
+using System;
 using System.Collections.Generic;
+
 namespace screenium
 {
     /// <summary>
@@ -10,16 +12,18 @@ namespace screenium
     /// </summary>
     class TestDescription
     {
-        //testName, testDescription, divSelector, Url, TitleContains
-        internal string Name;
-        internal string Description;
-        internal string DivSelector;
-        internal string Url;
-        internal string TitleContains;
+        internal string Name { get; set; }
+        internal string Description { get; set; }
+        internal string DivSelector { get; set; }
+        internal string Url { get; set; }
+        internal string Query1 { get; set; }
+        internal string Query2 { get; set; }
+        internal string Query3 { get; set; }
+        internal string TitleContains { get; set; }
 
-        internal static System.Collections.Generic.List<TestDescription> GetTestsByName(List<TestDescription> tests, string name)
+        internal static List<TestDescription> GetTestsByName(List<TestDescription> tests, string name)
         {
-            if (name.ToLowerInvariant().CompareTo("all") == 0)
+            if (string.Compare(name, "all", StringComparison.InvariantCultureIgnoreCase) == 0)
             {
                 return tests;
             }
@@ -30,7 +34,7 @@ namespace screenium
 
             foreach (var test in tests)
             {
-                if (test.Name.ToLowerInvariant().CompareTo(name) == 0)
+                if (string.Compare(test.Name, name, StringComparison.InvariantCultureIgnoreCase) == 0)
                 {
                     testsToRun.Add(test);
                 }
