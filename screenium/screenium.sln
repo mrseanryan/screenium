@@ -15,6 +15,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "TestData", "TestData", "{1EE40357-2F2C-4BA0-99D7-C133459A5EF8}"
 	ProjectSection(SolutionItems) = preProject
 		TestData\testGoogleHome.csv = TestData\testGoogleHome.csv
+		TestData\wv_lp_tests.csv = TestData\wv_lp_tests.csv
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "bat files", "bat files", "{30135C18-1164-430E-942F-6FE102E90FDF}"
