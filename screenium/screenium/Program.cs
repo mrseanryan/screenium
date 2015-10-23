@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using screenium.Csv;
 using screenium.SeleniumIntegration;
+using screenium.Compare;
 
 namespace screenium
 {

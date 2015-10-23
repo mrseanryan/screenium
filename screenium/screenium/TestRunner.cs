@@ -14,6 +14,7 @@ namespace screenium
     {
         internal CompareResult RunTests(List<TestDescription> testsToRun, ArgsProcessor argProc)
         {
+            CompareResult overallResult = CompareResult.Similar;
             foreach (var test in testsToRun)
             {
                 Outputter.Output("Running test " + test.Name + " - " + test.Description);
