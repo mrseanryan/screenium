@@ -33,9 +33,11 @@ OK - comparing against saved screenshots
 OK - output report page that lists diff images (with faded actual!) side-by-side
 OK - combine images via XOR, with highlighted diff in yellow
 
-xx - add prompt Y for saving screenshots
-xx - combine multiple tests into 1 report
+OK - add prompt Y for saving screenshots
+xx - combine multiple tests into 1 report  (Report -> TestReport, new class TestReportSet)
 xx - try with WV LP
+
+xx - add parallel execution (2 x WebDrivers ?)
 
 xx - report from x.partial.template.html templates -> html
 xx - improve report
@@ -50,15 +52,4 @@ xx - combine images via XOR, with highlighted diff in yellow
 example URLs
 ============
 Example URL queries that browser will process:
-
-hard coded generated data + time span: 
-
-&importedTestData=hard_coded_testdata&realTimeTestData=hard_coded_testdata&spanStartInSeconds=1433149200&spanLengthInSeconds=300
-
-CSV data + depth span:
-
-&importedTestData=testImportedData1&realTimeTestData=testRealtimeData1&spanStartInMeters=200&spanLengthInMeters=100
-
-CSV data + depth span + showing point labels:
-
-&importedTestData=testImportedData1&realTimeTestData=testRealtimeData1&spanStartInMeters=25&spanLengthInMeters=20&showPointLabels=true
+[see CSV files]

@@ -76,7 +76,8 @@ namespace screenium
             var runner = new TestRunner();
             var result = runner.RunTests(testsToRun, argProc);
 
-            Log("Finished running tests [" + GetResultAsString(result) + "]");
+            Outputter.Output("Finished running tests:");
+            Outputter.Output("[" + CompareResultHelper.GetResultAsString(result) + "]", CompareResultHelper.GetResultAsConsoleColor(result));
             return result;
         }
 
@@ -89,29 +90,14 @@ namespace screenium
             return isOk;
         }
 
-        private static string GetResultAsString(CompareResult result)
-        {
-            switch (result)
-            {
-                case CompareResult.Similar:
-                    return "OK";
-                case CompareResult.Different:
-                    return "Differences found";
-                case CompareResult.Cancelled:
-                    return "Cancelled";
-                default:
-                    throw new ArgumentException("not a recognised CompareResult: " + result);
-            }
-        }
-
         private static void RunSelfTest()
         {
-            Log("Running self test ...");
+            Outputter.Output("Running self test ...");
             using (BrowserDriver driver = new BrowserDriver())
             {
                 driver.TestChrome();
             }
-            Log("self test ran [OK]");
+            Outputter.Output("self test ran [OK]");
         }
 
         private static List<TestDescription> ReadTests(ArgsProcessor argProc)
@@ -122,16 +108,11 @@ namespace screenium
                 var reader = new TestConfigReader();
                 var path = argProc.GetArg(ArgsProcessor.Args.CSV_FILE_PATH);
                 tests = reader.ReadFromFilePath(path);
-                Log(string.Format("Read {0} tests from CSV file {1}", tests.Count, path));
+                Outputter.Output(string.Format("Read {0} tests from CSV file {1}", tests.Count, path));
             }
 
             testsToRun = TestDescription.GetTestsByName(tests, argProc.GetArg(ArgsProcessor.Args.TEST_NAME)); 
             return testsToRun;
-        }
-
-        private static void Log(string text)
-        {
-            Outputter.Output(text);
         }
     }
 }

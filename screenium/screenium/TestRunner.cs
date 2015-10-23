@@ -17,7 +17,7 @@ namespace screenium
             CompareResult overallResult = CompareResult.Similar;
             foreach (var test in testsToRun)
             {
-                Outputter.Output("Running test " + test.Name + " - " + test.Description);
+                Outputter.Output("Running test: " + test.Name + " - " + test.Description);
 
                 using (var driver = new BrowserDriver())
                 {
