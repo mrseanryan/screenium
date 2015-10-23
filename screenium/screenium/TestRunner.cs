@@ -9,7 +9,7 @@ namespace screenium
 {
     class TestRunner
     {
-        internal void RunTests(List<TestDescription> testsToRun, ArgsProcessor argProc)
+        internal CompareResult RunTests(List<TestDescription> testsToRun, ArgsProcessor argProc)
         {
             if (argProc.IsOptionOn(ArgsProcessor.Options.KeepOpenAfterRun))
             {
@@ -17,6 +17,7 @@ namespace screenium
                 throw new NotImplementedException();
             }
 
+            CompareResult overallResult = CompareResult.Similar;
             foreach (var test in testsToRun)
             {
                 Outputter.Output("Running test " + test.Name + " - " + test.Description);
@@ -29,7 +30,11 @@ namespace screenium
 
                     if (argProc.IsOptionOn(ArgsProcessor.Options.Run))
                     {
-                        CompareActualPageVersusExpected(argProc, dirManager, test, driver);
+                        var resultThisTest = CompareActualPageVersusExpected(argProc, dirManager, test, driver);
+                        if (resultThisTest != CompareResult.Similar)
+                        {
+                            overallResult = resultThisTest;
+                        }
                     }
                     else if (argProc.IsOptionOn(ArgsProcessor.Options.Save))
                     {
@@ -41,6 +46,7 @@ namespace screenium
                     }
                 }
             }
+            return overallResult;
         }
 
         private void SaveExpectedPage(DirectoryManager dirManager, TestDescription test, BrowserDriver driver)
@@ -49,7 +55,7 @@ namespace screenium
             driver.SaveDivImageToPath(test.DivSelector, dirManager.GetExpectedImageFilePath(test));
         }
 
-        private void CompareActualPageVersusExpected(ArgsProcessor argProc, DirectoryManager dirManager,
+        private CompareResult CompareActualPageVersusExpected(ArgsProcessor argProc, DirectoryManager dirManager,
             TestDescription test, BrowserDriver driver)
         {
             string tempFilePath = dirManager.GetActualImageFilePath(test);
@@ -59,6 +65,7 @@ namespace screenium
             var compareResult = comparer.CompareImages(tempFilePath, dirManager.GetExpectedImageFilePath(test), test.Name);
 
             CreateReports(argProc, test, compareResult);
+            return compareResult.Result;
         }
 
         private void CreateReports(ArgsProcessor argProc, TestDescription test, CompareResultDescription compareResult)

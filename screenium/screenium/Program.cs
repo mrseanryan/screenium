@@ -27,7 +27,8 @@ namespace screenium
                 else
                 {
                     //TODO return code of 666 if one or more tests detected differences
-                    RunTests(argProc);
+                    var result = RunTests(argProc);
+                    return GetResultAsReturnCode(result);
                 }
             }
             catch (Exception ex)
@@ -35,18 +36,44 @@ namespace screenium
                 Outputter.Output(ex);
                 return 2;
             }
-
             return 0;
         }
 
-        private static void RunTests(ArgsProcessor argProc)
+        private static int GetResultAsReturnCode(CompareResult result)
+        {
+            switch (result)
+            {
+                case CompareResult.Similar:
+                    return 0;
+                case CompareResult.Different:
+                    return 666;
+                default:
+                    throw new ArgumentException("not a recognised CompareResult: " + result);
+            }
+        }
+
+        private static CompareResult RunTests(ArgsProcessor argProc)
         {
             List<TestDescription> testsToRun = ReadTests(argProc);
 
             var runner = new TestRunner();
-            runner.RunTests(testsToRun, argProc);
+            var result = runner.RunTests(testsToRun, argProc);
 
-            Log("Finished running tests [OK]");
+            Log("Finished running tests [" + GetResultAsString(result) + "]");
+            return result;
+        }
+
+        private static string GetResultAsString(CompareResult result)
+        {
+            switch (result)
+            {
+                case CompareResult.Similar:
+                    return "OK";
+                case CompareResult.Different:
+                    return "Differences found";
+                default:
+                    throw new ArgumentException("not a recognised CompareResult: " + result);
+            }
         }
 
         private static void RunSelfTest()
