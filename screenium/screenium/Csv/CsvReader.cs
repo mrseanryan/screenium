@@ -4,7 +4,7 @@
 
 using System.Collections.Generic;
 
-namespace screenium
+namespace screenium.Csv
 {
     class CsvReader
     {
@@ -32,13 +32,22 @@ namespace screenium
                         Query1 = CleanText(row[column++]),
                         Query2 = CleanText(row[column++]),
                         Query3 = CleanText(row[column++]),
-                        TitleContains = CleanText(row[column++])
+                        TitleContains = CleanText(row[column++]),
+                        WindowWidth = CleanTextAsInt(row[column++]),
+                        WindowHeight = CleanTextAsInt(row[column++]),
+                        CropAdjustWidth = CleanTextAsInt(row[column++]),
+                        CropAdjustHeight = CleanTextAsInt(row[column++])
                     };
                     tests.Add(test);
                 }
             }
 
             return tests;
+        }
+
+        private int CleanTextAsInt(string text)
+        {
+            return int.Parse(CleanText(text));
         }
 
         private string CleanText(string text)

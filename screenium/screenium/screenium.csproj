@@ -58,7 +58,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ArgsProcessor.cs" />
-    <Compile Include="BrowserDriver.cs" />
+    <Compile Include="SeleniumIntegration\BrowserDriver.cs" />
     <Compile Include="Compare\CompareResult.cs" />
     <Compile Include="Compare\CompareResultDescription.cs" />
     <Compile Include="Csv\CsvFileReader.cs" />

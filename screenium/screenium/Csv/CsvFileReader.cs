@@ -12,7 +12,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 
-namespace screenium
+namespace screenium.Csv
 {
     /// <summary>
     /// Class to store one CSV row

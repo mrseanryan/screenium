@@ -2,7 +2,7 @@
 //
 //See the file license.txt for copying permission.
 
-namespace screenium
+namespace screenium.Reports
 {
     interface IReportCreator
     {

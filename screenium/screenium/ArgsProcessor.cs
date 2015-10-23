@@ -20,14 +20,13 @@ namespace screenium
             TEST_NAME,
             OUTPUT_FILE_PATH,
             IMAGES_DIR_PATH,
-            DIFFERENCE_TOLERANCE,
+            DIFFERENCE_TOLERANCE,//TODO move to CSV
             OPTIONS
         };
 
         internal enum Options
         {
             Run,
-            KeepOpenAfterRun,
             Save,
             TestSelf
         }

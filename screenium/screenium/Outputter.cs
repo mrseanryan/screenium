@@ -13,6 +13,14 @@ namespace screenium
             Console.WriteLine(text);
         }
 
+        internal static void Output(string text, ConsoleColor color)
+        {
+            var orig = Console.ForegroundColor;
+            Console.ForegroundColor = color;
+            Console.WriteLine(text);
+            Console.ForegroundColor = orig;
+        }
+
         internal static void Output(Exception ex)
         {
             Output(ex.Message);

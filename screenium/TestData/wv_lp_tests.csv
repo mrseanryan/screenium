@@ -1,6 +1,7 @@
-#testName, testDescription, divSelector, URL, Query1, Query2, Query3, TitleContains
-lp data import (time), lp data import (time), #logPlot, http://nlwks-170/Web/Default.aspx?Rig=400&Private=167&importedTestData=hard_coded_testdata&realTimeTestData=hard_coded_testdata&spanStartInMeters=5&spanLengthInMeters=1000,,,,lp
-lp template 1 (depth), lp template 1 (depth), #logPlot,http://nlwks-170/Web/Default.aspx?Rig=400&Private=156&importedTestData=hard_coded_testdata&realTimeTestData=hard_coded_testdata&spanStartInSeconds=1433199600&spanLengthInSeconds=18000,,,,lp
-#LP 1, Test Depth, #log1,http://localhost/Web//Default.aspx,?Rig=400&Private=130,,,,demo lp
-#LP advanced time, #logPlot,http://nlwks-170/Web/Default.aspx?Rig=400&Shared=1&importedTestData=hard_coded_testdata&realTimeTestData=hard_coded_testdata&spanStartInSeconds=1433199600&spanLengthInSeconds=18000,,,,demo lp
-#LP advanced depth, #logPlot,http://nlwks-170/Web/Default.aspx?Rig=400&Private=130&importedTestData=hard_coded_testdata&realTimeTestData=hard_coded_testdata&spanStartInMeters=5&spanLengthInMeters=1000,,,,demo lp
+#testName, testDescription, divSelector, URL, Query1, Query2, Query3, TitleContains, WindowWidth, WindowHeight, CropAdjustWidth, CropAdjustHeight
+#lp data import (time), lp data import (time), #logPlot, http://nlwks-170/Web/Default.aspx?Rig=400&Private=167&importedTestData=hard_coded_testdata&realTimeTestData=hard_coded_testdata&spanStartInMeters=5&spanLengthInMeters=1000,,,,lp,1400,1200,0,0
+#lp template 1 (depth), lp template 1 (depth), #logPlot,http://nlwks-170/Web/Default.aspx?Rig=400&Private=156&importedTestData=hard_coded_testdata&realTimeTestData=hard_coded_testdata&spanStartInSeconds=1433199600&spanLengthInSeconds=18000,,,,lp,1400,1200,0,0
+#LP 1, Test Depth, #log1,http://localhost/Web//Default.aspx,?Rig=400&Private=130,,,,demo lp,1400,1200,0,0
+#LP advanced time, #logPlot,http://nlwks-170/Web/Default.aspx?Rig=400&Shared=1&importedTestData=hard_coded_testdata&realTimeTestData=hard_coded_testdata&spanStartInSeconds=1433199600&spanLengthInSeconds=18000,,,,demo lp,1400,1200,0,0
+#LP advanced depth, #logPlot,http://nlwks-170/Web/Default.aspx?Rig=400&Private=130&importedTestData=hard_coded_testdata&realTimeTestData=hard_coded_testdata&spanStartInMeters=5&spanLengthInMeters=1000,,,,demo lp,1400,1200,0,0
+tp multi,tp multi,#template9_zone1,http://nlwks-170/Web/Default.aspx?Rig=400&Private=158&importedTestData=hard_coded_testdata&realTimeTestData=hard_coded_testdata&spanStartInSeconds=1433199600&spanLengthInSeconds=18000,,,,tp - multi,1400,1200,50,-75

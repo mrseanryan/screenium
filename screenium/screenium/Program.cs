@@ -4,6 +4,9 @@
 
 using System;
 using System.Collections.Generic;
+using screenium.Csv;
+using screenium.SeleniumIntegration;
+
 namespace screenium
 {
     class Program
@@ -44,7 +47,7 @@ namespace screenium
             switch (result)
             {
                 case CompareResult.Similar:
-                    return 0;
+            return 0;
                 case CompareResult.Different:
                     return 666;
                 default:
