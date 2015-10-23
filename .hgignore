@@ -22,4 +22,5 @@ TestRunSummary.xml
 
 #application:
 images/lp_*
+images/tp_*
 temp/*
