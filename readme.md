@@ -1,7 +1,7 @@
 screenium
 =========
 
-screenium = a console tool for automated web site testing, to detect differences via screenshots taken with Selenium WebDriver.
+screenium = easy to configure console tool, for automated testing of web sites, via screenshots taken with Selenium WebDriver.
 
 License
 =======
