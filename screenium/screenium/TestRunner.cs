@@ -57,10 +57,22 @@ namespace screenium
 
             var comparer = new CustomImageComparer(argProc);
             var compareResult = comparer.CompareImages(tempFilePath, dirManager.GetExpectedImageFilePath(test), test.Name);
-            var reporter = ReportCreatorFactory.Create();
 
-            var report = reporter.CreateReport(test, compareResult, argProc.GetArg(ArgsProcessor.Args.OUTPUT_FILE_PATH));
-            reporter.ShowReport(report);
+            CreateReports(argProc, test, compareResult);
+        }
+
+        private static void CreateReports(ArgsProcessor argProc, TestDescription test, CompareResultDescription compareResult)
+        {
+            var reporters = ReportCreatorFactory.CreateReporters();
+            foreach (var reporter in reporters)
+            {
+                var report = reporter.CreateReport(test, compareResult);
+                if (reporter.HasSaveCapability())
+                {
+                    reporter.SaveReport(report, argProc.GetArg(ArgsProcessor.Args.OUTPUT_FILE_PATH));
+                }
+                reporter.ShowReport(report);
+            }
         }
     }
 }

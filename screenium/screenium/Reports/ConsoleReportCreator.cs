@@ -8,16 +8,25 @@ namespace screenium
 {
     class ConsoleReportCreator : IReportCreator
     {
-        Report IReportCreator.CreateReport(TestDescription test, CompareResultDescription compareResult, string filePath)
+        Report IReportCreator.CreateReport(TestDescription test, CompareResultDescription compareResult)
         {
             var report = new Report
             {
                 Result = compareResult,
-                FilePath = null,
                 Test = test
             };
 
             return report;
+        }
+
+        bool IReportCreator.HasSaveCapability()
+        {
+            return false;
+        }
+
+        void IReportCreator.SaveReport(Report report, string filePath)
+        {
+            throw new NotSupportedException();
         }
 
         void IReportCreator.ShowReport(Report report)

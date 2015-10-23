@@ -59,19 +59,20 @@
   <ItemGroup>
     <Compile Include="ArgsProcessor.cs" />
     <Compile Include="BrowserDriver.cs" />
-    <Compile Include="CompareResult.cs" />
-    <Compile Include="CompareResultDescription.cs" />
-    <Compile Include="CsvFileReader.cs" />
-    <Compile Include="CsvReader.cs" />
+    <Compile Include="Compare\CompareResult.cs" />
+    <Compile Include="Compare\CompareResultDescription.cs" />
+    <Compile Include="Csv\CsvFileReader.cs" />
+    <Compile Include="Csv\CsvReader.cs" />
     <Compile Include="DirectoryManager.cs" />
-    <Compile Include="CustomImageComparer.cs" />
-    <Compile Include="IReportCreator.cs" />
+    <Compile Include="Compare\CustomImageComparer.cs" />
+    <Compile Include="Reports\HtmlReportCreator.cs" />
+    <Compile Include="Reports\IReportCreator.cs" />
     <Compile Include="Outputter.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Report.cs" />
-    <Compile Include="ConsoleReportCreator.cs" />
-    <Compile Include="ReportCreatorFactory.cs" />
+    <Compile Include="Reports\Report.cs" />
+    <Compile Include="Reports\ConsoleReportCreator.cs" />
+    <Compile Include="Reports\ReportCreatorFactory.cs" />
     <Compile Include="TestDescription.cs" />
     <Compile Include="TestRunner.cs" />
   </ItemGroup>

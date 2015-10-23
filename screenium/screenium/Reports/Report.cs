@@ -6,8 +6,6 @@ namespace screenium
 {
     class Report
     {
-        internal string FilePath { get; set; }
-
         internal CompareResultDescription Result { get; set; }
 
         internal TestDescription Test { get; set; }

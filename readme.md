@@ -11,17 +11,21 @@ Copyright (c) 2015 Sean Ryan
 
 How To Use screenium
 ====================
-1. run the self-test to make sure that everything is working OK
+1. install the dependencies (see below)
+
+2. build the source code using Visual Studio 2013 or later
+
+3. run the self-test to make sure that everything is working OK
 run_self_test.bat
 
-2. configure the CSV file
+4. configure the CSV file
 see example: screenium\TestData\testGoogleHome.csv
 
-3. run the console tool to save 'expected' images
+5. run the console tool to save 'expected' images
 see example BAT file:
 run_google_home_save.bat
 
-4. run the console tool to compare 'actual' web site, to the saved 'expected' images
+6. run the console tool to compare 'actual' web site, to the saved 'expected' images
 see example BAT file:
 run_google_home.bat
 
@@ -71,7 +75,7 @@ http://chromedriver.storage.googleapis.com/index.html
 x86 AND x64
 http://www.microsoft.com/en-us/download/details.aspx?id=48145
 
-references
+References
 ==========
 
 how-to:
