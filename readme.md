@@ -47,8 +47,7 @@ To see the arguments and options, simply type:
  and press ENTER:
  
 screenium 1.1.0.0
-Usage: <CSV_FILE_PATH> <TEST_NAME> <OUTPUT_FILE_PATH> <IMAGES_DIR_PATH> <DIFFERE
-NCE_TOLERANCE> <OPTIONS>
+Usage: <CSV_FILE_PATH> <TEST_NAME> <OUTPUT_FILE_PATH> <IMAGES_DIR_PATH> <DIFFERENCE_TOLERANCE> <OPTIONS>
 Options:
 -r = Run
 -k = KeepOpenAfterRun
