@@ -4,6 +4,8 @@
 
 using System;
 using System.Collections.Generic;
+using screenium.Csv;
+
 namespace screenium
 {
     class Program

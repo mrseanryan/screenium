@@ -4,7 +4,7 @@
 
 using ImageMagick;
 
-namespace screenium
+namespace screenium.Compare
 {
 	class CustomImageComparer
 	{

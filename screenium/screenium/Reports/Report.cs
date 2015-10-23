@@ -2,7 +2,9 @@
 //
 //See the file license.txt for copying permission.
 
-namespace screenium
+using screenium.Compare;
+
+namespace screenium.Reports
 {
     class Report
     {

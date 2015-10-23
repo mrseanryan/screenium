@@ -4,7 +4,7 @@
 
 using System.Collections.Generic;
 
-namespace screenium
+namespace screenium.Csv
 {
     class CsvReader
     {

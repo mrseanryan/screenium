@@ -5,7 +5,8 @@
 
 using System;
 using System.IO;
-namespace screenium
+
+namespace screenium.Reports
 {
     /// <summary>
     /// a HTML report creator
@@ -24,7 +25,7 @@ namespace screenium
         {
             string filePath = argProc.GetArg(ArgsProcessor.Args.OUTPUT_FILE_PATH);
             string extension = "html";
-            if (Path.GetExtension(filePath).ToLowerInvariant().CompareTo("." + extension) != 0)
+            if (string.Compare(Path.GetExtension(filePath), "." + extension, StringComparison.OrdinalIgnoreCase) != 0)
             {
                 throw new InvalidOperationException("Report output filename must end with ." + extension);
             }

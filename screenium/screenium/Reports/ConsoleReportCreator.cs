@@ -4,7 +4,7 @@
 
 using System;
 
-namespace screenium
+namespace screenium.Reports
 {
     class ConsoleReportCreator : IReportCreator
     {
