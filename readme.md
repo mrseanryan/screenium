@@ -1,7 +1,7 @@
-screenium readme
-================
+screenium
+=========
 
-Screenium = a console tool for automated web site testing, to detect differences via screenshots taken with Selenium WebDriver.
+screenium = a console tool for automated web site testing, to detect differences via screenshots taken with Selenium WebDriver.
 
 License
 =======
@@ -39,9 +39,20 @@ For manual inspection, difference images are generated.
 Usage From Console
 ==================
 To see the arguments and options, simply type:
+
+
+```
+#!BAT
+
  screenium
+```
+
  and press ENTER:
  
+
+```
+#!BAT
+
 screenium 1.1.0.0
 Usage: <CSV_FILE_PATH> <TEST_NAME> <OUTPUT_FILE_PATH> <IMAGES_DIR_PATH> <DIFFERE
 NCE_TOLERANCE> <OPTIONS>
@@ -50,6 +61,8 @@ Options:
 -k = KeepOpenAfterRun
 -s = Save
 -t = TestSelf
+```
+
 
 Dependencies
 ============
