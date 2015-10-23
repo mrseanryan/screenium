@@ -1,7 +1,7 @@
 screenium
 =========
 
-screenium = console tool to automatically test web sites
+screenium = a console tool to automatically test web sites
 
 - easy to configure (just a CSV file containing URLs) 
 - compares screenshots taken via Selenium WebDriver
@@ -17,32 +17,43 @@ Copyright (c) 2015 Sean Ryan
 
 How To Use screenium
 ====================
-1. install the dependencies (see below)
+1 - install the dependencies (see below)
 
-2. build the source code using Visual Studio 2013 or later
+2 - build the source code using Visual Studio 2013 or later
 
-3. run the self-test to make sure that everything is working OK
+3 - run the self-test to make sure that everything is working OK
+
 run_self_test.bat
 
-4. configure the CSV file
-see example: screenium\TestData\testGoogleHome.csv
+4 - configure the CSV file
 
-5. run the console tool to save 'expected' images
+see example CSV: 
+
+screenium\TestData\testGoogleHome.csv
+
+5 - run the console tool to save 'expected' images
+
 see example BAT file:
+
 run_google_home_save.bat
 
-6. run the console tool to compare 'actual' web site, to the saved 'expected' images
-see example BAT file:
+6 - run the console tool to compare 'actual' web site, to the saved 'expected' images
+
+see example BAT file: 
+
 run_google_home.bat
 
 A simple text report is output:
 
+```
+#!BAT
 Test Results:
 Google search by image page
 Result: Different
 Tolerance: 0.01
 Distortion: 0.0546446136539016
 Finished running tests [OK]
+```
 
 For manual inspection, difference images are generated.
 
@@ -67,7 +78,6 @@ screenium 1.1.0.0
 Usage: <CSV_FILE_PATH> <TEST_NAME> <OUTPUT_FILE_PATH> <IMAGES_DIR_PATH> <DIFFERENCE_TOLERANCE> <OPTIONS>
 Options:
 -r = Run
--k = KeepOpenAfterRun
 -s = Save
 -t = TestSelf
 ```
