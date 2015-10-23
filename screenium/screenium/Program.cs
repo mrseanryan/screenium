@@ -26,6 +26,7 @@ namespace screenium
                 }
                 else
                 {
+                    //TODO return code of 666 if one or more tests detected differences
                     RunTests(argProc);
                 }
             }
