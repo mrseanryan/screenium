@@ -2,7 +2,6 @@
 //
 //See the file license.txt for copying permission.
 
-using System;
 using System.IO;
 
 namespace screenium

@@ -73,6 +73,7 @@
     <Compile Include="Reports\Report.cs" />
     <Compile Include="Reports\ConsoleReportCreator.cs" />
     <Compile Include="Reports\ReportCreatorFactory.cs" />
+    <Compile Include="Reports\WindowsSupport.cs" />
     <Compile Include="TestDescription.cs" />
     <Compile Include="TestRunner.cs" />
   </ItemGroup>

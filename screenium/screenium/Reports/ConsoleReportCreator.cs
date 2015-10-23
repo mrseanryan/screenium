@@ -8,23 +8,12 @@ namespace screenium
 {
     class ConsoleReportCreator : IReportCreator
     {
-        Report IReportCreator.CreateReport(TestDescription test, CompareResultDescription compareResult)
-        {
-            var report = new Report
-            {
-                Result = compareResult,
-                Test = test
-            };
-
-            return report;
-        }
-
         bool IReportCreator.HasSaveCapability()
         {
             return false;
         }
 
-        void IReportCreator.SaveReport(Report report, string filePath)
+        void IReportCreator.SaveReport(Report report, ArgsProcessor argProc)
         {
             throw new NotSupportedException();
         }
@@ -33,8 +22,7 @@ namespace screenium
         {
             Outputter.OutputEmphasised("Test Results:");
 
-            Outputter.Output(report.Test.Name);
-
+            Outputter.Output("Test: " + report.Test.Name);
             Outputter.Output("Result: " + report.Result.Result);
             Outputter.Output("Tolerance: " + report.Result.Tolerance);
             Outputter.Output("Distortion: " + report.Result.Distortion);

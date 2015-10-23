@@ -1,7 +1,13 @@
 screenium
 =========
 
-screenium = easy to configure console tool, for automated testing of web sites, via screenshots taken with Selenium WebDriver.
+screenium = console tool to automatically test web sites
+
+- easy to configure (just a CSV file containing URLs) 
+- compares screenshots taken via Selenium WebDriver
+- easy to update your 'expected' screenshots
+- spend less time testing, and more time coding!
+- browsers: currently Google Chrome only
 
 License
 =======

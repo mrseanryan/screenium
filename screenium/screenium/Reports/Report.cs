@@ -9,5 +9,7 @@ namespace screenium
         internal CompareResultDescription Result { get; set; }
 
         internal TestDescription Test { get; set; }
+
+        internal string FilePath { get; set; }
     }
 }

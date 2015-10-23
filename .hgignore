@@ -22,3 +22,4 @@ TestRunSummary.xml
 
 #application:
 images/lp_*
+temp/*

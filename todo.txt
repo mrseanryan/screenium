@@ -31,12 +31,12 @@ OK - save screenshot to temp location
 OK - saving screenshots (-s) (with prompt for Y)
 xx - add prompt Y for saving screenshots
 OK - comparing against saved screenshots
-xx - output report page that lists actual images side-by-side
+xx - output report page that lists diff images (with faded actual!) side-by-side
 OK - combine images via XOR, with highlighted diff in yellow
+xx - try with WV LP
 
 xx - report from x.partial.template.html templates -> html
 xx - improve report
-xx - try with WV LP
 
 report:
 =====

@@ -49,7 +49,7 @@ namespace screenium
             driver.SaveDivImageToPath(test.DivSelector, dirManager.GetExpectedImageFilePath(test));
         }
 
-        private static void CompareActualPageVersusExpected(ArgsProcessor argProc, DirectoryManager dirManager,
+        private void CompareActualPageVersusExpected(ArgsProcessor argProc, DirectoryManager dirManager,
             TestDescription test, BrowserDriver driver)
         {
             string tempFilePath = dirManager.GetActualImageFilePath(test);
@@ -61,18 +61,29 @@ namespace screenium
             CreateReports(argProc, test, compareResult);
         }
 
-        private static void CreateReports(ArgsProcessor argProc, TestDescription test, CompareResultDescription compareResult)
+        private void CreateReports(ArgsProcessor argProc, TestDescription test, CompareResultDescription compareResult)
         {
             var reporters = ReportCreatorFactory.CreateReporters();
             foreach (var reporter in reporters)
             {
-                var report = reporter.CreateReport(test, compareResult);
+                var report = CreateReport(test, compareResult);
                 if (reporter.HasSaveCapability())
                 {
-                    reporter.SaveReport(report, argProc.GetArg(ArgsProcessor.Args.OUTPUT_FILE_PATH));
+                    reporter.SaveReport(report, argProc);
                 }
                 reporter.ShowReport(report);
             }
+        }
+
+        private Report CreateReport(TestDescription test, CompareResultDescription compareResult)
+        {
+            var report = new Report
+            {
+                Result = compareResult,
+                Test = test
+            };
+
+            return report;
         }
     }
 }
