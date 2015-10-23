@@ -14,12 +14,6 @@ namespace screenium
     {
         internal void RunTests(List<TestDescription> testsToRun, ArgsProcessor argProc)
         {
-            if (argProc.IsOptionOn(ArgsProcessor.Options.KeepOpenAfterRun))
-            {
-                //TODO implement me
-                throw new NotImplementedException();
-            }
-
             foreach (var test in testsToRun)
             {
                 Outputter.Output("Running test " + test.Name + " - " + test.Description);
