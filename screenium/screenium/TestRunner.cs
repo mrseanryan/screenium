@@ -61,7 +61,7 @@ namespace screenium
             driver.SaveDivImageToPath(test.DivSelector, tempFilePath, test.CropAdjustWidth, test.CropAdjustHeight);
 
             var comparer = new CustomImageComparer(argProc);
-            var compareResult = comparer.CompareImages(tempFilePath, dirManager.GetExpectedImageFilePath(test), test.Name);
+            var compareResult = comparer.CompareImages(tempFilePath, dirManager.GetExpectedImageFilePath(test), test);
 
             CreateReports(argProc, test, compareResult);
             return compareResult.Result;

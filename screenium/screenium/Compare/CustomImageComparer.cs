@@ -15,11 +15,11 @@ namespace screenium.Compare
 			_argProc = argProc;
 		}
 
-		internal CompareResultDescription CompareImages(string actualImageFilePath, string expectedImageFilePath, string testName)
+		internal CompareResultDescription CompareImages(string actualImageFilePath, string expectedImageFilePath, TestDescription test)
 		{
 			bool areImagesSimilar;
 		    double distortion;
-		    var tolerance = _argProc.GetArgAsDouble(ArgsProcessor.Args.DIFFERENCE_TOLERANCE);
+		    var tolerance = test.Tolerance;
 
 			//image library (.NET wrapper) - Magick.NET
 			using (MagickImage image1 = new MagickImage(actualImageFilePath))
@@ -32,7 +32,7 @@ namespace screenium.Compare
                 distortion = image1.Compare(image2, ErrorMetric.MeanAbsolute, diffImage);
 				areImagesSimilar = distortion < tolerance;
 
-				diffImage.Write(dirManager.GetDiffImageFilePath(testName));
+				diffImage.Write(dirManager.GetDiffImageFilePath(test.Name));
 			}
 			
             var result = areImagesSimilar ? CompareResult.Similar : CompareResult.Different;

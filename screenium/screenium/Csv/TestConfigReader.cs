@@ -6,13 +6,13 @@ using System.Collections.Generic;
 
 namespace screenium.Csv
 {
-    class CsvReader
+    class TestConfigReader
     {
         internal List<TestDescription> ReadFromFilePath(string path)
         {
             List<TestDescription> tests = new List<TestDescription>();
 
-            using (var reader = new CsvFileReader(path))
+            using (var reader = new GenericCsvFileReader(path))
             {
                 CsvRow row = new CsvRow();
                 while (reader.ReadRow(row))
@@ -36,13 +36,19 @@ namespace screenium.Csv
                         WindowWidth = CleanTextAsInt(row[column++]),
                         WindowHeight = CleanTextAsInt(row[column++]),
                         CropAdjustWidth = CleanTextAsInt(row[column++]),
-                        CropAdjustHeight = CleanTextAsInt(row[column++])
+                        CropAdjustHeight = CleanTextAsInt(row[column++]),
+                        Tolerance = CleanTextAsDouble(row[column++])
                     };
                     tests.Add(test);
                 }
             }
 
             return tests;
+        }
+
+        private double CleanTextAsDouble(string text)
+        {
+            return double.Parse(CleanText(text));
         }
 
         private int CleanTextAsInt(string text)

@@ -61,8 +61,8 @@
     <Compile Include="SeleniumIntegration\BrowserDriver.cs" />
     <Compile Include="Compare\CompareResult.cs" />
     <Compile Include="Compare\CompareResultDescription.cs" />
-    <Compile Include="Csv\CsvFileReader.cs" />
-    <Compile Include="Csv\CsvReader.cs" />
+    <Compile Include="Csv\GenericCsvFileReader.cs" />
+    <Compile Include="Csv\TestConfigReader.cs" />
     <Compile Include="DirectoryManager.cs" />
     <Compile Include="Compare\CustomImageComparer.cs" />
     <Compile Include="Reports\HtmlReportCreator.cs" />

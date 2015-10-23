@@ -2,11 +2,11 @@
 //
 //See the file license.txt for copying permission.
 
-using System;
-using System.Collections.Generic;
+using screenium.Compare;
 using screenium.Csv;
 using screenium.SeleniumIntegration;
-using screenium.Compare;
+using System;
+using System.Collections.Generic;
 
 namespace screenium
 {
@@ -51,6 +51,8 @@ namespace screenium
             return 0;
                 case CompareResult.Different:
                     return 666;
+                case CompareResult.Cancelled:
+                    return 404;
                 default:
                     throw new ArgumentException("not a recognised CompareResult: " + result);
             }
@@ -60,11 +62,31 @@ namespace screenium
         {
             List<TestDescription> testsToRun = ReadTests(argProc);
 
+            if (argProc.IsOptionOn(ArgsProcessor.Options.Save))
+            {
+                //protect the saved 'expected' files, by prompting the user:
+                var message = "Are you sure that you want get new saved 'expected' images? [Y to continue]";
+                if (!IsUserOkToContinue(message))
+                {
+                    Outputter.Output("Cancelling...");
+                    return CompareResult.Cancelled;
+                }
+            }
+
             var runner = new TestRunner();
             var result = runner.RunTests(testsToRun, argProc);
 
             Log("Finished running tests [" + GetResultAsString(result) + "]");
             return result;
+        }
+
+        private static bool IsUserOkToContinue(string message)
+        {
+            Outputter.Output(message);
+            var keyInfo = Console.ReadKey();
+            Console.WriteLine();
+            bool isOk = keyInfo.KeyChar.ToString().ToLowerInvariant() == "y";
+            return isOk;
         }
 
         private static string GetResultAsString(CompareResult result)
@@ -75,6 +97,8 @@ namespace screenium
                     return "OK";
                 case CompareResult.Different:
                     return "Differences found";
+                case CompareResult.Cancelled:
+                    return "Cancelled";
                 default:
                     throw new ArgumentException("not a recognised CompareResult: " + result);
             }
@@ -95,7 +119,7 @@ namespace screenium
             List<TestDescription> testsToRun;
             List<TestDescription> tests; 
             {
-                var reader = new CsvReader();
+                var reader = new TestConfigReader();
                 var path = argProc.GetArg(ArgsProcessor.Args.CSV_FILE_PATH);
                 tests = reader.ReadFromFilePath(path);
                 Log(string.Format("Read {0} tests from CSV file {1}", tests.Count, path));

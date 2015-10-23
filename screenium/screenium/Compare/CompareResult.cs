@@ -7,6 +7,7 @@ namespace screenium.Compare
     enum CompareResult
     {
         Similar,
-        Different
+        Different,
+        Cancelled
     }
 }

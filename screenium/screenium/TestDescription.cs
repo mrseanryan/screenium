@@ -23,6 +23,7 @@ namespace screenium
         internal string TitleContains { get; set; }
         internal int CropAdjustWidth { get; set; }
         internal int CropAdjustHeight { get; set; }
+        internal double Tolerance { get; set; }
 
         internal static List<TestDescription> GetTestsByName(List<TestDescription> tests, string name)
         {

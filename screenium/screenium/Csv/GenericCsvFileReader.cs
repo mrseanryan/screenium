@@ -25,16 +25,16 @@ namespace screenium.Csv
     /// <summary>
     /// Class to read data from a CSV file
     /// </summary>
-    internal class CsvFileReader : StreamReader
+    internal class GenericCsvFileReader : StreamReader
     {
         //TODO use StreamReader by encapsulation not inheritance
 
-        public CsvFileReader(Stream stream)
+        public GenericCsvFileReader(Stream stream)
             : base(stream)
         {
         }
 
-        public CsvFileReader(string filename)
+        public GenericCsvFileReader(string filename)
             : base(filename)
         {
         }
