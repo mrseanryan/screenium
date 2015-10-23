@@ -4,6 +4,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 
 namespace screenium
 {
@@ -20,6 +21,8 @@ namespace screenium
         internal string Query2 { get; set; }
         internal string Query3 { get; set; }
         internal string TitleContains { get; set; }
+        internal int CropAdjustWidth { get; set; }
+        internal int CropAdjustHeight { get; set; }
 
         internal static List<TestDescription> GetTestsByName(List<TestDescription> tests, string name)
         {
@@ -41,6 +44,15 @@ namespace screenium
             }
 
             return testsToRun;
+        }
+
+        public int WindowWidth { get; set; }
+        
+        public int WindowHeight { get; set; }
+
+        public Size WindowSize 
+        {
+            get { return new Size(WindowWidth, WindowHeight); }
         }
     }
 }

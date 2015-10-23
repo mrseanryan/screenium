@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using screenium.Compare;
 using screenium.Reports;
+using screenium.SeleniumIntegration;
 
 namespace screenium
 {
@@ -25,6 +26,8 @@ namespace screenium
 
                 using (var driver = new BrowserDriver())
                 {
+                    driver.SetWindowSize(test.WindowSize);
+
                     driver.OpenUrl(test.Url, test.DivSelector, test.TitleContains);
 
                     var dirManager = new DirectoryManager(argProc);
@@ -48,14 +51,14 @@ namespace screenium
         private void SaveExpectedPage(DirectoryManager dirManager, TestDescription test, BrowserDriver driver)
         {
             Outputter.Output("Saving expected page for test: " + test.Name);
-            driver.SaveDivImageToPath(test.DivSelector, dirManager.GetExpectedImageFilePath(test));
+            driver.SaveDivImageToPath(test.DivSelector, dirManager.GetExpectedImageFilePath(test), test.CropAdjustWidth, test.CropAdjustHeight);
         }
 
         private void CompareActualPageVersusExpected(ArgsProcessor argProc, DirectoryManager dirManager,
             TestDescription test, BrowserDriver driver)
         {
             string tempFilePath = dirManager.GetActualImageFilePath(test);
-            driver.SaveDivImageToPath(test.DivSelector, tempFilePath);
+            driver.SaveDivImageToPath(test.DivSelector, tempFilePath, test.CropAdjustWidth, test.CropAdjustHeight);
 
             var comparer = new CustomImageComparer(argProc);
             var compareResult = comparer.CompareImages(tempFilePath, dirManager.GetExpectedImageFilePath(test), test.Name);

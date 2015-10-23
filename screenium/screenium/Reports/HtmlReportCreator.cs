@@ -52,7 +52,7 @@ namespace screenium.Reports
 
                     sw.Write(GetTagStart("table"));
                     WriteHtmlRow(sw, "Test:", report.Test.Name);
-                    WriteHtmlRow(sw, "Result: ", report.Result.Result.ToString());
+                    WriteHtmlRow(sw, "Result: ", GetResultAsHtml(report.Result.Result));
                     WriteHtmlRow(sw, "Tolerance: ", report.Result.Tolerance);
                     WriteHtmlRow(sw, "Distortion: ", report.Result.Distortion);
 
@@ -71,11 +71,35 @@ namespace screenium.Reports
             report.FilePath = filePath;
         }
 
+        private string GetResultAsHtml(Compare.CompareResult compareResult)
+        {
+            string color;
+            const string green = "#00FF00";
+            const string red = "#FF0000";
+            switch (compareResult)
+            {
+                case Compare.CompareResult.Similar:
+                    color = green;
+                    break;
+                case Compare.CompareResult.Different:
+                    color = red;
+                    break;
+                default:
+                    throw new ArgumentException("Not a recognised Report Result: " + compareResult);
+            }
+            return GetTagWithAttributesAndChildText("div", "style='background-color:" + color + "'", compareResult.ToString());
+        }
+
         private string GetHeader(string title)
         {
             return GetTagStart("head") +
                 GetTagWithChildText("title", title) +
                 GetTagEnd("head");
+        }
+
+        private string GetTagWithAttributesAndChildText(string tag, string attributes, string text)
+        {
+            return GetTagStartWithAttributes(tag, attributes) + text + GetTagEnd(tag);
         }
 
         private string GetTagWithChildText(string tag, string text)
@@ -112,7 +136,12 @@ namespace screenium.Reports
 
         private string GetTagStart(string text)
         {
-            return "<" + text + ">" + Environment.NewLine;
+            return GetTagStartWithAttributes(text, "");
+        }
+
+        private string GetTagStartWithAttributes(string text, string attributes)
+        {
+            return "<" + text + " " + attributes + ">" + Environment.NewLine;
         }
 
         private string GetTagEnd(string text)
