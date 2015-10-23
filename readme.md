@@ -55,7 +55,8 @@ Distortion: 0.0546446136539016
 Finished running tests [OK]
 ```
 
-For manual inspection, difference images are generated.
+For manual inspection, a report containing difference images is generated.
+For integration with a build, the console returns error codes as standard.
 
 Usage From Console
 ==================
