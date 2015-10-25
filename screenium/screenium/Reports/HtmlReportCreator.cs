@@ -20,8 +20,7 @@ namespace screenium.Reports
             return true;
         }
 
-        //TODO add support for multiple tests, per-report)
-        public void SaveReport(Report report, ArgsProcessor argProc)
+        public void SaveReport(ReportSet reports, ArgsProcessor argProc)
         {
             string filePath = argProc.GetArg(ArgsProcessor.Args.OUTPUT_FILE_PATH);
             string extension = "html";
@@ -37,38 +36,53 @@ namespace screenium.Reports
                 using (StreamWriter sw = new StreamWriter(fs))
                 {
                     sw.Write(GetTagStart("html"));
-
                     sw.Write(GetHeader("screenium Test Results"));
-
                     sw.Write(GetTagStart("body"));
+                    WriteReportHeadingHtml(sw);
+                    sw.Write(GetSeparator());
 
-                    sw.Write(GetTagStart("table"));
-                    sw.Write(GetTagStart("tr"));
-                    sw.Write(GetTagStart("td"));
-                    sw.Write(GetEmphasisedText("screenium Test Results:"));
-                    sw.Write(GetTagEnd("td"));
-                    sw.Write(GetTagEnd("tr"));
-                    sw.Write(GetTagEnd("table"));
-
-                    sw.Write(GetTagStart("table"));
-                    WriteHtmlRow(sw, "Test:", report.Test.Name);
-                    WriteHtmlRow(sw, "Result: ", GetResultAsHtml(report.Result.Result));
-                    WriteHtmlRow(sw, "Tolerance: ", report.Result.Tolerance);
-                    WriteHtmlRow(sw, "Distortion: ", report.Result.Distortion);
-
-                    var diffImageFilePath = dirManager.GetDiffImageFilePath(report.Test.Name);
-                    WriteHtmlRow(sw, "Diff Image: ", CreateImageHtml(diffImageFilePath, "diff image"));
-
-                    sw.Write(GetTagEnd("table"));
-
+                    foreach (var report in reports.Reports)
+                    {
+                        WriteReportHtml(dirManager, sw, report);
+                        sw.Write(GetSeparator());
+                    }
                     sw.Write(GetTagEnd("body"));
-
                     sw.Write(GetTagEnd("html"));
                     sw.Flush();
                 }
             }
 
-            report.FilePath = filePath;
+            reports.FilePath = filePath;
+        }
+
+        private void WriteReportHtml(DirectoryManager dirManager, StreamWriter sw, Report report)
+        {
+            sw.Write(GetTagStart("table"));
+            WriteHtmlRow(sw, "Test:", report.Test.Name);
+            WriteHtmlRow(sw, "Result: ", GetResultAsHtml(report.Result.Result));
+            WriteHtmlRow(sw, "Tolerance: ", report.Result.Tolerance);
+            WriteHtmlRow(sw, "Distortion: ", report.Result.Distortion);
+
+            var diffImageFilePath = dirManager.GetDiffImageFilePath(report.Test.Name);
+            WriteHtmlRow(sw, "Diff Image: ", CreateImageHtml(diffImageFilePath, "diff image"));
+
+            sw.Write(GetTagEnd("table"));
+        }
+
+        private void WriteReportHeadingHtml(StreamWriter sw)
+        {
+            sw.Write(GetTagStart("table"));
+            sw.Write(GetTagStart("tr"));
+            sw.Write(GetTagStart("td"));
+            sw.Write(GetEmphasisedText("screenium Test Results:"));
+            sw.Write(GetTagEnd("td"));
+            sw.Write(GetTagEnd("tr"));
+            sw.Write(GetTagEnd("table"));
+        }
+
+        private string GetSeparator()
+        {
+            return GetTagStart("hr") + GetTagEnd("hr");
         }
 
         private string GetResultAsHtml(Compare.CompareResult compareResult)
@@ -149,9 +163,9 @@ namespace screenium.Reports
             return "</" + text + ">" + Environment.NewLine;
         }
 
-        public void ShowReport(Report report)
+        public void ShowReport(ReportSet reports)
         {
-            Reports.WindowsSupport.OpenFileInExplorer(report.FilePath);
+            Reports.WindowsSupport.OpenFileInExplorer(reports.FilePath);
         }
     }
 }

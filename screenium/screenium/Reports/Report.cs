@@ -11,7 +11,5 @@ namespace screenium.Reports
         internal CompareResultDescription Result { get; set; }
 
         internal TestDescription Test { get; set; }
-
-        internal string FilePath { get; set; }
     }
 }

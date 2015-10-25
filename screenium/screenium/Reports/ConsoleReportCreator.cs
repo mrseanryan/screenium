@@ -13,12 +13,20 @@ namespace screenium.Reports
             return false;
         }
 
-        void IReportCreator.SaveReport(Report report, ArgsProcessor argProc)
+        void IReportCreator.SaveReport(ReportSet reports, ArgsProcessor argProc)
         {
             throw new NotSupportedException();
         }
 
-        void IReportCreator.ShowReport(Report report)
+        void IReportCreator.ShowReport(ReportSet reports)
+        {
+            foreach (var report in reports.Reports)
+            {
+                ShowReport(report);
+            }
+        }
+
+        private void ShowReport(Report report)
         {
             Outputter.Output("");
             Outputter.OutputEmphasised("Test Results:");

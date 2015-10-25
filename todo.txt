@@ -34,20 +34,20 @@ OK - output report page that lists diff images (with faded actual!) side-by-side
 OK - combine images via XOR, with highlighted diff in yellow
 
 OK - add prompt Y for saving screenshots
-xx - combine multiple tests into 1 report  (Report -> TestReport, new class TestReportSet)
+OK - combine multiple tests into 1 report  (Report -> TestReport, new class TestReportSet)
 xx - try with WV LP
 
-xx - add parallel execution (2 x WebDrivers ?)
+xx - add parallel execution (N=2 x WebDrivers ?)
 
-xx - report from x.partial.template.html templates -> html
-xx - improve report
+n/a - report from x.partial.template.html templates -> html
+xx - improve report styling
 
 report:
 =====
 xx - overall result as red/green bar
-xx - list of failed/passing tests with red/green
-xx - links to detail section: expected, actual images side-by-side
-xx - combine images via XOR, with highlighted diff in yellow
+OK - list of failed/passing tests with red/green
+n/a - links to detail section: expected, actual images side-by-side
+OK - combine images via XOR, with highlighted diff in yellow
 
 example URLs
 ============

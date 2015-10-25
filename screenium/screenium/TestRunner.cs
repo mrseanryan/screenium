@@ -2,11 +2,11 @@
 //
 //See the file license.txt for copying permission.
 
-using System;
-using System.Collections.Generic;
 using screenium.Compare;
 using screenium.Reports;
 using screenium.SeleniumIntegration;
+using System;
+using System.Collections.Generic;
 
 namespace screenium
 {
@@ -15,6 +15,7 @@ namespace screenium
         internal CompareResult RunTests(List<TestDescription> testsToRun, ArgsProcessor argProc)
         {
             CompareResult overallResult = CompareResult.Similar;
+            var reportSet = new ReportSet();
             foreach (var test in testsToRun)
             {
                 Outputter.Output("Running test: " + test.Name + " - " + test.Description);
@@ -29,11 +30,13 @@ namespace screenium
 
                     if (argProc.IsOptionOn(ArgsProcessor.Options.Run))
                     {
-                        var resultThisTest = CompareActualPageVersusExpected(argProc, dirManager, test, driver);
+                        var reportThisTest = CompareActualPageVersusExpected(argProc, dirManager, test, driver);
+                        var resultThisTest = reportThisTest.Result.Result;
                         if (resultThisTest != CompareResult.Similar)
                         {
                             overallResult = resultThisTest;
                         }
+                        reportSet.Reports.Add(reportThisTest);
                     }
                     else if (argProc.IsOptionOn(ArgsProcessor.Options.Save))
                     {
@@ -45,6 +48,11 @@ namespace screenium
                     }
                 }
             }
+
+            if (argProc.IsOptionOn(ArgsProcessor.Options.Run))
+            {
+                CreateReports(argProc, reportSet);
+            }
             return overallResult;
         }
 
@@ -54,7 +62,7 @@ namespace screenium
             driver.SaveDivImageToPath(test.DivSelector, dirManager.GetExpectedImageFilePath(test), test.CropAdjustWidth, test.CropAdjustHeight);
         }
 
-        private CompareResult CompareActualPageVersusExpected(ArgsProcessor argProc, DirectoryManager dirManager,
+        private Report CompareActualPageVersusExpected(ArgsProcessor argProc, DirectoryManager dirManager,
             TestDescription test, BrowserDriver driver)
         {
             string tempFilePath = dirManager.GetActualImageFilePath(test);
@@ -63,21 +71,21 @@ namespace screenium
             var comparer = new CustomImageComparer(argProc);
             var compareResult = comparer.CompareImages(tempFilePath, dirManager.GetExpectedImageFilePath(test), test);
 
-            CreateReports(argProc, test, compareResult);
-            return compareResult.Result;
+            var report = CreateReport(test, compareResult);
+
+            return report;
         }
 
-        private void CreateReports(ArgsProcessor argProc, TestDescription test, CompareResultDescription compareResult)
+        private void CreateReports(ArgsProcessor argProc, ReportSet reports)
         {
             var reporters = ReportCreatorFactory.CreateReporters();
             foreach (var reporter in reporters)
             {
-                var report = CreateReport(test, compareResult);
                 if (reporter.HasSaveCapability())
                 {
-                    reporter.SaveReport(report, argProc);
+                    reporter.SaveReport(reports, argProc);
                 }
-                reporter.ShowReport(report);
+                reporter.ShowReport(reports);
             }
         }
 
