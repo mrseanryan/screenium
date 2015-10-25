@@ -1,6 +1,7 @@
 screenium
 =========
 
+![screenium_icon_45w.png](https://bitbucket.org/repo/rzKA8y/images/436353880-screenium_icon_45w.png)
 screenium = a console tool to automatically test web sites
 
 - easy to configure (just a CSV file containing URLs) 
