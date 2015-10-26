@@ -9,6 +9,7 @@ screenium = a console tool to automatically test web sites
 - easy to update your 'expected' screenshots
 - spend less time testing, and more time coding!
 - browsers: currently Google Chrome only
+- integration with your application is via URLs only - suitable for SPA or similar...
 
 License
 =======

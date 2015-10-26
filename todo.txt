@@ -38,7 +38,7 @@ OK - combine multiple tests into 1 report  (Report -> TestReport, new class Test
 OK - try with WV LP
 
 OK - add bad row test. output Column as well as Row.
-xx - add per-test SleepTimespan (usually 0) after page text seen, and before taking screenshot
+OK - add per-test SleepTimespan (usually 0) after page text seen, and before taking screenshot
 
 xx - add parallel execution (N=2 x WebDrivers ?)
 
