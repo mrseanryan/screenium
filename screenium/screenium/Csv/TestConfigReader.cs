@@ -15,6 +15,7 @@ namespace screenium.Csv
 
             using (var reader = new GenericCsvFileReader(path))
             {
+                int column = 0;
                 try
                 {
                     CsvRow row = new CsvRow();
@@ -25,7 +26,7 @@ namespace screenium.Csv
                             continue;
                         }
 
-                        int column = 0;
+                        column = 0;
                         TestDescription test = new TestDescription()
                         {
                             Name = CleanText(row[column++]),
@@ -47,7 +48,7 @@ namespace screenium.Csv
                 }
                 catch (Exception ex)
                 {
-                    throw new TestConfigReaderException(reader.CurrentRow, ex);
+                    throw new TestConfigReaderException(reader.CurrentRow, column + 1, ex);
                 }
             }
 

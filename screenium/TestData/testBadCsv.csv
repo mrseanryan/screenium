@@ -1,0 +1,3 @@
+#testName, testDescription, divSelector, URL, Query1, Query2, Query3, TitleContains, WindowWidth, WindowHeight, CropAdjustWidth, CropAdjustHeight, Tolerance
+bad csv missing the testDescription column, #logo, http://www.google.com/search?q=cheese&biw=1348&bih=540&source=lnms&tbm=isch&sa=X,,,,Google,1000,800,0,0,0.01
+Google home page, Test using the Google home page, #hplogo,http://www.google.com,,,,Google,1000,800,0,0,0.01
