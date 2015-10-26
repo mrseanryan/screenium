@@ -35,8 +35,9 @@ OK - combine images via XOR, with highlighted diff in yellow
 
 OK - add prompt Y for saving screenshots
 OK - combine multiple tests into 1 report  (Report -> TestReport, new class TestReportSet)
-xx - try with WV LP
+OK - try with WV LP
 
+xx - add per-test delay (usually 0) after page text seen, and before taking screenshot
 xx - add parallel execution (N=2 x WebDrivers ?)
 
 n/a - report from x.partial.template.html templates -> html
