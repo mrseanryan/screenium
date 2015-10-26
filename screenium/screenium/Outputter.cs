@@ -37,5 +37,10 @@ namespace screenium
             Output(text);
             Output(new string('=', text.Length));
         }
+
+        internal static void OutputSeparator()
+        {
+            Output("----------");
+        }
     }
 }

@@ -2,13 +2,14 @@
 //
 //See the file license.txt for copying permission.
 
+using OpenQA.Selenium;
+using OpenQA.Selenium.Chrome;
+using OpenQA.Selenium.Support.UI;
 using System;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
-using OpenQA.Selenium;
-using OpenQA.Selenium.Chrome;
-using OpenQA.Selenium.Support.UI;
+using System.Threading;
 
 namespace screenium.SeleniumIntegration
 {
@@ -55,6 +56,7 @@ namespace screenium.SeleniumIntegration
             // Wait for the page to load, timeout after 10 seconds
             //TODO find a better way to wait ...
             WebDriverWait wait = new WebDriverWait(_driver, TimeSpan.FromSeconds(10));
+            Outputter.Output("Searching for text: " + titleContains);
             wait.Until((d) => { return d.Title.ToLower().Contains(titleContains.ToLower()); });
 
             Outputter.Output("Page title is: " + _driver.Title);
@@ -67,13 +69,15 @@ namespace screenium.SeleniumIntegration
             }
         }
 
-        internal void SaveDivImageToPath(string divSelector, string tempFilePath, int cropAdjustWidth, int cropAdjustHeight)
+        internal void SaveDivImageToPath(string divSelector, string tempFilePath, int cropAdjustWidth, int cropAdjustHeight, TimeSpan sleepTimeSpan)
         {
             //get screenshot of a particular element, via cropping:
             //http://stackoverflow.com/questions/13832322/how-to-capture-the-screenshot-of-only-a-specific-element-using-selenium-webdrive
             
             // Get html element and its location and dimensions:
             var div = _driver.FindElement(By.CssSelector(divSelector));
+
+            SleepBeforeScreenshot(sleepTimeSpan);
 
             // Get page screenshot and save it in temp folder:
             var pageScreenshot = ((ITakesScreenshot)_driver).GetScreenshot();
@@ -98,6 +102,16 @@ namespace screenium.SeleniumIntegration
             var divBitmap = fullWindowBitmap.Clone(part, fullWindowBitmap.PixelFormat);
             fullWindowBitmap.Dispose();
             divBitmap.Save(tempFilePath, imageFormat);
+            Outputter.Output("Got screenshot.");
+        }
+
+        private void SleepBeforeScreenshot(TimeSpan sleepTimeSpan)
+        {
+            if (sleepTimeSpan.TotalMilliseconds > 0)
+            {
+                Outputter.Output("Sleeping before screenshot ...");
+                Thread.Sleep(sleepTimeSpan);
+            }
         }
 
         public void Dispose()

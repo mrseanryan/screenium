@@ -41,7 +41,8 @@ namespace screenium.Csv
                             WindowHeight = CleanTextAsInt(row[column++]),
                             CropAdjustWidth = CleanTextAsInt(row[column++]),
                             CropAdjustHeight = CleanTextAsInt(row[column++]),
-                            Tolerance = CleanTextAsDouble(row[column++])
+                            Tolerance = CleanTextAsDouble(row[column++]),
+                            SleepTimespan = CleanTextAsTimespan(row[column++]),
                         };
                         tests.Add(test);
                     }
@@ -53,6 +54,11 @@ namespace screenium.Csv
             }
 
             return tests;
+        }
+
+        private TimeSpan CleanTextAsTimespan(string text)
+        {
+            return TimeSpan.Parse(text);
         }
 
         private double CleanTextAsDouble(string text)

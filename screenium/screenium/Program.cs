@@ -72,6 +72,7 @@ namespace screenium
                 }
             }
 
+            Outputter.OutputSeparator();
             var runner = new TestRunner();
             var result = runner.RunTests(testsToRun, argProc);
 

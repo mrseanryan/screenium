@@ -24,6 +24,7 @@ namespace screenium
         internal int CropAdjustWidth { get; set; }
         internal int CropAdjustHeight { get; set; }
         internal double Tolerance { get; set; }
+        internal TimeSpan SleepTimespan { get; set; }
 
         internal static List<TestDescription> GetTestsByName(List<TestDescription> tests, string name)
         {

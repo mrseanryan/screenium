@@ -19,34 +19,8 @@ namespace screenium
             foreach (var test in testsToRun)
             {
                 Outputter.Output("Running test: " + test.Name + " - " + test.Description);
-
-                using (var driver = new BrowserDriver())
-                {
-                    driver.SetWindowSize(test.WindowSize);
-
-                    driver.OpenUrl(test.Url, test.DivSelector, test.TitleContains);
-
-                    var dirManager = new DirectoryManager(argProc);
-
-                    if (argProc.IsOptionOn(ArgsProcessor.Options.Run))
-                    {
-                        var reportThisTest = CompareActualPageVersusExpected(argProc, dirManager, test, driver);
-                        var resultThisTest = reportThisTest.Result.Result;
-                        if (resultThisTest != CompareResult.Similar)
-                        {
-                            overallResult = resultThisTest;
-                        }
-                        reportSet.Reports.Add(reportThisTest);
-                    }
-                    else if (argProc.IsOptionOn(ArgsProcessor.Options.Save))
-                    {
-                        SaveExpectedPage(dirManager, test, driver);
-                    }
-                    else
-                    {
-                        throw new InvalidOperationException("Not a support set of options");
-                    }
-                }
+                overallResult = RunTest(argProc, overallResult, reportSet, test);
+                Outputter.OutputSeparator();
             }
 
             if (argProc.IsOptionOn(ArgsProcessor.Options.Run))
@@ -56,17 +30,49 @@ namespace screenium
             return overallResult;
         }
 
+        private CompareResult RunTest(ArgsProcessor argProc, CompareResult overallResult, ReportSet reportSet, TestDescription test)
+        {
+            using (var driver = new BrowserDriver())
+            {
+                driver.SetWindowSize(test.WindowSize);
+
+                driver.OpenUrl(test.Url, test.DivSelector, test.TitleContains);
+
+                var dirManager = new DirectoryManager(argProc);
+
+                if (argProc.IsOptionOn(ArgsProcessor.Options.Run))
+                {
+                    var reportThisTest = CompareActualPageVersusExpected(argProc, dirManager, test, driver);
+                    var resultThisTest = reportThisTest.Result.Result;
+                    if (resultThisTest != CompareResult.Similar)
+                    {
+                        overallResult = resultThisTest;
+                    }
+                    reportSet.Reports.Add(reportThisTest);
+                }
+                else if (argProc.IsOptionOn(ArgsProcessor.Options.Save))
+                {
+                    SaveExpectedPage(dirManager, test, driver);
+                }
+                else
+                {
+                    throw new InvalidOperationException("Not a support set of options");
+                }
+            }
+            return overallResult;
+        }
+
         private void SaveExpectedPage(DirectoryManager dirManager, TestDescription test, BrowserDriver driver)
         {
             Outputter.Output("Saving expected page for test: " + test.Name);
-            driver.SaveDivImageToPath(test.DivSelector, dirManager.GetExpectedImageFilePath(test), test.CropAdjustWidth, test.CropAdjustHeight);
+            driver.SaveDivImageToPath(test.DivSelector, dirManager.GetExpectedImageFilePath(test), test.CropAdjustWidth, test.CropAdjustHeight, test.SleepTimespan);
         }
 
         private Report CompareActualPageVersusExpected(ArgsProcessor argProc, DirectoryManager dirManager,
             TestDescription test, BrowserDriver driver)
         {
             string tempFilePath = dirManager.GetActualImageFilePath(test);
-            driver.SaveDivImageToPath(test.DivSelector, tempFilePath, test.CropAdjustWidth, test.CropAdjustHeight);
+            driver.SaveDivImageToPath(test.DivSelector, tempFilePath, test.CropAdjustWidth, test.CropAdjustHeight, test.SleepTimespan);
 
             var comparer = new CustomImageComparer(argProc);
             var compareResult = comparer.CompareImages(tempFilePath, dirManager.GetExpectedImageFilePath(test), test);
