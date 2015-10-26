@@ -76,11 +76,18 @@ namespace screenium.SeleniumIntegration
 
             Outputter.Output("Page title is: " + _driver.Title);
 
-            IWebElement query = _driver.FindElement(By.CssSelector(divSelector));
-
+            IWebElement query;
+            try
+            {
+                query = _driver.FindElement(By.CssSelector(divSelector));
+            }
+            catch (Exception ex)
+            {
+                throw new InvalidOperationException("Could not find the div with CSS selecotr: " + divSelector, ex);
+            }
             if (!query.Displayed)
             {
-                throw new InvalidOperationException("the div is not displayed: css selector: " + divSelector);
+                throw new InvalidOperationException("The div is not displayed: css selector: " + divSelector);
             }
         }
 
