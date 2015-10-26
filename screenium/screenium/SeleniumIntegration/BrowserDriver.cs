@@ -16,6 +16,7 @@ namespace screenium.SeleniumIntegration
     class BrowserDriver : IDisposable
     {
         private IWebDriver _driver;
+        private ImageFormat _imageFormat = ImageFormat.Png;
 
         internal BrowserDriver()
         {
@@ -42,6 +43,20 @@ namespace screenium.SeleniumIntegration
 
             // Should see: "Cheese - Google Search"
             Console.WriteLine("Page title is: " + _driver.Title);
+
+            //save a screenshot, to make sure ImageMagick is working:
+            if (!TestSaveScreenshot())
+            {
+                throw new InvalidOperationException("The screenshot could not be created or could not be saved.");
+            }
+        }
+
+        private bool TestSaveScreenshot()
+        {
+            var tempFilePath = Path.GetTempFileName();
+            SaveDivImageToPath("", tempFilePath, 0, 0, new TimeSpan());
+            FileInfo info = new FileInfo(tempFilePath);
+            return info.Length > 0;
         }
 
         private void CreateDriver()
@@ -71,15 +86,19 @@ namespace screenium.SeleniumIntegration
 
         internal void SaveDivImageToPath(string divSelector, string tempFilePath, int cropAdjustWidth, int cropAdjustHeight, TimeSpan sleepTimeSpan)
         {
-            //get screenshot of a particular element, via cropping:
-            //http://stackoverflow.com/questions/13832322/how-to-capture-the-screenshot-of-only-a-specific-element-using-selenium-webdrive
-            
-            // Get html element and its location and dimensions:
-            var div = _driver.FindElement(By.CssSelector(divSelector));
-
             SleepBeforeScreenshot(sleepTimeSpan);
 
-            // Get page screenshot and save it in temp folder:
+            SaveScreenshotOfFullPage(ref tempFilePath);
+
+            if (!string.IsNullOrWhiteSpace(divSelector))
+            {
+                CropScreenshotToMatchDiv(divSelector, tempFilePath, cropAdjustWidth, cropAdjustHeight);
+            }
+            Outputter.Output("Got screenshot.");
+        }
+
+        private void SaveScreenshotOfFullPage(ref string tempFilePath)
+        {
             var pageScreenshot = ((ITakesScreenshot)_driver).GetScreenshot();
             tempFilePath = Path.GetFullPath(tempFilePath);
             var dirPath = Path.GetDirectoryName(tempFilePath);
@@ -88,8 +107,16 @@ namespace screenium.SeleniumIntegration
                 throw new DirectoryNotFoundException(dirPath);
             }
 
-            var imageFormat = ImageFormat.Png;
-            pageScreenshot.SaveAsFile(tempFilePath, imageFormat);
+            pageScreenshot.SaveAsFile(tempFilePath, _imageFormat);
+        }
+
+        private void CropScreenshotToMatchDiv(string divSelector, string tempFilePath, int cropAdjustWidth, int cropAdjustHeight)
+        {
+            //get screenshot of a particular element, via cropping:
+            //http://stackoverflow.com/questions/13832322/how-to-capture-the-screenshot-of-only-a-specific-element-using-selenium-webdrive
+
+            // Get html element and its location and dimensions:
+            IWebElement div = _driver.FindElement(By.CssSelector(divSelector));
 
             // Load temp image as bitmap:
             var fullWindowBitmap = new Bitmap(tempFilePath);
@@ -101,8 +128,7 @@ namespace screenium.SeleniumIntegration
             var part = new RectangleF(div.Location.X, div.Location.Y, cropSize.Width, cropSize.Height);
             var divBitmap = fullWindowBitmap.Clone(part, fullWindowBitmap.PixelFormat);
             fullWindowBitmap.Dispose();
-            divBitmap.Save(tempFilePath, imageFormat);
-            Outputter.Output("Got screenshot.");
+            divBitmap.Save(tempFilePath, _imageFormat);
         }
 
         private void SleepBeforeScreenshot(TimeSpan sleepTimeSpan)
