@@ -27,6 +27,8 @@ namespace screenium.Csv
     /// </summary>
     internal class GenericCsvFileReader : StreamReader
     {
+        private int _currentRow = 0;
+
         //TODO use StreamReader by encapsulation not inheritance
 
         public GenericCsvFileReader(Stream stream)
@@ -49,6 +51,7 @@ namespace screenium.Csv
             while (true)
             {
                 row.LineText = ReadLine();
+                _currentRow++;
                 if (String.IsNullOrEmpty(row.LineText))
                 {
                     return false;
@@ -123,6 +126,14 @@ namespace screenium.Csv
 
             // Return true if any columns read
             return (row.Count > 0);
+        }
+
+        public int CurrentRow 
+        {
+            get 
+            {
+                return this._currentRow;
+            }
         }
     }
 }

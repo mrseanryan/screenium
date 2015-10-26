@@ -24,3 +24,8 @@ TestRunSummary.xml
 images/lp_*
 images/tp_*
 temp/*
+images/indi*
+images/roadm*
+images/rose*
+images/rst*
+images/scatter*

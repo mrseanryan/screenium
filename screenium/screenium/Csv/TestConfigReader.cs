@@ -2,6 +2,7 @@
 //
 //See the file license.txt for copying permission.
 
+using System;
 using System.Collections.Generic;
 
 namespace screenium.Csv
@@ -14,32 +15,39 @@ namespace screenium.Csv
 
             using (var reader = new GenericCsvFileReader(path))
             {
-                CsvRow row = new CsvRow();
-                while (reader.ReadRow(row))
+                try
                 {
-                    if (row.Count == 0)
+                    CsvRow row = new CsvRow();
+                    while (reader.ReadRow(row))
                     {
-                        continue;
-                    }
+                        if (row.Count == 0)
+                        {
+                            continue;
+                        }
 
-                    int column = 0;
-                    TestDescription test = new TestDescription()
-                    {
-                        Name = CleanText(row[column++]),
-                        Description = CleanText(row[column++]),
-                        DivSelector = CleanText(row[column++]),
-                        Url = CleanText(row[column++]),
-                        Query1 = CleanText(row[column++]),
-                        Query2 = CleanText(row[column++]),
-                        Query3 = CleanText(row[column++]),
-                        TitleContains = CleanText(row[column++]),
-                        WindowWidth = CleanTextAsInt(row[column++]),
-                        WindowHeight = CleanTextAsInt(row[column++]),
-                        CropAdjustWidth = CleanTextAsInt(row[column++]),
-                        CropAdjustHeight = CleanTextAsInt(row[column++]),
-                        Tolerance = CleanTextAsDouble(row[column++])
-                    };
-                    tests.Add(test);
+                        int column = 0;
+                        TestDescription test = new TestDescription()
+                        {
+                            Name = CleanText(row[column++]),
+                            Description = CleanText(row[column++]),
+                            DivSelector = CleanText(row[column++]),
+                            Url = CleanText(row[column++]),
+                            Query1 = CleanText(row[column++]),
+                            Query2 = CleanText(row[column++]),
+                            Query3 = CleanText(row[column++]),
+                            TitleContains = CleanText(row[column++]),
+                            WindowWidth = CleanTextAsInt(row[column++]),
+                            WindowHeight = CleanTextAsInt(row[column++]),
+                            CropAdjustWidth = CleanTextAsInt(row[column++]),
+                            CropAdjustHeight = CleanTextAsInt(row[column++]),
+                            Tolerance = CleanTextAsDouble(row[column++])
+                        };
+                        tests.Add(test);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    throw new TestConfigReaderException(reader.CurrentRow, ex);
                 }
             }
 

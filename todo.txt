@@ -40,7 +40,7 @@ xx - try with WV LP
 xx - add parallel execution (N=2 x WebDrivers ?)
 
 n/a - report from x.partial.template.html templates -> html
-xx - improve report styling
+xx - improve report styling (bootstrap accordion)
 
 report:
 =====
