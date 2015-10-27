@@ -71,11 +71,11 @@ namespace screenium
         private Report CompareActualPageVersusExpected(ArgsProcessor argProc, DirectoryManager dirManager,
             TestDescription test, BrowserDriver driver)
         {
-            string tempFilePath = dirManager.GetActualImageFilePath(test);
-            driver.SaveDivImageToPath(test.DivSelector, tempFilePath, test.CropAdjustWidth, test.CropAdjustHeight, test.SleepTimespan);
+            string actualFilePath = dirManager.GetActualImageFilePath(test);
+            driver.SaveDivImageToPath(test.DivSelector, actualFilePath, test.CropAdjustWidth, test.CropAdjustHeight, test.SleepTimespan);
 
             var comparer = new CustomImageComparer(argProc);
-            var compareResult = comparer.CompareImages(tempFilePath, dirManager.GetExpectedImageFilePath(test), test);
+            var compareResult = comparer.CompareImages(actualFilePath, dirManager.GetExpectedImageFilePath(test), test);
 
             var report = CreateReport(test, compareResult);
 

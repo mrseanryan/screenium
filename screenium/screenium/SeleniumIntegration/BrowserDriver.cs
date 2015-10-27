@@ -16,7 +16,7 @@ namespace screenium.SeleniumIntegration
     class BrowserDriver : IDisposable
     {
         private IWebDriver _driver;
-        private ImageFormat _imageFormat = ImageFormat.Png;
+        private readonly ImageFormat _imageFormat = ImageFormat.Png;
 
         internal BrowserDriver()
         {
@@ -39,7 +39,7 @@ namespace screenium.SeleniumIntegration
             // Google's search is rendered dynamically with JavaScript.
             // Wait for the page to load, timeout after 10 seconds
             WebDriverWait wait = new WebDriverWait(_driver, TimeSpan.FromSeconds(10));
-            wait.Until((d) => { return d.Title.ToLower().StartsWith("cheese"); });
+            wait.Until(d => d.Title.ToLower().StartsWith("cheese"));
 
             // Should see: "Cheese - Google Search"
             Console.WriteLine("Page title is: " + _driver.Title);
@@ -71,8 +71,8 @@ namespace screenium.SeleniumIntegration
             // Wait for the page to load, timeout after 10 seconds
             //TODO find a better way to wait ...
             WebDriverWait wait = new WebDriverWait(_driver, TimeSpan.FromSeconds(10));
-            Outputter.Output("Searching for text: " + titleContains);
-            wait.Until((d) => { return d.Title.ToLower().Contains(titleContains.ToLower()); });
+            Outputter.Output("Searching for title text: " + titleContains);
+            wait.Until(d => d.Title.ToLower().Contains(titleContains.ToLower()));
 
             Outputter.Output("Page title is: " + _driver.Title);
 
@@ -91,33 +91,33 @@ namespace screenium.SeleniumIntegration
             }
         }
 
-        internal void SaveDivImageToPath(string divSelector, string tempFilePath, int cropAdjustWidth, int cropAdjustHeight, TimeSpan sleepTimeSpan)
+        internal void SaveDivImageToPath(string divSelector, string imageFilePath, int cropAdjustWidth, int cropAdjustHeight, TimeSpan sleepTimeSpan)
         {
             SleepBeforeScreenshot(sleepTimeSpan);
 
-            SaveScreenshotOfFullPage(ref tempFilePath);
+            SaveScreenshotOfFullPage(ref imageFilePath);
 
             if (!string.IsNullOrWhiteSpace(divSelector))
             {
-                CropScreenshotToMatchDiv(divSelector, tempFilePath, cropAdjustWidth, cropAdjustHeight);
+                CropScreenshotToMatchDiv(divSelector, imageFilePath, cropAdjustWidth, cropAdjustHeight);
             }
             Outputter.Output("Got screenshot.");
         }
 
-        private void SaveScreenshotOfFullPage(ref string tempFilePath)
+        private void SaveScreenshotOfFullPage(ref string imageFilePath)
         {
             var pageScreenshot = ((ITakesScreenshot)_driver).GetScreenshot();
-            tempFilePath = Path.GetFullPath(tempFilePath);
-            var dirPath = Path.GetDirectoryName(tempFilePath);
-            if (!Directory.Exists(dirPath))
+            imageFilePath = Path.GetFullPath(imageFilePath);
+            var dirPath = Path.GetDirectoryName(imageFilePath);
+            if (dirPath == null || !Directory.Exists(dirPath))
             {
                 throw new DirectoryNotFoundException(dirPath);
             }
 
-            pageScreenshot.SaveAsFile(tempFilePath, _imageFormat);
+            pageScreenshot.SaveAsFile(imageFilePath, _imageFormat);
         }
 
-        private void CropScreenshotToMatchDiv(string divSelector, string tempFilePath, int cropAdjustWidth, int cropAdjustHeight)
+        private void CropScreenshotToMatchDiv(string divSelector, string imageFilePath, int cropAdjustWidth, int cropAdjustHeight)
         {
             //get screenshot of a particular element, via cropping:
             //http://stackoverflow.com/questions/13832322/how-to-capture-the-screenshot-of-only-a-specific-element-using-selenium-webdrive
@@ -126,16 +126,24 @@ namespace screenium.SeleniumIntegration
             IWebElement div = _driver.FindElement(By.CssSelector(divSelector));
 
             // Load temp image as bitmap:
-            var fullWindowBitmap = new Bitmap(tempFilePath);
+            Bitmap divBitmap;
+            //copy the file to temp, to get around issue where Bitmap holds the file open, even after it is Disposed!
+            var tempFilePath2 = Path.GetTempFileName();
+            File.Copy(imageFilePath, tempFilePath2, true);
+            using (var fullWindowBitmap = new Bitmap(tempFilePath2))
+            {
+                // crop page screenshot to the match the div:
+                var cropSize =
+                    new Size(
+                        Math.Min(fullWindowBitmap.Width - div.Location.X,
+                            div.Location.X + div.Size.Width + cropAdjustWidth),
+                        Math.Min(fullWindowBitmap.Height - div.Location.Y,
+                            div.Location.Y + div.Size.Height + cropAdjustHeight));
 
-            // crop page screenshot to the match the div:
-            var cropSize = new Size(Math.Min(fullWindowBitmap.Width - div.Location.X, div.Location.X + div.Size.Width + cropAdjustWidth),
-                Math.Min(fullWindowBitmap.Height - div.Location.Y, div.Location.Y + div.Size.Height + cropAdjustHeight));
-
-            var part = new RectangleF(div.Location.X, div.Location.Y, cropSize.Width, cropSize.Height);
-            var divBitmap = fullWindowBitmap.Clone(part, fullWindowBitmap.PixelFormat);
-            fullWindowBitmap.Dispose();
-            divBitmap.Save(tempFilePath, _imageFormat);
+                var part = new RectangleF(div.Location.X, div.Location.Y, cropSize.Width, cropSize.Height);
+                divBitmap = fullWindowBitmap.Clone(part, fullWindowBitmap.PixelFormat);
+            }
+            divBitmap.Save(imageFilePath, _imageFormat);
         }
 
         private void SleepBeforeScreenshot(TimeSpan sleepTimeSpan)
