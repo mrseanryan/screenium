@@ -83,7 +83,7 @@ namespace screenium.SeleniumIntegration
             }
             catch (Exception ex)
             {
-                throw new InvalidOperationException("Could not find the div with CSS selecotr: " + divSelector, ex);
+                throw new InvalidOperationException("Could not find the div with CSS selector: " + divSelector, ex);
             }
             if (!query.Displayed)
             {

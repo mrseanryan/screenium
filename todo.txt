@@ -40,6 +40,8 @@ OK - try with WV LP
 OK - add bad row test. output Column as well as Row.
 OK - add per-test SleepTimespan (usually 0) after page text seen, and before taking screenshot
 
+xx - add AcceptChanges option, with Y prompt -> moves actual to expected
+xx - have 4 adjustments: CropAdjustWidth, CropAdjustHeight -> CropAdjustTop, CropAdjustRight, CropAdjustBottom, CropAdjustLeft
 xx - add parallel execution (N=2 x WebDrivers ?)
 
 xx - improve report styling (bootstrap accordion)
