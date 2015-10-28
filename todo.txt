@@ -50,8 +50,11 @@ xx - Report: improve styling
    - bootstrap accordion from templates/template1.html
    - new cmd line arg TemplateFilePath
 
+xx - Report: add link to side-x-side view
+xx - ScriptCount and js file with same name and N tests. screenshot after each js script run.
+
 xx - refactor to have screeniumLib project, for possible later UI
-   
+
 report:
 =====
 xx - overall result as red/green bar
