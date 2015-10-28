@@ -23,8 +23,18 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "TestData", "TestData", "{1E
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "bat files", "bat files", "{30135C18-1164-430E-942F-6FE102E90FDF}"
 	ProjectSection(SolutionItems) = preProject
+		..\copy_edited_image_of_google.bat = ..\copy_edited_image_of_google.bat
+		..\run_bad_test_name.bat = ..\run_bad_test_name.bat
+		..\run_badCsv.bat = ..\run_badCsv.bat
 		..\run_google_home.bat = ..\run_google_home.bat
+		..\run_google_home_save.bat = ..\run_google_home_save.bat
 		..\run_self_test.bat = ..\run_self_test.bat
+		..\run_wv_lp.bat = ..\run_wv_lp.bat
+		..\run_wv_lp_save.bat = ..\run_wv_lp_save.bat
+		..\run_wv_new_dashboard.bat = ..\run_wv_new_dashboard.bat
+		..\run_wv_new_dashboard_save.bat = ..\run_wv_new_dashboard_save.bat
+		..\run_wv_others.bat = ..\run_wv_others.bat
+		..\run_wv_others_save.bat = ..\run_wv_others_save.bat
 	EndProjectSection
 EndProject
 Global

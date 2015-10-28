@@ -45,6 +45,11 @@ namespace screenium
                 }
             }
 
+            if (testsToRun.Count == 0)
+            {
+                throw new ArgumentException("No tests were found in the CSV file that match the test name '" + name + "'");
+            }
+
             return testsToRun;
         }
 
