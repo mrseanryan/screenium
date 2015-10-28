@@ -23,7 +23,7 @@ OK - fire up test sites
   https://code.google.com/p/selenium/wiki/PageFactory
 
 xx - add Query1, Query2, Query3
-xx - add delay arg: DelayInSeconds
+xx - add delay arg: TimeoutTimeSpan
 OK - save screenshot to temp location
 		get screenshot of a particular element, via cropping:
 		http://stackoverflow.com/questions/13832322/how-to-capture-the-screenshot-of-only-a-specific-element-using-selenium-webdrive
@@ -40,12 +40,15 @@ OK - try with WV LP
 OK - add bad row test. output Column as well as Row.
 OK - add per-test SleepTimespan (usually 0) after page text seen, and before taking screenshot
 
-xx - add Created DateTime, Execution Duration, x/y Tests Passed to Report class and to Console at end and to the HTML in header
-xx - add AcceptChanges option, with Y prompt -> moves actual to expected
-xx - have 4 adjustments: CropAdjustWidth, CropAdjustHeight -> CropAdjustTop, CropAdjustRight, CropAdjustBottom, CropAdjustLeft
+-xx - add Created DateTime, Execution Duration, x/y Tests Passed to Report class and to Console at end and to the HTML in header
+-xx - add AcceptChanges option, with Y prompt -> moves actual to expected
+-xx - have 4 adjustments: CropAdjustWidth, CropAdjustHeight -> CropAdjustTop, CropAdjustRight, CropAdjustBottom, CropAdjustLeft
+
 xx - add parallel execution (N=2 x WebDrivers ?)
 
-xx - improve report styling (bootstrap accordion)
+xx - improve report styling
+   - bootstrap accordion from templates/template1.html
+   - new cmd line arg TemplateFilePath
 
 report:
 =====

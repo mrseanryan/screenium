@@ -12,52 +12,55 @@ namespace screenium
 {
     class TestRunner
     {
+        BrowserDriver _driver;
+
         internal CompareResult RunTests(List<TestDescription> testsToRun, ArgsProcessor argProc)
         {
-            CompareResult overallResult = CompareResult.Similar;
-            var reportSet = new ReportSet();
-            foreach (var test in testsToRun)
+            using (_driver = new BrowserDriver())
             {
-                Outputter.Output("Running test: " + test.Name + " - " + test.Description);
-                overallResult = RunTest(argProc, overallResult, reportSet, test);
-                Outputter.OutputSeparator();
-            }
+                CompareResult overallResult = CompareResult.Similar;
+                var reportSet = new ReportSet();
+                foreach (var test in testsToRun)
+                {
+                    Outputter.Output("Running test: " + test.Name + " - " + test.Description);
+                    overallResult = RunTest(argProc, overallResult, reportSet, test);
+                    Outputter.OutputSeparator();
+                }
 
-            if (argProc.IsOptionOn(ArgsProcessor.Options.Run))
-            {
-                CreateReports(argProc, reportSet);
+                if (argProc.IsOptionOn(ArgsProcessor.Options.Run))
+                {
+                    CreateReports(argProc, reportSet);
+                }
+                return overallResult;
             }
-            return overallResult;
+            _driver = null;
         }
 
         private CompareResult RunTest(ArgsProcessor argProc, CompareResult overallResult, ReportSet reportSet, TestDescription test)
         {
-            using (var driver = new BrowserDriver())
+            _driver.SetWindowSize(test.WindowSize);
+
+            _driver.OpenUrl(test.Url, test.DivSelector, test.TitleContains);
+
+            var dirManager = new DirectoryManager(argProc);
+
+            if (argProc.IsOptionOn(ArgsProcessor.Options.Run))
             {
-                driver.SetWindowSize(test.WindowSize);
-
-                driver.OpenUrl(test.Url, test.DivSelector, test.TitleContains);
-
-                var dirManager = new DirectoryManager(argProc);
-
-                if (argProc.IsOptionOn(ArgsProcessor.Options.Run))
+                var reportThisTest = CompareActualPageVersusExpected(argProc, dirManager, test, _driver);
+                var resultThisTest = reportThisTest.Result.Result;
+                if (resultThisTest != CompareResult.Similar)
                 {
-                    var reportThisTest = CompareActualPageVersusExpected(argProc, dirManager, test, driver);
-                    var resultThisTest = reportThisTest.Result.Result;
-                    if (resultThisTest != CompareResult.Similar)
-                    {
-                        overallResult = resultThisTest;
-                    }
-                    reportSet.Reports.Add(reportThisTest);
+                    overallResult = resultThisTest;
                 }
-                else if (argProc.IsOptionOn(ArgsProcessor.Options.Save))
-                {
-                    SaveExpectedPage(dirManager, test, driver);
-                }
-                else
-                {
-                    throw new InvalidOperationException("Not a support set of options");
-                }
+                reportSet.Reports.Add(reportThisTest);
+            }
+            else if (argProc.IsOptionOn(ArgsProcessor.Options.Save))
+            {
+                SaveExpectedPage(dirManager, test, _driver);
+            }
+            else
+            {
+                throw new InvalidOperationException("Not a support set of options");
             }
             return overallResult;
         }
