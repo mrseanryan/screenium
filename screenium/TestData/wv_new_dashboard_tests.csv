@@ -1,2 +1,2 @@
 #testName, testDescription, divSelector, URL, Query1, Query2, Query3, TitleContains, WindowWidth, WindowHeight, CropAdjustWidth, CropAdjustHeight, Tolerance, SleepTimespan
-wv new dashboard - map, wv new dashboard - map, #shell-container,http://localhost/web/Dashboards/,,,,Well,1400,1200,0,0,0.0003,00:00:02
+wv new dashboard - map, wv new dashboard - map, #shell-container,http://localhost/web/Dashboards/,,,,Well,1200,1000,0,0,0.0003,00:00:10
