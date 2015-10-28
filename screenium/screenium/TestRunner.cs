@@ -16,24 +16,30 @@ namespace screenium
 
         internal CompareResult RunTests(List<TestDescription> testsToRun, ArgsProcessor argProc)
         {
-            using (_driver = new BrowserDriver())
+            CompareResult overallResult = CompareResult.Similar;
+            try
             {
-                CompareResult overallResult = CompareResult.Similar;
-                var reportSet = new ReportSet();
-                foreach (var test in testsToRun)
+                using (_driver = new BrowserDriver())
                 {
-                    Outputter.Output("Running test: " + test.Name + " - " + test.Description);
-                    overallResult = RunTest(argProc, overallResult, reportSet, test);
-                    Outputter.OutputSeparator();
-                }
+                    var reportSet = new ReportSet();
+                    foreach (var test in testsToRun)
+                    {
+                        Outputter.Output("Running test: " + test.Name + " - " + test.Description);
+                        overallResult = RunTest(argProc, overallResult, reportSet, test);
+                        Outputter.OutputSeparator();
+                    }
 
-                if (argProc.IsOptionOn(ArgsProcessor.Options.Run))
-                {
-                    CreateReports(argProc, reportSet);
+                    if (argProc.IsOptionOn(ArgsProcessor.Options.Run))
+                    {
+                        CreateReports(argProc, reportSet);
+                    }
                 }
-                return overallResult;
             }
-            _driver = null;
+            finally
+            {
+                _driver = null;
+            }
+            return overallResult;
         }
 
         private CompareResult RunTest(ArgsProcessor argProc, CompareResult overallResult, ReportSet reportSet, TestDescription test)
