@@ -60,7 +60,7 @@ namespace screenium
             }
             else
             {
-                throw new InvalidOperationException("Not a support set of options");
+                throw new InvalidOperationException("Not a supported set of options");
             }
             return overallResult;
         }
