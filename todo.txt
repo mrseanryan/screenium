@@ -50,6 +50,8 @@ xx - Report: improve styling
    - bootstrap accordion from templates/template1.html
    - new cmd line arg TemplateFilePath
 
+xx - refactor to have screeniumLib project, for possible later UI
+   
 report:
 =====
 xx - overall result as red/green bar
