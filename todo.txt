@@ -40,12 +40,15 @@ OK - try with WV LP
 OK - add bad row test. output Column as well as Row.
 OK - add per-test SleepTimespan (usually 0) after page text seen, and before taking screenshot
 
-xx - fix bug: if test name not recognised from CSV, then throw
+OK - fix bug: if test name not recognised from CSV, then throw
 
 xx - Report: add CSV filename to the header
-xx - Report: add Created DateTime, Execution Duration, x/y Tests Passed to Report class and to Console at end and to the HTML in header
+xx - Report: add Created DateTime, Execution Duration, x/y Tests Passed to Report class, and to Console at end, and to the HTML in header
+
 xx - add AcceptChanges option, with Y prompt -> moves actual to expected
+
 xx - have 4 adjustments: CropAdjustWidth, CropAdjustHeight -> CropAdjustTop, CropAdjustRight, CropAdjustBottom, CropAdjustLeft
+
 xx - add parallel execution (N=2 x WebDrivers ?)
 
 xx - Report: improve styling
@@ -53,6 +56,7 @@ xx - Report: improve styling
    - new cmd line arg TemplateFilePath
 
 xx - Report: add link to side-x-side view
+
 xx - ScriptCount and js file with same name and N tests. screenshot after each js script run.
 
 xx - refactor to have screeniumLib project, for possible later UI
