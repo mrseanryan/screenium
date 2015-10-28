@@ -40,13 +40,13 @@ OK - try with WV LP
 OK - add bad row test. output Column as well as Row.
 OK - add per-test SleepTimespan (usually 0) after page text seen, and before taking screenshot
 
--xx - add Created DateTime, Execution Duration, x/y Tests Passed to Report class and to Console at end and to the HTML in header
--xx - add AcceptChanges option, with Y prompt -> moves actual to expected
--xx - have 4 adjustments: CropAdjustWidth, CropAdjustHeight -> CropAdjustTop, CropAdjustRight, CropAdjustBottom, CropAdjustLeft
-
+xx - Report: add CSV filename to the header
+xx - Report: add Created DateTime, Execution Duration, x/y Tests Passed to Report class and to Console at end and to the HTML in header
+xx - add AcceptChanges option, with Y prompt -> moves actual to expected
+xx - have 4 adjustments: CropAdjustWidth, CropAdjustHeight -> CropAdjustTop, CropAdjustRight, CropAdjustBottom, CropAdjustLeft
 xx - add parallel execution (N=2 x WebDrivers ?)
 
-xx - improve report styling
+xx - Report: improve styling
    - bootstrap accordion from templates/template1.html
    - new cmd line arg TemplateFilePath
 
