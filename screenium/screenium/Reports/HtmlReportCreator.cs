@@ -58,7 +58,7 @@ namespace screenium.Reports
         private void WriteReportHtml(DirectoryManager dirManager, StreamWriter sw, Report report)
         {
             sw.Write(GetTagStart("table"));
-            WriteHtmlRow(sw, "Test:", report.Test.Name);
+            WriteHtmlRow(sw, "Test:", GetLink(report.Test.Name, report.Test.Url));
             WriteHtmlRow(sw, "Result: ", GetResultAsHtml(report.Result.Result));
             WriteHtmlRow(sw, "Tolerance: ", report.Result.Tolerance);
             WriteHtmlRow(sw, "Distortion: ", report.Result.Distortion);
@@ -67,6 +67,11 @@ namespace screenium.Reports
             WriteHtmlRow(sw, "Diff Image: ", CreateImageHtml(diffImageFilePath, "diff image"));
 
             sw.Write(GetTagEnd("table"));
+        }
+
+        private string GetLink(string text, string url)
+        {
+            return GetTagStartWithAttributes("a", "href='" + url + "' target='_new_window'") + text + GetTagEnd("a");
         }
 
         private void WriteReportHeadingHtml(StreamWriter sw)

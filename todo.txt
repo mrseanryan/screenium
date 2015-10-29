@@ -46,6 +46,7 @@ xx - try add option KeepOpen, but for 1 test only (throw on All) (not sure if it
 
 xx - Report: add CSV filename to the header
 xx - Report: add Created DateTime, Execution Duration, x/y Tests Passed to Report class, and to Console at end, and to the HTML in header
+OK - Report: add link to the test URL (on the test name)
 
 xx - add AcceptChanges option, with Y prompt -> moves actual to expected
 
