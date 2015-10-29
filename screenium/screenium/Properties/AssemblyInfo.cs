@@ -1,4 +1,4 @@
-﻿//Copyright (c) 2015 Sean Ryan
+﻿//original license: MIT
 //
 //See the file license.txt for copying permission.
 
@@ -13,7 +13,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("screenium")]
-[assembly: AssemblyCopyright("Copyright © Sean Ryan 2015")]
+[assembly: AssemblyCopyright("MIT licensed - 2015")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -35,4 +35,4 @@ using System.Runtime.InteropServices;
 // You can specify all the values or you can default the Build and Revision Numbers 
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("1.1.0.0")]
+[assembly: AssemblyVersion("1.2.0.0")]

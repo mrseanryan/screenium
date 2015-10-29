@@ -1,12 +1,8 @@
-﻿//Copyright (c) 2015 Sean Ryan
+﻿//original license: MIT
 //
 //See the file license.txt for copying permission.
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace screenium.Compare
 {
@@ -16,9 +12,9 @@ namespace screenium.Compare
         {
             switch (result)
             {
-                case Compare.CompareResult.Similar:
+                case CompareResult.Similar:
                     return ConsoleColor.Green;
-                case Compare.CompareResult.Different:
+                case CompareResult.Different:
                     return ConsoleColor.Red;
                 default:
                     throw new ArgumentException("Not a recognised CompareResult: " + result);

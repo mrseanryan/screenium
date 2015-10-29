@@ -1,4 +1,4 @@
-//Copyright (c) 2015 Sean Ryan
+//original license: MIT
 //
 //See the file license.txt for copying permission.
 

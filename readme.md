@@ -15,7 +15,9 @@ License
 =======
 The MIT License (MIT)
 
-Copyright (c) 2015 Sean Ryan
+- screenium code written by Sean Ryan.
+
+- uses 3rd party DLLs (see Dependencies section).
 
 How To Use screenium
 ====================
@@ -96,6 +98,9 @@ nuget: Selenium.WebDriver
 version: 2.46.0
 
 nuget: WebDriver.Support
+
+- Image Magick.NET
+nuget: Magick.NET-Q16-AnyCPU
 
 - ChromeDriver [is included in source code]
 version: 2.20 [but its best to use the latest one!]
