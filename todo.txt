@@ -42,6 +42,8 @@ OK - add per-test SleepTimespan (usually 0) after page text seen, and before tak
 
 OK - fix bug: if test name not recognised from CSV, then throw
 
+xx - try add option KeepOpen, but for 1 test only (throw on All) (not sure if it is possible)
+
 xx - Report: add CSV filename to the header
 xx - Report: add Created DateTime, Execution Duration, x/y Tests Passed to Report class, and to Console at end, and to the HTML in header
 
