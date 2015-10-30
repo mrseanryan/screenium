@@ -44,9 +44,11 @@ OK - fix bug: if test name not recognised from CSV, then throw
 
 n/a - try add option KeepOpen, but for 1 test only (throw on All) (not sure if it is possible)
 
-xx - Report: add CSV filename to the header
-xx - Report: add Created DateTime, Execution Duration, x/y Tests Passed to Report class, and to Console at end, and to the HTML in header
+OK - Report: add CSV filename to the header
+OK - Report: add Created DateTime, Execution Duration, x/y Tests Passed to Report class, and to Console at end, and to the HTML in header
 OK - Report: add link to the test URL (on the test name)
+
+xx - add menu to select which test, or ALL.  so cmd line arg is "all" or else "menu" or else "test name"
 
 xx - add AcceptChanges option, with Y prompt -> moves actual to expected
 
@@ -55,10 +57,10 @@ xx - have 4 adjustments: CropAdjustWidth, CropAdjustHeight -> CropAdjustTop, Cro
 xx - add parallel execution (N=2 x WebDrivers ?)
 
 xx - Report: improve styling
-   - bootstrap accordion from templates/template1.html
    - new cmd line arg TemplateFilePath
+   - bootstrap accordion from templates/template1.html
 
-xx - Report: add link to side-x-side view
+xx - Report: add link to side-x-side view OR via a tab control ?
 
 xx - ScriptCount and js file with same name and N tests. screenshot after each js script run.
 

@@ -7,6 +7,8 @@ using screenium.Reports;
 using screenium.SeleniumIntegration;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
 
 namespace screenium
 {
@@ -19,15 +21,23 @@ namespace screenium
             CompareResult overallResult = CompareResult.Similar;
             try
             {
+                var watch = Stopwatch.StartNew();
+
                 using (_driver = new BrowserDriver())
                 {
                     var reportSet = new ReportSet();
+                    reportSet.Created = DateTime.Now;
+                    reportSet.CsvFileName = Path.GetFileName(argProc.GetArg(ArgsProcessor.Args.CSV_FILE_PATH));
+
                     foreach (var test in testsToRun)
                     {
                         Outputter.Output("Running test: " + test.Name + " - " + test.Description);
                         overallResult = RunTest(argProc, overallResult, reportSet, test);
                         Outputter.OutputSeparator();
                     }
+
+                    watch.Stop();
+                    reportSet.Duration = watch.Elapsed;
 
                     if (argProc.IsOptionOn(ArgsProcessor.Options.Run))
                     {

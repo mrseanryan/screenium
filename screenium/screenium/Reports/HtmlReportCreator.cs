@@ -2,7 +2,6 @@
 //
 //See the file license.txt for copying permission.
 
-
 using System;
 using System.IO;
 
@@ -38,7 +37,7 @@ namespace screenium.Reports
                     sw.Write(GetTagStart("html"));
                     sw.Write(GetHeader("screenium Test Results"));
                     sw.Write(GetTagStart("body"));
-                    WriteReportHeadingHtml(sw);
+                    WriteReportHeadingHtml(sw, reports);
                     sw.Write(GetSeparator());
 
                     foreach (var report in reports.Reports)
@@ -74,14 +73,16 @@ namespace screenium.Reports
             return GetTagStartWithAttributes("a", "href='" + url + "' target='_new_window'") + text + GetTagEnd("a");
         }
 
-        private void WriteReportHeadingHtml(StreamWriter sw)
+        private void WriteReportHeadingHtml(StreamWriter sw, ReportSet reports)
         {
             sw.Write(GetTagStart("table"));
-            sw.Write(GetTagStart("tr"));
-            sw.Write(GetTagStart("td"));
-            sw.Write(GetEmphasisedText("screenium Test Results:"));
-            sw.Write(GetTagEnd("td"));
-            sw.Write(GetTagEnd("tr"));
+
+            WriteHtmlRow(sw, GetEmphasisedText("screenium Test Results:"), reports.CsvFileName);
+
+            WriteHtmlRow(sw, "Created: ", DateSupport.ToString(reports.Created));
+            WriteHtmlRow(sw, "Duration: ", DateSupport.ToString(reports.Duration));
+            WriteHtmlRow(sw, "Result: ", reports.CountTestsPassed + " of " + reports.CountTests + " tests passed.");
+
             sw.Write(GetTagEnd("table"));
         }
 

@@ -20,16 +20,27 @@ namespace screenium.Reports
 
         void IReportCreator.ShowReport(ReportSet reports)
         {
+            ShowReportHeader(reports);
+
             foreach (var report in reports.Reports)
             {
                 ShowReport(report);
             }
         }
 
+        private void ShowReportHeader(ReportSet reports)
+        {
+            Outputter.Output("");
+            Outputter.OutputEmphasised("Test Results Summary:");
+            Outputter.Output("Filename: " + reports.CsvFileName);
+            Outputter.Output("Duration: " + DateSupport.ToString(reports.Duration));
+            Outputter.Output(reports.CountTestsPassed + " of " + reports.CountTests + " tests passed.");
+        }
+
         private void ShowReport(Report report)
         {
             Outputter.Output("");
-            Outputter.OutputEmphasised("Test Results:");
+            Outputter.OutputEmphasised("Test Result:");
 
             Outputter.Output("Test: " + report.Test.Name);
             Outputter.Output("Result: " + report.Result.Result, Compare.CompareResultHelper.GetResultAsConsoleColor(report.Result.Result));
