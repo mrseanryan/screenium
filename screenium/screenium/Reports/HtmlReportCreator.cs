@@ -77,8 +77,8 @@ namespace screenium.Reports
         {
             sw.Write(GetTagStart("table"));
 
-            WriteHtmlRow(sw, GetEmphasisedText("screenium Test Results:"), reports.CsvFileName);
-
+            WriteHtmlRow(sw, GetEmphasisedText("screenium Test Results:"), "");
+            WriteHtmlRow(sw, "Filename", reports.CsvFileName);
             WriteHtmlRow(sw, "Created: ", DateSupport.ToString(reports.Created));
             WriteHtmlRow(sw, "Duration: ", DateSupport.ToString(reports.Duration));
             WriteHtmlRow(sw, "Overall Result: ", GetHtmlColoredForResult(reports.OverallResult, reports.OverallResult.ToString()));
