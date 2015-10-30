@@ -47,6 +47,7 @@ n/a - try add option KeepOpen, but for 1 test only (throw on All) (not sure if i
 OK - Report: add CSV filename to the header
 OK - Report: add Created DateTime, Execution Duration, x/y Tests Passed to Report class, and to Console at end, and to the HTML in header
 OK - Report: add link to the test URL (on the test name)
+xx - report: add date to filename?  but this is in the BAT ...  => make a dated archive copy of the report! (with images)
 
 xx - add menu to select which test, or ALL.  so cmd line arg is "all" or else "menu" or else "test name"
 
