@@ -81,7 +81,10 @@ namespace screenium.Reports
 
             WriteHtmlRow(sw, "Created: ", DateSupport.ToString(reports.Created));
             WriteHtmlRow(sw, "Duration: ", DateSupport.ToString(reports.Duration));
-            WriteHtmlRow(sw, "Result: ", reports.CountTestsPassed + " of " + reports.CountTests + " tests passed.");
+            WriteHtmlRow(sw, "Overall Result: ", GetHtmlColoredForResult(reports.OverallResult, reports.OverallResult.ToString()));
+
+            var resultHtml = reports.CountTestsPassed + " of " + reports.CountTests + " tests passed.";
+            WriteHtmlRow(sw, "Result: ", resultHtml);
 
             sw.Write(GetTagEnd("table"));
         }
@@ -92,6 +95,11 @@ namespace screenium.Reports
         }
 
         private string GetResultAsHtml(Compare.CompareResult compareResult)
+        {
+            return GetHtmlColoredForResult(compareResult, compareResult.ToString());
+        }
+
+        private string GetHtmlColoredForResult(Compare.CompareResult compareResult, string text)
         {
             string color;
             const string green = "#00FF00";
@@ -107,7 +115,7 @@ namespace screenium.Reports
                 default:
                     throw new ArgumentException("Not a recognised Report Result: " + compareResult);
             }
-            return GetTagWithAttributesAndChildText("div", "style='background-color:" + color + "'", compareResult.ToString());
+            return GetTagWithAttributesAndChildText("div", "style='background-color:" + color + "'", text);
         }
 
         private string GetHeader(string title)

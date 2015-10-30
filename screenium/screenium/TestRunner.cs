@@ -18,21 +18,21 @@ namespace screenium
 
         internal CompareResult RunTests(List<TestDescription> testsToRun, ArgsProcessor argProc)
         {
-            CompareResult overallResult = CompareResult.Similar;
+            var reportSet = new ReportSet();
+            reportSet.OverallResult = CompareResult.Similar;
             try
             {
                 var watch = Stopwatch.StartNew();
 
                 using (_driver = new BrowserDriver())
                 {
-                    var reportSet = new ReportSet();
                     reportSet.Created = DateTime.Now;
                     reportSet.CsvFileName = Path.GetFileName(argProc.GetArg(ArgsProcessor.Args.CSV_FILE_PATH));
 
                     foreach (var test in testsToRun)
                     {
                         Outputter.Output("Running test: " + test.Name + " - " + test.Description);
-                        overallResult = RunTest(argProc, overallResult, reportSet, test);
+                        reportSet.OverallResult = RunTest(argProc, reportSet.OverallResult, reportSet, test);
                         Outputter.OutputSeparator();
                     }
 
@@ -49,7 +49,7 @@ namespace screenium
             {
                 _driver = null;
             }
-            return overallResult;
+            return reportSet.OverallResult;
         }
 
         private CompareResult RunTest(ArgsProcessor argProc, CompareResult overallResult, ReportSet reportSet, TestDescription test)

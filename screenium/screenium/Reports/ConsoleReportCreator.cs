@@ -20,20 +20,22 @@ namespace screenium.Reports
 
         void IReportCreator.ShowReport(ReportSet reports)
         {
-            ShowReportHeader(reports);
-
             foreach (var report in reports.Reports)
             {
                 ShowReport(report);
             }
+            //in console output, is actually better to have summary at the *end*
+            ShowReportHeader(reports);
         }
 
         private void ShowReportHeader(ReportSet reports)
         {
             Outputter.Output("");
-            Outputter.OutputEmphasised("Test Results Summary:");
+            Outputter.OutputEmphasised("Test Results Summary:", ConsoleColor.Cyan);
             Outputter.Output("Filename: " + reports.CsvFileName);
             Outputter.Output("Duration: " + DateSupport.ToString(reports.Duration));
+
+            Outputter.Output("Overall Result: " + reports.OverallResult, Compare.CompareResultHelper.GetResultAsConsoleColor(reports.OverallResult));
             Outputter.Output(reports.CountTestsPassed + " of " + reports.CountTests + " tests passed.");
         }
 

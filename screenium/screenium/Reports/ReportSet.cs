@@ -40,5 +40,7 @@ namespace screenium.Reports
         }
 
         public string CsvFileName { get; set; }
+
+        public Compare.CompareResult OverallResult { get; set; }
     }
 }

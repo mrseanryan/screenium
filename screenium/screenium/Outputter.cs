@@ -8,6 +8,8 @@ namespace screenium
 {
     class Outputter
     {
+        private static ConsoleColor _origColor = Console.ForegroundColor;
+
         internal static void Output(string text)
         {
             Console.WriteLine(text);
@@ -15,10 +17,19 @@ namespace screenium
 
         internal static void Output(string text, ConsoleColor color)
         {
-            var orig = Console.ForegroundColor;
-            Console.ForegroundColor = color;
+            SetConsoleColor(color);
             Console.WriteLine(text);
-            Console.ForegroundColor = orig;
+            RestoreConsoleColor();
+        }
+
+        private static void SetConsoleColor(ConsoleColor color)
+        {
+            Console.ForegroundColor = color;
+        }
+
+        private static void RestoreConsoleColor()
+        {
+            Console.ForegroundColor = _origColor;
         }
 
         internal static void Output(Exception ex)
@@ -30,6 +41,13 @@ namespace screenium
             {
                 Output(ex.InnerException);
             }
+        }
+
+        internal static void OutputEmphasised(string text, ConsoleColor color)
+        {
+            SetConsoleColor(color);
+            OutputEmphasised(text);
+            RestoreConsoleColor();
         }
 
         internal static void OutputEmphasised(string text)
