@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.31101.0
+VisualStudioVersion = 12.0.40629.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "screenium", "screenium\screenium.csproj", "{925C50F6-A7AF-4DD0-86DB-F2F45CBF6E21}"
 EndProject
@@ -16,9 +16,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "TestData", "TestData", "{1E
 	ProjectSection(SolutionItems) = preProject
 		TestData\testBadCsv.csv = TestData\testBadCsv.csv
 		TestData\testGoogleHome.csv = TestData\testGoogleHome.csv
-		TestData\wv_lp_tests.csv = TestData\wv_lp_tests.csv
-		TestData\wv_new_dashboard_tests.csv = TestData\wv_new_dashboard_tests.csv
-		TestData\wv_other_tests.csv = TestData\wv_other_tests.csv
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "bat files", "bat files", "{30135C18-1164-430E-942F-6FE102E90FDF}"
@@ -29,12 +26,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "bat files", "bat files", "{
 		..\run_google_home.bat = ..\run_google_home.bat
 		..\run_google_home_save.bat = ..\run_google_home_save.bat
 		..\run_self_test.bat = ..\run_self_test.bat
-		..\run_wv_lp.bat = ..\run_wv_lp.bat
-		..\run_wv_lp_save.bat = ..\run_wv_lp_save.bat
-		..\run_wv_new_dashboard.bat = ..\run_wv_new_dashboard.bat
-		..\run_wv_new_dashboard_save.bat = ..\run_wv_new_dashboard_save.bat
-		..\run_wv_others.bat = ..\run_wv_others.bat
-		..\run_wv_others_save.bat = ..\run_wv_others_save.bat
 	EndProjectSection
 EndProject
 Global
