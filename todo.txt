@@ -49,6 +49,10 @@ OK - Report: add Created DateTime, Execution Duration, x/y Tests Passed to Repor
 OK - Report: add link to the test URL (on the test name)
 xx - report: add date to filename?  but this is in the BAT ...  => make a dated archive copy of the report! (with images)
 
+==> HERE <==
+
+xx - only show ex details if Verbose option. else show Error: (msg)
+
 xx - add menu to select which test, or ALL.  so cmd line arg is "all" or else "menu" or else "test name"
 
 xx - add AcceptChanges option, with Y prompt -> moves actual to expected
