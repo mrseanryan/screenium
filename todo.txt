@@ -64,8 +64,8 @@ xx - have 4 adjustments: CropAdjustWidth, CropAdjustHeight -> CropAdjustTop, Cro
 xx - add parallel execution (N=2 x WebDrivers ?)
 
 xx - Report: improve styling
-   - new cmd line arg TemplateFilePath
-   - bootstrap accordion from templates/template1.html
+   OK - new cmd line arg TemplateFilePath
+   xx - bootstrap accordion from templates/template1.html
 
 xx - Report: improved side-x-side via kendo popup window
 
