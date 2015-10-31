@@ -12,6 +12,7 @@ namespace screenium.Reports
 
         private const string _templateNameSideBySide = "sideXside.template.html";
 
+        private const string _templateParamHeader = "{TEST_HEADER}";
         private const string _templateParamExpectedImage = "{PATH_TO_EXPECTED_IMAGE}";
         private const string _templateParamActualImage = "{PATH_TO_ACTUAL_IMAGE}";
         private const string _templateParamName = "{TEST_NAME}";
@@ -21,12 +22,13 @@ namespace screenium.Reports
             this._argProc = argProc;
         }
 
-        internal void CreateSideBySideFiles(TestDescription test)
+        internal void CreateSideBySideFiles(TestDescription test, string testHeaderHtml)
         {
             var dirManager = new DirectoryManager(_argProc);
 
             var templateHtml = ReadHtmlFromTemplate(_templateNameSideBySide);
 
+            SetTemplateParam(_templateParamHeader, testHeaderHtml, ref templateHtml);
             SetTemplateParam(_templateParamExpectedImage, dirManager.GetExpectedImageFilename(test), ref templateHtml);
             SetTemplateParam(_templateParamActualImage, dirManager.GetActualImageFilename(test.Name), ref templateHtml);
             SetTemplateParam(_templateParamName, test.Name, ref templateHtml);

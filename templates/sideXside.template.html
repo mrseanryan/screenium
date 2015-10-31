@@ -6,28 +6,21 @@ screenium - {TEST_NAME}
 
 <style>
 .sideBySideImage {
-	float: left; 
 	width: 100%; 
 }
 </style>
 
 </head>
 <body >
-<table >
-<tr >
-<td >
-<b >
-screenium: {TEST_NAME}</b>
-</td>
-<td >
-</td>
-</tr>
 
+{TEST_HEADER}
+
+<table style="width:100%;">
 <tr >
-<td >
+<td style="width:50%;">
 <img src='{PATH_TO_EXPECTED_IMAGE}' class='sideBySideImage' />
 </td>
-<td >
+<td style="width:50%;">
 <img src='{PATH_TO_ACTUAL_IMAGE}' class='sideBySideImage' />
 </td>	
 </tr>
@@ -42,5 +35,6 @@ actual
 </tr>
 
 </table>
+
 <p style="clear: both;">
 </html>

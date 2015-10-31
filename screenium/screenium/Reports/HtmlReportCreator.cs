@@ -55,7 +55,15 @@ namespace screenium.Reports
                         WriteReportHtml(dirManager, sw, report);
                         sw.Write(GetSeparator());
 
-                        templateCreator.CreateSideBySideFiles(report.Test);
+                        using (var memoryStream = new MemoryStream())
+                        {
+                            using (var writerToMemory = new StreamWriter(memoryStream))
+                            {
+                                CreateReportHeadingHtml(writerToMemory, report);
+                                writerToMemory.Flush();
+                                templateCreator.CreateSideBySideFiles(report.Test, GetStringFromStream(memoryStream));
+                            }
+                        }
                     }
                     sw.Write(GetTagEnd("body"));
                     sw.Write(GetTagEnd("html"));
@@ -66,16 +74,31 @@ namespace screenium.Reports
             reports.FilePath = filePath;
         }
 
-        private void WriteReportHtml(DirectoryManager dirManager, StreamWriter sw, Report report)
+        private string GetStringFromStream(MemoryStream memStream)
+        {
+            var sr = new StreamReader(memStream);
+            {
+                memStream.Position = 0;
+                return sr.ReadToEnd();
+            }
+        }
+
+        private void CreateReportHeadingHtml(StreamWriter sw, Report report)
         {
             sw.Write(GetTagStart("table"));
             WriteHtmlRow(sw, "Test:", GetLink(report.Test.Name, report.Test.Url));
             WriteHtmlRow(sw, "Result: ", GetResultAsHtml(report.Result.Result));
             WriteHtmlRow(sw, "Tolerance: ", report.Result.Tolerance);
             WriteHtmlRow(sw, "Distortion: ", report.Result.Distortion);
+            sw.Write(GetTagEnd("table"));
+        }
 
+        private void WriteReportHtml(DirectoryManager dirManager, StreamWriter sw, Report report)
+        {
+            CreateReportHeadingHtml(sw, report);
+
+            sw.Write(GetTagStart("table"));
             WriteHtmlRow(sw, "Diff Image: ", CreateImageHtmlWithLinkToSideBySide(report.Test, dirManager));
-
             sw.Write(GetTagEnd("table"));
         }
 
@@ -96,18 +119,13 @@ namespace screenium.Reports
         {
             //copy images to output dir, so that the report is self-contained:
             var expectedImageFilePath = dirManager.GetExpectedImageFilePath(test);
-            var expectedImageFileName = dirManager.GetExpectedImageFilename(test);
-
             var diffImageFilePath = dirManager.GetDiffImageFilePath(test.Name);
-            var diffImageFileName = dirManager.GetDiffImageFileName(test.Name);
-
             var actualImageFilePath = dirManager.GetActualImageFilePath(test.Name);
-            var actualImageFileName = dirManager.GetActualImageFilename(test.Name);
 
             var outputDir = Path.GetDirectoryName(_argProc.GetArg(ArgsProcessor.Args.OUTPUT_FILE_PATH));
-            var expectedImageFilePathInOutputDir = Path.Combine(outputDir, expectedImageFileName);
-            var actualImageFilePathInOutputDir = Path.Combine(outputDir, actualImageFileName);
-            var diffImageFilePathInOutputDir = Path.Combine(outputDir, diffImageFileName);
+            var expectedImageFilePathInOutputDir = Path.Combine(outputDir, Path.GetFileName(expectedImageFilePath));
+            var actualImageFilePathInOutputDir = Path.Combine(outputDir, Path.GetFileName(actualImageFilePath));
+            var diffImageFilePathInOutputDir = Path.Combine(outputDir, Path.GetFileName(diffImageFilePath));
 
             CopyFile(expectedImageFilePath, expectedImageFilePathInOutputDir);
             CopyFile(actualImageFilePath, actualImageFilePathInOutputDir);
