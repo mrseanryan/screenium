@@ -53,6 +53,8 @@ xx - report: add date to filename?  but this is in the BAT ...  => make a dated 
 
 xx - only show ex details if Verbose option. else show Error: (msg)
 
+xx - report SxS into new tab. make all new tabs use index, so not re-using same tab.
+
 xx - add menu to select which test, or ALL.  so cmd line arg is "all" or else "menu" or else "test name"
 
 xx - add AcceptChanges option, with Y prompt -> moves actual to expected
@@ -65,7 +67,7 @@ xx - Report: improve styling
    - new cmd line arg TemplateFilePath
    - bootstrap accordion from templates/template1.html
 
-xx - Report: add link to side-x-side view OR via a tab control ?
+xx - Report: improved side-x-side via kendo popup window
 
 xx - ScriptCount and js file with same name and N tests. screenshot after each js script run.
 
