@@ -89,8 +89,8 @@ To see the arguments and options, simply type:
 ```
 #!BAT
 
-screenium 1.1.0.0
-Usage: <CSV_FILE_PATH> <TEST_NAME> <OUTPUT_FILE_PATH> <IMAGES_DIR_PATH> <DIFFERENCE_TOLERANCE> <OPTIONS>
+screenium 1.2.0.0
+Usage: <CSV_FILE_PATH> <TEST_NAME> <OUTPUT_FILE_PATH> <IMAGES_DIR_PATH> <TEMPLATES_DIR_PATH> <OPTIONS>
 Options:
 -r = Run
 -s = Save
