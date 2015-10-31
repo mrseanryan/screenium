@@ -13,7 +13,7 @@ namespace screenium.Reports
             return false;
         }
 
-        void IReportCreator.SaveReport(ReportSet reports, ArgsProcessor argProc)
+        void IReportCreator.SaveReport(ReportSet reports)
         {
             throw new NotSupportedException();
         }

@@ -51,9 +51,10 @@ xx - report: add date to filename?  but this is in the BAT ...  => make a dated 
 
 ==> HERE <==
 
-xx - only show ex details if Verbose option. else show Error: (msg)
+OK - report SxS into new tab. make all new tabs use index, so not re-using same tab.
+OK - make report be self contained - local images, template files
 
-xx - report SxS into new tab. make all new tabs use index, so not re-using same tab.
+xx - only show ex details if Verbose option. else show Error: (msg)
 
 xx - add menu to select which test, or ALL.  so cmd line arg is "all" or else "menu" or else "test name"
 

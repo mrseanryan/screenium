@@ -103,12 +103,12 @@ namespace screenium
 
         private void CreateReports(ArgsProcessor argProc, ReportSet reports)
         {
-            var reporters = ReportCreatorFactory.CreateReporters();
+            var reporters = ReportCreatorFactory.CreateReporters(argProc);
             foreach (var reporter in reporters)
             {
                 if (reporter.HasSaveCapability())
                 {
-                    reporter.SaveReport(reports, argProc);
+                    reporter.SaveReport(reports);
                 }
                 reporter.ShowReport(reports);
             }

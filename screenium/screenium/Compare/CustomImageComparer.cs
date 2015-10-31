@@ -3,6 +3,8 @@
 //See the file license.txt for copying permission.
 
 using ImageMagick;
+using System;
+using System.IO;
 
 namespace screenium.Compare
 {
@@ -17,6 +19,13 @@ namespace screenium.Compare
 
 		internal CompareResultDescription CompareImages(string actualImageFilePath, string expectedImageFilePath, TestDescription test)
 		{
+            if (!File.Exists(expectedImageFilePath))
+            {
+                throw new ArgumentException("The expected image is not found - do you need to run first with -s option? " + 
+                    Environment.NewLine + 
+                    expectedImageFilePath);
+            }
+
 			bool areImagesSimilar;
 			double distortion;
 			var tolerance = test.Tolerance;

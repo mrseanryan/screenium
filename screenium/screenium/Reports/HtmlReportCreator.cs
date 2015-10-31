@@ -14,21 +14,31 @@ namespace screenium.Reports
     /// </summary>
     class HtmlReportCreator : IReportCreator
     {
+        private ArgsProcessor _argProc;
+        private int _targetId = 1;
+
+        public HtmlReportCreator(ArgsProcessor argProc)
+        {
+            _argProc = argProc;
+        }
+
         public bool HasSaveCapability()
         {
             return true;
         }
 
-        public void SaveReport(ReportSet reports, ArgsProcessor argProc)
+        public void SaveReport(ReportSet reports)
         {
-            string filePath = argProc.GetArg(ArgsProcessor.Args.OUTPUT_FILE_PATH);
+            string filePath = _argProc.GetArg(ArgsProcessor.Args.OUTPUT_FILE_PATH);
             string extension = "html";
             if (string.Compare(Path.GetExtension(filePath), "." + extension, StringComparison.OrdinalIgnoreCase) != 0)
             {
                 throw new InvalidOperationException("Report output filename must end with ." + extension);
             }
 
-            DirectoryManager dirManager = new DirectoryManager(argProc);
+            DirectoryManager dirManager = new DirectoryManager(_argProc);
+
+            var templateCreator = new TemplateCreator(_argProc);
 
             using (FileStream fs = new FileStream(filePath, FileMode.Create))
             {
@@ -44,6 +54,8 @@ namespace screenium.Reports
                     {
                         WriteReportHtml(dirManager, sw, report);
                         sw.Write(GetSeparator());
+
+                        templateCreator.CreateSideBySideFiles(report.Test);
                     }
                     sw.Write(GetTagEnd("body"));
                     sw.Write(GetTagEnd("html"));
@@ -62,15 +74,59 @@ namespace screenium.Reports
             WriteHtmlRow(sw, "Tolerance: ", report.Result.Tolerance);
             WriteHtmlRow(sw, "Distortion: ", report.Result.Distortion);
 
-            var diffImageFilePath = dirManager.GetDiffImageFilePath(report.Test.Name);
-            WriteHtmlRow(sw, "Diff Image: ", CreateImageHtml(diffImageFilePath, "diff image"));
+            WriteHtmlRow(sw, "Diff Image: ", CreateImageHtmlWithLinkToSideBySide(report.Test, dirManager));
 
             sw.Write(GetTagEnd("table"));
         }
 
+        private string CreateImageHtmlWithLinkToSideBySide(TestDescription test, DirectoryManager dirManager)
+        {
+            CopyImagesToReportOutputDir(test, dirManager);
+
+            string html = "";
+
+            var diffImageFileName = dirManager.GetDiffImageFileName(test.Name);
+            var imageHtml = CreateImageHtml(diffImageFileName, "diff image");
+            html += GetLink(imageHtml, dirManager.GetSideBySideFilename(test));
+
+            return html;
+        }
+
+        private void CopyImagesToReportOutputDir(TestDescription test, DirectoryManager dirManager)
+        {
+            //copy images to output dir, so that the report is self-contained:
+            var expectedImageFilePath = dirManager.GetExpectedImageFilePath(test);
+            var expectedImageFileName = dirManager.GetExpectedImageFilename(test);
+
+            var diffImageFilePath = dirManager.GetDiffImageFilePath(test.Name);
+            var diffImageFileName = dirManager.GetDiffImageFileName(test.Name);
+
+            var actualImageFilePath = dirManager.GetActualImageFilePath(test.Name);
+            var actualImageFileName = dirManager.GetActualImageFilename(test.Name);
+
+            var outputDir = Path.GetDirectoryName(_argProc.GetArg(ArgsProcessor.Args.OUTPUT_FILE_PATH));
+            var expectedImageFilePathInOutputDir = Path.Combine(outputDir, expectedImageFileName);
+            var actualImageFilePathInOutputDir = Path.Combine(outputDir, actualImageFileName);
+            var diffImageFilePathInOutputDir = Path.Combine(outputDir, diffImageFileName);
+
+            CopyFile(expectedImageFilePath, expectedImageFilePathInOutputDir);
+            CopyFile(actualImageFilePath, actualImageFilePathInOutputDir);
+            CopyFile(diffImageFilePath, diffImageFilePathInOutputDir);
+        }
+
+        private void CopyFile(string sourcePath, string destPath)
+        {
+            File.Copy(sourcePath, destPath, true);
+        }
+
         private string GetLink(string text, string url)
         {
-            return GetTagStartWithAttributes("a", "href='" + url + "' target='_new_window'") + text + GetTagEnd("a");
+            return GetTagStartWithAttributes("a", "href='" + url + "' target='"+GetNextTargetId()+"'") + text + GetTagEnd("a");
+        }
+
+        private string GetNextTargetId()
+        {
+            return "_screenium_window_" + _targetId++;
         }
 
         private void WriteReportHeadingHtml(StreamWriter sw, ReportSet reports)

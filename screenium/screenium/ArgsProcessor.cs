@@ -20,6 +20,7 @@ namespace screenium
             TEST_NAME,
             OUTPUT_FILE_PATH,
             IMAGES_DIR_PATH,
+            TEMPLATES_DIR_PATH,
             OPTIONS
         };
 

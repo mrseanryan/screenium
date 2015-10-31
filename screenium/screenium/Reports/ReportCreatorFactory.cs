@@ -8,9 +8,9 @@ namespace screenium.Reports
 {
     class ReportCreatorFactory
     {
-        internal static List<IReportCreator> CreateReporters()
+        internal static List<IReportCreator> CreateReporters(ArgsProcessor argProc)
         {
-            var reporters = new List<IReportCreator> {new ConsoleReportCreator(), new HtmlReportCreator()};
+            var reporters = new List<IReportCreator> {new ConsoleReportCreator(), new HtmlReportCreator(argProc)};
 
             return reporters;
         }

@@ -8,7 +8,7 @@ namespace screenium.Reports
     {
         bool HasSaveCapability();
 
-        void SaveReport(ReportSet report, ArgsProcessor argProc);
+        void SaveReport(ReportSet report);
 
         void ShowReport(ReportSet report);
     }
