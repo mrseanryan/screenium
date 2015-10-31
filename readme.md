@@ -11,6 +11,8 @@ screenium = a console tool to automatically test web sites
 - browsers: currently Google Chrome only
 - integration with your application is via URLs only - suitable for SPA or similar...
 
+![sample_report_screenshot.PNG](https://bitbucket.org/repo/rzKA8y/images/1379854876-sample_report_screenshot.PNG)
+
 License
 =======
 The MIT License (MIT)
