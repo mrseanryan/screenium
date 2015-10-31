@@ -78,7 +78,7 @@ namespace screenium
 
         internal string GetActualImageFilename(string testName)
         {
-            var filename = CreateFilenameFromTest(testName + "__actual.");
+            var filename = CreateFilenameFromTest(testName + "__actual");
             return filename;
         }
 
