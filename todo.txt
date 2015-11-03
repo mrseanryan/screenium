@@ -46,17 +46,15 @@ OK - Report: add CSV filename to the header
 OK - Report: add Created DateTime, Execution Duration, x/y Tests Passed to Report class, and to Console at end, and to the HTML in header
 OK - Report: add link to the test URL (on the test name)
 
-xx - add a combined summary, over multiple runs.  
-	ALL bat deletes the combinedSummary.report.csv
-	Subsequent runs append to it, and then generate combinedSummary.report.html
-
-xx - report: add date to filename?  but this is in the BAT ...  => make a dated archive copy of the report! (with images)
-
 OK - report SxS into new tab. make all new tabs use index, so not re-using same tab.
 OK - make report be self contained - local images, template files
 
 ==> HERE <==
-xx - only show ex details if Verbose option. else show Error: (msg)
+xx - only show exception details if Verbose option. else show Error: (msg)
+
+xx - add a combined summary, over multiple runs -> XML.  
+	ALL bat deletes the combinedSummary.report.xml
+	Subsequent runs append to it, and generate combinedSummary.report.html
 
 xx - add menu to select which test, or ALL.  so cmd line arg is "all" or else "menu" or else "test name"
 
@@ -64,7 +62,7 @@ xx - add AcceptChanges option, with Y prompt -> moves actual to expected
 
 xx - have 4 adjustments: CropAdjustWidth, CropAdjustHeight -> CropAdjustTop, CropAdjustRight, CropAdjustBottom, CropAdjustLeft
 
-xx - add parallel execution (N=2 x WebDrivers ?)
+xx - report archive: => make a dated archive copy of the report (with images)
 
 xx - Report: improve styling
    OK - new cmd line arg TemplateFilePath
@@ -76,12 +74,14 @@ xx - ScriptCount and js file with same name and N tests. screenshot after each j
 
 xx - refactor to have screeniumLib project, for possible later UI
 
+xx - add parallel execution (N=2 x WebDrivers ?)
+
 xx - add Query1, Query2, Query3 [not needed?]
 xx - add delay arg: TimeoutTimeSpan
 
 report:
 =====
-xx - overall result as red/green bar
+OK - overall result as red/green bar
 OK - list of failed/passing tests with red/green
 n/a - links to detail section: expected, actual images side-by-side
 OK - combine images via XOR, with highlighted diff in yellow
