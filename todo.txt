@@ -22,8 +22,6 @@ OK - fire up test sites
   design pattern: Page Object and Page Factory
   https://code.google.com/p/selenium/wiki/PageFactory
 
-xx - add Query1, Query2, Query3
-xx - add delay arg: TimeoutTimeSpan
 OK - save screenshot to temp location
 		get screenshot of a particular element, via cropping:
 		http://stackoverflow.com/questions/13832322/how-to-capture-the-screenshot-of-only-a-specific-element-using-selenium-webdrive
@@ -72,6 +70,9 @@ xx - Report: improved side-x-side via kendo popup window
 xx - ScriptCount and js file with same name and N tests. screenshot after each js script run.
 
 xx - refactor to have screeniumLib project, for possible later UI
+
+xx - add Query1, Query2, Query3 [not needed?]
+xx - add delay arg: TimeoutTimeSpan
 
 report:
 =====
