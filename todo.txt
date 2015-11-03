@@ -53,8 +53,8 @@ OK - make report be self contained - local images, template files
 xx - only show exception details if Verbose option. else show Error: (msg)
 
 xx - add a combined summary, over multiple runs -> XML.  
-	ALL bat deletes the combinedSummary.report.xml
-	Subsequent runs append to it, and generate combinedSummary.report.html
+	ALL bat deletes the combinedReport.xml
+	Subsequent runs load it, append to it, write it, then generate combinedReport.html
 
 xx - add menu to select which test, or ALL.  so cmd line arg is "all" or else "menu" or else "test name"
 
