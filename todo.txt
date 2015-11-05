@@ -61,7 +61,7 @@ xx - add menu to select which test, or ALL.  so cmd line arg is "all" or else "m
 xx - add AcceptChanges option, with Y prompt -> moves actual to expected
 
 xx - have 4 adjustments: CropAdjustWidth, CropAdjustHeight -> CropAdjustTop, CropAdjustRight, CropAdjustBottom, CropAdjustLeft
-
+===
 xx - report archive: => make a dated archive copy of the report (with images)
 
 xx - Report: improve styling
