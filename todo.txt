@@ -50,9 +50,11 @@ OK - report SxS into new tab. make all new tabs use index, so not re-using same 
 OK - make report be self contained - local images, template files
 
 ==> HERE <==
+xx - add a wake up test in WV: v. high tolerance and high sleep time.
+
 xx - only show exception details if Verbose option. else show Error: (msg)
 
-xx - add a combined summary, over multiple runs -> XML.  
+xx - add a combined summary, over multiple runs -> XML.
 	ALL bat deletes the combinedReport.xml
 	Subsequent runs load it, append to it, write it, then generate combinedReport.html
 
