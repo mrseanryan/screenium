@@ -47,7 +47,7 @@ namespace screenium
 
         private string CreateFilenameFromTest(string testName, bool isWithExtension = true)
         {
-            string illegals = " ;/\\$.,<>";
+            string illegals = " ;/\\$.,<>:";
             string filename = testName;
             foreach (char illegal in illegals)
             {
