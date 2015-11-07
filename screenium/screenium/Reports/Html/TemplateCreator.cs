@@ -21,6 +21,7 @@ namespace screenium.Reports
         internal const string TemplateParamCombinedResult = "{COMBINED_RESULT}";
         internal const string TemplateParamCombinedTestsPassed = "{COMBINED_TESTS_PASSED}";
         internal const string TemplateParamCombinedTestsTotal = "{COMBINED_TESTS_TOTAL}";
+        internal const string TemplateParamCombinedSuiteParts = "{COMBINED_TEST_SUITES_PARTS}";
 
         //the test-suite part of the combined report:
         internal const string TemplateParamSuiteName = "{TEST_SUITE_NAME}";

@@ -68,6 +68,7 @@
     <Compile Include="Reports\Combined\CombinedReportPersistance.cs" />
     <Compile Include="Reports\DateSupport.cs" />
     <Compile Include="Reports\Html\HtmlSideBySideReportCreator.cs" />
+    <Compile Include="Reports\Html\HtmlSupport.cs" />
     <Compile Include="Reports\ReportSet.cs" />
     <Compile Include="Reports\Html\TemplateCreator.cs" />
     <Compile Include="SeleniumIntegration\BrowserDriver.cs" />

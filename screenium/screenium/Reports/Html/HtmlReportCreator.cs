@@ -17,6 +17,7 @@ namespace screenium.Reports
     {
         private ArgsProcessor _argProc;
         private int _targetId = 1;
+        private HtmlSupport _htmlSupport = new HtmlSupport();
 
         public HtmlReportCreator(ArgsProcessor argProc)
         {
@@ -45,16 +46,16 @@ namespace screenium.Reports
             {
                 using (StreamWriter sw = new StreamWriter(fs))
                 {
-                    sw.Write(GetTagStart("html"));
+                    sw.Write(_htmlSupport.GetTagStart("html"));
                     sw.Write(GetHeader("screenium Test Suite Results"));
-                    sw.Write(GetTagStart("body"));
+                    sw.Write(_htmlSupport.GetTagStart("body"));
                     WriteReportHeadingHtml(sw, reports, reports.SuiteName);
-                    sw.Write(GetSeparator());
+                    sw.Write(_htmlSupport.GetSeparator());
 
                     foreach (var report in reports.Reports)
                     {
                         WriteReportHtml(dirManager, sw, report, null);
-                        sw.Write(GetSeparator());
+                        sw.Write(_htmlSupport.GetSeparator());
 
                         using (var memoryStream = new MemoryStream())
                         {
@@ -66,8 +67,8 @@ namespace screenium.Reports
                             }
                         }
                     }
-                    sw.Write(GetTagEnd("body"));
-                    sw.Write(GetTagEnd("html"));
+                    sw.Write(_htmlSupport.GetTagEnd("body"));
+                    sw.Write(_htmlSupport.GetTagEnd("html"));
                     sw.Flush();
                 }
             }
@@ -86,7 +87,7 @@ namespace screenium.Reports
 
         private void CreateReportHeadingHtml(StreamWriter sw, Report report, string suiteName)
         {
-            sw.Write(GetTagStart("table"));
+            sw.Write(_htmlSupport.GetTagStart("table"));
             if (!string.IsNullOrWhiteSpace(suiteName))
             {
                 WriteHtmlRow(sw, "Test Suite:", suiteName);
@@ -95,16 +96,16 @@ namespace screenium.Reports
             WriteHtmlRow(sw, "Result: ", GetResultAsHtml(report.Result.Result));
             WriteHtmlRow(sw, "Tolerance: ", report.Result.Tolerance);
             WriteHtmlRow(sw, "Distortion: ", report.Result.Distortion);
-            sw.Write(GetTagEnd("table"));
+            sw.Write(_htmlSupport.GetTagEnd("table"));
         }
 
         private void WriteReportHtml(DirectoryManager dirManager, StreamWriter sw, Report report, string suiteName)
         {
             CreateReportHeadingHtml(sw, report, suiteName);
 
-            sw.Write(GetTagStart("table"));
+            sw.Write(_htmlSupport.GetTagStart("table"));
             WriteHtmlRow(sw, "Diff Image: ", CreateImageHtmlWithLinkToSideBySide(report.Test, dirManager));
-            sw.Write(GetTagEnd("table"));
+            sw.Write(_htmlSupport.GetTagEnd("table"));
         }
 
         private string CreateImageHtmlWithLinkToSideBySide(TestDescription test, DirectoryManager dirManager)
@@ -114,7 +115,7 @@ namespace screenium.Reports
             string html = "";
 
             var diffImageFileName = dirManager.GetDiffImageFileName(test.Name);
-            var imageHtml = CreateImageHtml(diffImageFileName, "diff image");
+            var imageHtml = _htmlSupport.CreateImageHtml(diffImageFileName, "diff image");
             html += GetLink(imageHtml, dirManager.GetSideBySideFilename(test));
 
             return html;
@@ -144,7 +145,7 @@ namespace screenium.Reports
 
         private string GetLink(string text, string url)
         {
-            return GetTagStartWithAttributes("a", "href='" + url + "' target='" + GetNextTargetId() + "'") + text + GetTagEnd("a");
+            return _htmlSupport.GetTagStartWithAttributes("a", "href='" + url + "' target='" + GetNextTargetId() + "'") + text + _htmlSupport.GetTagEnd("a");
         }
 
         private string GetNextTargetId()
@@ -154,106 +155,48 @@ namespace screenium.Reports
 
         private void WriteReportHeadingHtml(StreamWriter sw, ReportSet reports, string suiteName)
         {
-            sw.Write(GetTagStart("table"));
+            sw.Write(_htmlSupport.GetTagStart("table"));
 
-            WriteHtmlRow(sw, GetEmphasisedText("screenium Test Suite Results:"), "");
+            WriteHtmlRow(sw, _htmlSupport.GetEmphasisedText("screenium Test Suite Results:"), "");
             WriteHtmlRow(sw, "Test Suite:", suiteName);
             WriteHtmlRow(sw, "Created: ", DateSupport.ToString(reports.Created));
             WriteHtmlRow(sw, "Duration: ", DateSupport.ToString(reports.Duration));
-            WriteHtmlRow(sw, "Suite Result: ", GetHtmlColoredForResult(reports.OverallResult, reports.OverallResult.ToString()));
+            WriteHtmlRow(sw, "Suite Result: ", _htmlSupport.GetHtmlColoredForResult(reports.OverallResult, reports.OverallResult.ToString()));
 
             var resultHtml = reports.CountTestsPassed + " of " + reports.CountTests + " tests passed.";
             WriteHtmlRow(sw, "Tests Passed: ", resultHtml);
 
-            sw.Write(GetTagEnd("table"));
-        }
-
-        private string GetSeparator()
-        {
-            return GetTagStart("hr") + GetTagEnd("hr");
+            sw.Write(_htmlSupport.GetTagEnd("table"));
         }
 
         private string GetResultAsHtml(Compare.CompareResult compareResult)
         {
-            return GetHtmlColoredForResult(compareResult, compareResult.ToString());
+            return _htmlSupport.GetHtmlColoredForResult(compareResult, compareResult.ToString());
         }
 
-        private string GetHtmlColoredForResult(Compare.CompareResult compareResult, string text)
-        {
-            string color;
-            const string green = "#00FF00";
-            const string red = "#FF0000";
-            switch (compareResult)
-            {
-                case Compare.CompareResult.Similar:
-                    color = green;
-                    break;
-                case Compare.CompareResult.Different:
-                    color = red;
-                    break;
-                default:
-                    throw new ArgumentException("Not a recognised Report Result: " + compareResult);
-            }
-            return GetTagWithAttributesAndChildText("div", "style='background-color:" + color + "'", text);
-        }
 
         private string GetHeader(string title)
         {
-            return GetTagStart("head") +
-                GetTagWithChildText("title", title) +
-                GetTagEnd("head");
-        }
-
-        private string GetTagWithAttributesAndChildText(string tag, string attributes, string text)
-        {
-            return GetTagStartWithAttributes(tag, attributes) + text + GetTagEnd(tag);
-        }
-
-        private string GetTagWithChildText(string tag, string text)
-        {
-            return GetTagStart(tag) + text + GetTagEnd(tag);
-        }
-
-        private string GetEmphasisedText(string text)
-        {
-            return GetTagStart("b") + text + GetTagEnd("b");
-        }
-
-        private string CreateImageHtml(string imageFilePath, string altText)
-        {
-            return "<img src='" + imageFilePath + "' alt='" + altText + "' />";
+            return _htmlSupport.GetTagStart("head") +
+                _htmlSupport.GetTagWithChildText("title", title) +
+                _htmlSupport.GetTagEnd("head");
         }
 
         private void WriteHtmlRow(StreamWriter sw, string name, string value)
         {
-            sw.Write(GetTagStart("tr"));
-            sw.Write(GetTagStart("td"));
+            sw.Write(_htmlSupport.GetTagStart("tr"));
+            sw.Write(_htmlSupport.GetTagStart("td"));
             sw.Write(name);
-            sw.Write(GetTagEnd("td"));
-            sw.Write(GetTagStart("td"));
+            sw.Write(_htmlSupport.GetTagEnd("td"));
+            sw.Write(_htmlSupport.GetTagStart("td"));
             sw.Write(value);
-            sw.Write(GetTagEnd("td"));
-            sw.Write(GetTagEnd("tr"));
+            sw.Write(_htmlSupport.GetTagEnd("td"));
+            sw.Write(_htmlSupport.GetTagEnd("tr"));
         }
 
         private void WriteHtmlRow(StreamWriter sw, string name, double value)
         {
             WriteHtmlRow(sw, name, value.ToString());
-        }
-
-        private string GetTagStart(string text)
-        {
-            return GetTagStartWithAttributes(text, "");
-        }
-
-        private string GetTagStartWithAttributes(string text, string attributes)
-        {
-            return "<" + text + " " + attributes + ">" + Environment.NewLine;
-        }
-
-        private string GetTagEnd(string text)
-        {
-            return "</" + text + ">" + Environment.NewLine;
         }
 
         public void ShowReport(ReportSet reports)
