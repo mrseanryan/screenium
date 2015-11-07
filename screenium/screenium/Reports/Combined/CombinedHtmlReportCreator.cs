@@ -15,6 +15,10 @@ namespace screenium.Reports
         {
             _combinedPersist = new CombinedReportPersistance(new DirectoryManager(argProc));
 
+            var combined = _combinedPersist.LoadCombinedData();
+
+
+
             //TODO output to combined report HTML
         }
     }

@@ -2,6 +2,7 @@
 //
 //See the file license.txt for copying permission.
 
+using screenium.Reports.Html;
 using System;
 using System.IO;
 
@@ -38,7 +39,7 @@ namespace screenium.Reports
 
             DirectoryManager dirManager = new DirectoryManager(_argProc);
 
-            var templateCreator = new TemplateCreator(_argProc);
+            var sideBySideCreator = new HtmlSideBySideReportCreator(_argProc);
 
             using (FileStream fs = new FileStream(filePath, FileMode.Create))
             {
@@ -61,7 +62,7 @@ namespace screenium.Reports
                             {
                                 CreateReportHeadingHtml(writerToMemory, report, reports.SuiteName);
                                 writerToMemory.Flush();
-                                templateCreator.CreateSideBySideFiles(report.Test, GetStringFromStream(memoryStream));
+                                sideBySideCreator.CreateSideBySideFiles(report.Test, GetStringFromStream(memoryStream));
                             }
                         }
                     }

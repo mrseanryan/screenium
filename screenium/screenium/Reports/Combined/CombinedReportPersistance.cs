@@ -29,7 +29,7 @@ namespace screenium.Reports
             SaveCombinedData(combinedData);
         }
 
-        private CombinedReportData LoadCombinedData()
+        public CombinedReportData LoadCombinedData()
         {
             if (!File.Exists(_path))
             {

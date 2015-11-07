@@ -9,32 +9,29 @@ namespace screenium.Reports
     {
         private ArgsProcessor _argProc;
 
-        private const string _templateNameSideBySide = "sideXside.template.html";
+        internal const string TemplateNameSideBySide = "sideXside.template.html";
 
-        private const string _templateParamHeader = "{TEST_HEADER}";
-        private const string _templateParamExpectedImage = "{PATH_TO_EXPECTED_IMAGE}";
-        private const string _templateParamActualImage = "{PATH_TO_ACTUAL_IMAGE}";
-        private const string _templateParamName = "{TEST_NAME}";
+        internal const string TemplateParamHeader = "{TEST_HEADER}";
+        internal const string TemplateParamExpectedImage = "{PATH_TO_EXPECTED_IMAGE}";
+        internal const string TemplateParamActualImage = "{PATH_TO_ACTUAL_IMAGE}";
 
-        public TemplateCreator(ArgsProcessor argProc)
+        internal const string TemplateParamName = "{TEST_NAME}";
+
+        private string _templateHtml;
+        public TemplateCreator(ArgsProcessor argProc, string templateName)
         {
             this._argProc = argProc;
+            _templateHtml = ReadHtmlFromTemplate(templateName);
         }
 
-        internal void CreateSideBySideFiles(TestDescription test, string testHeaderHtml)
+        internal void SetTemplateParam(string _templateParam, string value)
         {
-            var dirManager = new DirectoryManager(_argProc);
+            SetTemplateParam(_templateParam, value, ref _templateHtml);
+        }
 
-            var templateHtml = ReadHtmlFromTemplate(_templateNameSideBySide);
-
-            SetTemplateParam(_templateParamHeader, testHeaderHtml, ref templateHtml);
-            SetTemplateParam(_templateParamExpectedImage, dirManager.GetExpectedImageFilename(test), ref templateHtml);
-            SetTemplateParam(_templateParamActualImage, dirManager.GetActualImageFilename(test.Name), ref templateHtml);
-            SetTemplateParam(_templateParamName, test.Name, ref templateHtml);
-
-            string outFilename = dirManager.GetSideBySideFilename(test);
-            string outFilePath = Path.Combine(dirManager.GetOutputDirectoryFullPath(), outFilename);
-            SaveHtml(templateHtml, outFilePath);
+        internal void Save(string outFilePath)
+        {
+            SaveHtml(_templateHtml, outFilePath);
         }
 
         private void SaveHtml(string templateHtml, string filePath)
