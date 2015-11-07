@@ -40,6 +40,15 @@ namespace screenium
         {
             return "combinedReport";
         }
+        internal string GetCombinedReportHtmlPath()
+        {
+            var filename = GetCombinedReportFilenameWithoutExtension() + ".html";
+
+            var reportDir = _argProc.GetArg(ArgsProcessor.Args.OUTPUT_FILE_PATH);
+            reportDir = Path.GetDirectoryName(reportDir);
+
+            return Path.GetFullPath(Path.Combine(reportDir, filename));
+        }
 
         internal string GetDiffImageFileName(string testName)
         {

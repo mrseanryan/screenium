@@ -10,7 +10,26 @@ namespace screenium.Reports
         private ArgsProcessor _argProc;
 
         internal const string TemplateNameSideBySide = "sideXside.template.html";
+        internal const string TemplateNameCombinedReport = "combinedReport.template.html";
+        internal const string TemplateNameCombinedReportTestPart = "combinedReport.testPart.template.html";
 
+        //TODO use enums not strings!
+
+        //the combined report:
+        internal const string TemplateParamCombinedStartTime = "{COMBINED_START_TIME}";
+        internal const string TemplateParamCombinedDuration = "{COMBINED_DURATION}";
+        internal const string TemplateParamCombinedResult = "{COMBINED_RESULT}";
+        internal const string TemplateParamCombinedTestsPassed = "{COMBINED_TESTS_PASSED}";
+        internal const string TemplateParamCombinedTestsTotal = "{COMBINED_TESTS_TOTAL}";
+
+        //the test-suite part of the combined report:
+        internal const string TemplateParamSuiteName = "{TEST_SUITE_NAME}";
+        internal const string TemplateParamSuiteResult = "{TEST_SUITE_RESULT}";
+        internal const string TemplateParamTestsPassed = "{TESTS_PASSED}";
+        internal const string TemplateParamTestsTotal = "{TESTS_TOTAL}";
+        internal const string TemplateParamSuiteReportUrl = "{URL_OF_TEST_SUITE_REPORT}";
+
+        //side by site report:
         internal const string TemplateParamHeader = "{TEST_HEADER}";
         internal const string TemplateParamExpectedImage = "{PATH_TO_EXPECTED_IMAGE}";
         internal const string TemplateParamActualImage = "{PATH_TO_ACTUAL_IMAGE}";
