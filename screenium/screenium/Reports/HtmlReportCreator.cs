@@ -45,21 +45,21 @@ namespace screenium.Reports
                 using (StreamWriter sw = new StreamWriter(fs))
                 {
                     sw.Write(GetTagStart("html"));
-                    sw.Write(GetHeader("screenium Test Results"));
+                    sw.Write(GetHeader("screenium Test Suite Results"));
                     sw.Write(GetTagStart("body"));
-                    WriteReportHeadingHtml(sw, reports);
+                    WriteReportHeadingHtml(sw, reports, reports.SuiteName);
                     sw.Write(GetSeparator());
 
                     foreach (var report in reports.Reports)
                     {
-                        WriteReportHtml(dirManager, sw, report);
+                        WriteReportHtml(dirManager, sw, report, null);
                         sw.Write(GetSeparator());
 
                         using (var memoryStream = new MemoryStream())
                         {
                             using (var writerToMemory = new StreamWriter(memoryStream))
                             {
-                                CreateReportHeadingHtml(writerToMemory, report);
+                                CreateReportHeadingHtml(writerToMemory, report, reports.SuiteName);
                                 writerToMemory.Flush();
                                 templateCreator.CreateSideBySideFiles(report.Test, GetStringFromStream(memoryStream));
                             }
@@ -83,9 +83,13 @@ namespace screenium.Reports
             }
         }
 
-        private void CreateReportHeadingHtml(StreamWriter sw, Report report)
+        private void CreateReportHeadingHtml(StreamWriter sw, Report report, string suiteName)
         {
             sw.Write(GetTagStart("table"));
+            if(!string.IsNullOrWhiteSpace(suiteName))
+            {
+                WriteHtmlRow(sw, "Test Suite:", suiteName);
+            }
             WriteHtmlRow(sw, "Test:", GetLink(report.Test.Name, report.Test.Url));
             WriteHtmlRow(sw, "Result: ", GetResultAsHtml(report.Result.Result));
             WriteHtmlRow(sw, "Tolerance: ", report.Result.Tolerance);
@@ -93,9 +97,9 @@ namespace screenium.Reports
             sw.Write(GetTagEnd("table"));
         }
 
-        private void WriteReportHtml(DirectoryManager dirManager, StreamWriter sw, Report report)
+        private void WriteReportHtml(DirectoryManager dirManager, StreamWriter sw, Report report, string suiteName)
         {
-            CreateReportHeadingHtml(sw, report);
+            CreateReportHeadingHtml(sw, report, suiteName);
 
             sw.Write(GetTagStart("table"));
             WriteHtmlRow(sw, "Diff Image: ", CreateImageHtmlWithLinkToSideBySide(report.Test, dirManager));
@@ -139,7 +143,7 @@ namespace screenium.Reports
 
         private string GetLink(string text, string url)
         {
-            return GetTagStartWithAttributes("a", "href='" + url + "' target='"+GetNextTargetId()+"'") + text + GetTagEnd("a");
+            return GetTagStartWithAttributes("a", "href='" + url + "' target='" + GetNextTargetId() + "'") + text + GetTagEnd("a");
         }
 
         private string GetNextTargetId()
@@ -147,18 +151,18 @@ namespace screenium.Reports
             return "_screenium_window_" + _targetId++;
         }
 
-        private void WriteReportHeadingHtml(StreamWriter sw, ReportSet reports)
+        private void WriteReportHeadingHtml(StreamWriter sw, ReportSet reports, string suiteName)
         {
             sw.Write(GetTagStart("table"));
 
-            WriteHtmlRow(sw, GetEmphasisedText("screenium Test Results:"), "");
-            WriteHtmlRow(sw, "Filename", reports.CsvFileName);
+            WriteHtmlRow(sw, GetEmphasisedText("screenium Test Suite Results:"), "");
+            WriteHtmlRow(sw, "Test Suite:", suiteName);
             WriteHtmlRow(sw, "Created: ", DateSupport.ToString(reports.Created));
             WriteHtmlRow(sw, "Duration: ", DateSupport.ToString(reports.Duration));
-            WriteHtmlRow(sw, "Overall Result: ", GetHtmlColoredForResult(reports.OverallResult, reports.OverallResult.ToString()));
+            WriteHtmlRow(sw, "Suite Result: ", GetHtmlColoredForResult(reports.OverallResult, reports.OverallResult.ToString()));
 
             var resultHtml = reports.CountTestsPassed + " of " + reports.CountTests + " tests passed.";
-            WriteHtmlRow(sw, "Result: ", resultHtml);
+            WriteHtmlRow(sw, "Tests Passed: ", resultHtml);
 
             sw.Write(GetTagEnd("table"));
         }
@@ -216,7 +220,7 @@ namespace screenium.Reports
 
         private string CreateImageHtml(string imageFilePath, string altText)
         {
-            return "<img src='" + imageFilePath + "' alt='"+altText+"' />";
+            return "<img src='" + imageFilePath + "' alt='" + altText + "' />";
         }
 
         private void WriteHtmlRow(StreamWriter sw, string name, string value)

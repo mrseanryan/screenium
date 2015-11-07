@@ -47,7 +47,7 @@ namespace screenium
             switch (result)
             {
                 case CompareResult.Similar:
-            return 0;
+                    return 0;
                 case CompareResult.Different:
                     return 666;
                 case CompareResult.Cancelled:
@@ -103,15 +103,15 @@ namespace screenium
         private static List<TestDescription> ReadTests(ArgsProcessor argProc)
         {
             List<TestDescription> testsToRun;
-            List<TestDescription> tests; 
+            List<TestDescription> tests;
             {
                 var reader = new TestConfigReader();
                 var path = argProc.GetArg(ArgsProcessor.Args.CSV_FILE_PATH);
                 tests = reader.ReadFromFilePath(path);
-                Outputter.Output(string.Format("Read {0} tests from CSV file {1}", tests.Count, path));
+                Outputter.Output(string.Format("Read {0} tests from Test Suite: {1}", tests.Count, path));
             }
 
-            testsToRun = TestDescription.GetTestsByName(tests, argProc.GetArg(ArgsProcessor.Args.TEST_NAME)); 
+            testsToRun = TestDescription.GetTestsByName(tests, argProc.GetArg(ArgsProcessor.Args.TEST_NAME));
             return testsToRun;
         }
     }

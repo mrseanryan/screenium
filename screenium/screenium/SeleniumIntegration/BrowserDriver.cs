@@ -62,6 +62,7 @@ namespace screenium.SeleniumIntegration
         private void CreateDriver()
         {
             _driver = new ChromeDriver();
+            Outputter.OutputSeparator();
         }
 
         internal void OpenUrl(string url, string divSelector, string titleContains)

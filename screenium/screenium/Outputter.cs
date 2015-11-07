@@ -34,7 +34,7 @@ namespace screenium
 
         internal static void Output(Exception ex)
         {
-            Output(ex.Message);
+            Output(ex.Message, ConsoleColor.Red);
             Output(ex.StackTrace);
 
             if (ex.InnerException != null)

@@ -30,18 +30,16 @@ namespace screenium.Reports
 
         private void ShowReportHeader(ReportSet reports)
         {
-            Outputter.Output("");
             Outputter.OutputEmphasised("Test Results Summary:", ConsoleColor.Cyan);
-            Outputter.Output("Filename: " + reports.CsvFileName);
+            Outputter.Output("Test Suite: " + reports.SuiteName);
             Outputter.Output("Duration: " + DateSupport.ToString(reports.Duration));
 
-            Outputter.Output("Overall Result: " + reports.OverallResult, Compare.CompareResultHelper.GetResultAsConsoleColor(reports.OverallResult));
+            Outputter.Output("Suite Result: " + reports.OverallResult, Compare.CompareResultHelper.GetResultAsConsoleColor(reports.OverallResult));
             Outputter.Output(reports.CountTestsPassed + " of " + reports.CountTests + " tests passed.");
         }
 
         private void ShowReport(Report report)
         {
-            Outputter.Output("");
             Outputter.OutputEmphasised("Test Result:");
 
             Outputter.Output("Test: " + report.Test.Name);

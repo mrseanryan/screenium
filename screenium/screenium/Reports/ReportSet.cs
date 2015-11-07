@@ -41,6 +41,13 @@ namespace screenium.Reports
 
         public string CsvFileName { get; set; }
 
+        /// <summary>
+        /// convenience method to make code clearer.
+        /// </summary>
+        public string SuiteName
+        {
+            get { return CsvFileName; }
+        }
         public Compare.CompareResult OverallResult { get; set; }
     }
 }
