@@ -86,7 +86,7 @@ namespace screenium.Reports
         private void CreateReportHeadingHtml(StreamWriter sw, Report report, string suiteName)
         {
             sw.Write(GetTagStart("table"));
-            if(!string.IsNullOrWhiteSpace(suiteName))
+            if (!string.IsNullOrWhiteSpace(suiteName))
             {
                 WriteHtmlRow(sw, "Test Suite:", suiteName);
             }

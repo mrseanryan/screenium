@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.40629.0
+# Visual Studio 14
+VisualStudioVersion = 14.0.23107.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "screenium", "screenium\screenium.csproj", "{925C50F6-A7AF-4DD0-86DB-F2F45CBF6E21}"
 EndProject
@@ -23,6 +23,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "bat files", "bat files", "{
 		..\copy_edited_image_of_google.bat = ..\copy_edited_image_of_google.bat
 		..\run_bad_test_name.bat = ..\run_bad_test_name.bat
 		..\run_badCsv.bat = ..\run_badCsv.bat
+		..\run_combinedReport.bat = ..\run_combinedReport.bat
 		..\run_google_home.bat = ..\run_google_home.bat
 		..\run_google_home_save.bat = ..\run_google_home_save.bat
 		..\run_self_test.bat = ..\run_self_test.bat

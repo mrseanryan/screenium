@@ -6,10 +6,10 @@ using screenium.Compare;
 
 namespace screenium.Reports
 {
-    class Report
+    public class Report
     {
-        internal CompareResultDescription Result { get; set; }
+        public CompareResultDescription Result { get; set; }
 
-        internal TestDescription Test { get; set; }
+        public TestDescription Test { get; set; }
     }
 }

@@ -4,10 +4,10 @@
 
 namespace screenium.Compare
 {
-    class CompareResultDescription
+    public class CompareResultDescription
     {
-        internal CompareResult Result { get; set; }
-        internal double Distortion { get; set; }
-        internal double Tolerance { get; set; }
+        public CompareResult Result { get; set; }
+        public double Distortion { get; set; }
+        public double Tolerance { get; set; }
     }
 }

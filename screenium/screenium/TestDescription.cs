@@ -11,22 +11,22 @@ namespace screenium
     /// <summary>
     /// describes 1 test from a CSV file
     /// </summary>
-    class TestDescription
+    public class TestDescription
     {
-        internal string Name { get; set; }
-        internal string Description { get; set; }
-        internal string DivSelector { get; set; }
-        internal string Url { get; set; }
-        internal string Query1 { get; set; }
-        internal string Query2 { get; set; }
-        internal string Query3 { get; set; }
-        internal string TitleContains { get; set; }
-        internal int CropAdjustWidth { get; set; }
-        internal int CropAdjustHeight { get; set; }
-        internal double Tolerance { get; set; }
-        internal TimeSpan SleepTimespan { get; set; }
+        public string Name { get; set; }
+        public string Description { get; set; }
+        public string DivSelector { get; set; }
+        public string Url { get; set; }
+        public string Query1 { get; set; }
+        public string Query2 { get; set; }
+        public string Query3 { get; set; }
+        public string TitleContains { get; set; }
+        public int CropAdjustWidth { get; set; }
+        public int CropAdjustHeight { get; set; }
+        public double Tolerance { get; set; }
+        public TimeSpan SleepTimespan { get; set; }
 
-        internal static List<TestDescription> GetTestsByName(List<TestDescription> tests, string name)
+        public static List<TestDescription> GetTestsByName(List<TestDescription> tests, string name)
         {
             if (string.Compare(name, "all", StringComparison.InvariantCultureIgnoreCase) == 0)
             {

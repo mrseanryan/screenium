@@ -8,16 +8,16 @@ using System.Linq;
 
 namespace screenium.Reports
 {
-    class ReportSet
+    public class ReportSet
     {
-        internal ReportSet()
+        public ReportSet()
         {
             Reports = new List<Report>();
         }
 
-        internal List<Report> Reports { get; set; }
+        public List<Report> Reports { get; set; }
 
-        internal string FilePath { get; set; }
+        public string FilePath { get; set; }
 
         public TimeSpan Duration { get; set; }
 
@@ -49,5 +49,6 @@ namespace screenium.Reports
             get { return CsvFileName; }
         }
         public Compare.CompareResult OverallResult { get; set; }
+        public string Exception { get; set; }
     }
 }

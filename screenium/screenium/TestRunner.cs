@@ -18,17 +18,14 @@ namespace screenium
 
         internal CompareResult RunTests(List<TestDescription> testsToRun, ArgsProcessor argProc)
         {
-            var reportSet = new ReportSet();
-            reportSet.OverallResult = CompareResult.Similar;
+            ReportSet reportSet = CreateReport(argProc);
+
             try
             {
                 var watch = Stopwatch.StartNew();
 
                 using (_driver = new BrowserDriver())
                 {
-                    reportSet.Created = DateTime.Now;
-                    reportSet.CsvFileName = Path.GetFileName(argProc.GetArg(ArgsProcessor.Args.CSV_FILE_PATH));
-
                     foreach (var test in testsToRun)
                     {
                         Outputter.Output("Running test: " + test.Name + " - " + test.Description);
@@ -45,11 +42,39 @@ namespace screenium
                     }
                 }
             }
+            catch (Exception ex)
+            {
+                reportSet.Exception = ex.Message;
+
+                throw;
+            }
             finally
             {
                 _driver = null;
+                //try to log the exception in the combined report:
+                AppendResultToCombinedReport(reportSet, argProc);
             }
+
             return reportSet.OverallResult;
+        }
+
+        private static ReportSet CreateReport(ArgsProcessor argProc)
+        {
+            var reportSet = new ReportSet();
+            reportSet.OverallResult = CompareResult.Similar;
+            reportSet.Created = DateTime.Now;
+            reportSet.CsvFileName = Path.GetFileName(argProc.GetArg(ArgsProcessor.Args.CSV_FILE_PATH));
+            return reportSet;
+        }
+
+        private void AppendResultToCombinedReport(ReportSet reportSet, ArgsProcessor argProc)
+        {
+            var dirManager = new DirectoryManager(argProc);
+            var combinedPersist = new CombinedReportPersistance(dirManager);
+            combinedPersist.AddReportSet(reportSet);
+
+            var htmlCreator = new CombinedHtmlReportCreator();
+            htmlCreator.CreateReport(argProc);
         }
 
         private CompareResult RunTest(ArgsProcessor argProc, CompareResult overallResult, ReportSet reportSet, TestDescription test)

@@ -26,6 +26,21 @@ namespace screenium
             return Path.GetFullPath(Path.Combine(imagesDirPath, filename));
         }
 
+        internal string GetCombinedReportXmlPath()
+        {
+            var filename = GetCombinedReportFilenameWithoutExtension() + ".xml";
+
+            var reportDir = _argProc.GetArg(ArgsProcessor.Args.OUTPUT_FILE_PATH);
+            reportDir = Path.GetDirectoryName(reportDir);
+
+            return Path.GetFullPath(Path.Combine(reportDir, filename));
+        }
+
+        private string GetCombinedReportFilenameWithoutExtension()
+        {
+            return "combinedReport";
+        }
+
         internal string GetDiffImageFileName(string testName)
         {
             string filename = CreateFilenameFromTest(testName + "__diff");

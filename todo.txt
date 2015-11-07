@@ -56,6 +56,8 @@ xx - add a combined summary, over multiple runs -> XML.
 	ALL bat deletes the combinedReport.xml
 	Subsequent runs load it, append to it, write it, then generate combinedReport.html
 
+xx - //TODO add Exception and have it set if the Exception property is set
+	
 xx - add AcceptChanges option, with Y prompt -> moves actual to expected
 
 xx - add menu to select which test, or ALL.  so cmd line arg is "all" or else "menu" or else "test name"
