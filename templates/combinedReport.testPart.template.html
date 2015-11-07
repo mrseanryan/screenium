@@ -1,5 +1,5 @@
 <!-- partial template-->
-<table style="width:100%;">
+<table>
 
 <tr >
 <td >
@@ -24,16 +24,18 @@ result:
 test results:
 </td>
 <td >
-{TESTS_PASSED} of {TESTS_TOTAL} tests passed
+{TEST_SUITE_TESTS_PASSED} of {TEST_SUITE_TESTS_TOTAL} tests passed
 </td>
 </tr>
 
 <tr >
 <td >
-<a href='{URL_OF_TEST_SUITE_REPORT}'>view report</a>
+{TEST_SUITE_REPORT_LINK}
 </td>
 <td >
 </td>
 </tr>
 
 </table>
+
+<hr/>

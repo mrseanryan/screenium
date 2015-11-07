@@ -2,6 +2,7 @@
 //
 //See the file license.txt for copying permission.
 
+using System;
 using System.IO;
 namespace screenium.Reports
 {
@@ -26,9 +27,9 @@ namespace screenium.Reports
         //the test-suite part of the combined report:
         internal const string TemplateParamSuiteName = "{TEST_SUITE_NAME}";
         internal const string TemplateParamSuiteResult = "{TEST_SUITE_RESULT}";
-        internal const string TemplateParamTestsPassed = "{TESTS_PASSED}";
-        internal const string TemplateParamTestsTotal = "{TESTS_TOTAL}";
-        internal const string TemplateParamSuiteReportUrl = "{URL_OF_TEST_SUITE_REPORT}";
+        internal const string TemplateParamSuiteTestsPassed = "{TEST_SUITE_TESTS_PASSED}";
+        internal const string TemplateParamSuiteTestsTotal = "{TEST_SUITE_TESTS_TOTAL}";
+        internal const string TemplateParamSuiteReportLink = "{TEST_SUITE_REPORT_LINK}";
 
         //side by site report:
         internal const string TemplateParamHeader = "{TEST_HEADER}";
@@ -38,15 +39,30 @@ namespace screenium.Reports
         internal const string TemplateParamName = "{TEST_NAME}";
 
         private string _templateHtml;
+
         public TemplateCreator(ArgsProcessor argProc, string templateName)
         {
             this._argProc = argProc;
             _templateHtml = ReadHtmlFromTemplate(templateName);
         }
 
-        internal void SetTemplateParam(string _templateParam, string value)
+        internal void SetTemplateParam(string templateParam, string value)
         {
-            SetTemplateParam(_templateParam, value, ref _templateHtml);
+            SetTemplateParam(templateParam, value, ref _templateHtml);
+        }
+        internal void SetTemplateParam(string templateParam, int value)
+        {
+            SetTemplateParam(templateParam, value.ToString());
+        }
+
+        internal void SetTemplateParam(string templateParam, DateTime value)
+        {
+            SetTemplateParam(templateParam, DateSupport.ToString(value));
+        }
+
+        internal void SetTemplateParam(string templateParam, TimeSpan value)
+        {
+            SetTemplateParam(templateParam, DateSupport.ToString(value));
         }
 
         internal void Save(string outFilePath)
@@ -64,6 +80,11 @@ namespace screenium.Reports
                     sw.Flush();
                 }
             }
+        }
+
+        public override string ToString()
+        {
+            return _templateHtml;
         }
 
         private void SetTemplateParam(string paramName, string value, ref string templateHtml)

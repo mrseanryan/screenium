@@ -16,7 +16,6 @@ namespace screenium.Reports
     class HtmlReportCreator : IReportCreator
     {
         private ArgsProcessor _argProc;
-        private int _targetId = 1;
         private HtmlSupport _htmlSupport = new HtmlSupport();
 
         public HtmlReportCreator(ArgsProcessor argProc)
@@ -46,6 +45,7 @@ namespace screenium.Reports
             {
                 using (StreamWriter sw = new StreamWriter(fs))
                 {
+                    //TODO use a template.html file for report!
                     sw.Write(_htmlSupport.GetTagStart("html"));
                     sw.Write(GetHeader("screenium Test Suite Results"));
                     sw.Write(_htmlSupport.GetTagStart("body"));
@@ -92,7 +92,7 @@ namespace screenium.Reports
             {
                 WriteHtmlRow(sw, "Test Suite:", suiteName);
             }
-            WriteHtmlRow(sw, "Test:", GetLink(report.Test.Name, report.Test.Url));
+            WriteHtmlRow(sw, "Test:", _htmlSupport.GetLink(report.Test.Name, report.Test.Url));
             WriteHtmlRow(sw, "Result: ", GetResultAsHtml(report.Result.Result));
             WriteHtmlRow(sw, "Tolerance: ", report.Result.Tolerance);
             WriteHtmlRow(sw, "Distortion: ", report.Result.Distortion);
@@ -116,7 +116,7 @@ namespace screenium.Reports
 
             var diffImageFileName = dirManager.GetDiffImageFileName(test.Name);
             var imageHtml = _htmlSupport.CreateImageHtml(diffImageFileName, "diff image");
-            html += GetLink(imageHtml, dirManager.GetSideBySideFilename(test));
+            html += _htmlSupport.GetLink(imageHtml, dirManager.GetSideBySideFilename(test));
 
             return html;
         }
@@ -141,16 +141,6 @@ namespace screenium.Reports
         private void CopyFile(string sourcePath, string destPath)
         {
             File.Copy(sourcePath, destPath, true);
-        }
-
-        private string GetLink(string text, string url)
-        {
-            return _htmlSupport.GetTagStartWithAttributes("a", "href='" + url + "' target='" + GetNextTargetId() + "'") + text + _htmlSupport.GetTagEnd("a");
-        }
-
-        private string GetNextTargetId()
-        {
-            return "_screenium_window_" + _targetId++;
         }
 
         private void WriteReportHeadingHtml(StreamWriter sw, ReportSet reports, string suiteName)

@@ -9,6 +9,8 @@ namespace screenium.Reports.Html
 {
     class HtmlSupport
     {
+        private static int _targetId = 0;
+
         internal string GetHtmlColoredForResult(CompareResult compareResult, string text)
         {
             string color;
@@ -32,6 +34,17 @@ namespace screenium.Reports.Html
         {
             return GetTagStart("hr") + GetTagEnd("hr");
         }
+
+        internal string GetLink(string text, string url)
+        {
+            return GetTagStartWithAttributes("a", "href='" + url + "' target='" + GetNextTargetId() + "'") + text + GetTagEnd("a");
+        }
+
+        private string GetNextTargetId()
+        {
+            return "_screenium_window_" + _targetId++;
+        }
+
         private string GetTagWithAttributesAndChildText(string tag, string attributes, string text)
         {
             return GetTagStartWithAttributes(tag, attributes) + text + GetTagEnd(tag);
