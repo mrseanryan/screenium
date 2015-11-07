@@ -45,7 +45,7 @@ namespace screenium.Reports
             {
                 using (StreamWriter sw = new StreamWriter(fs))
                 {
-                    //TODO use a template.html file for report!
+                    //TODO main Suite report: use a template.html file for report!
                     sw.Write(_htmlSupport.GetTagStart("html"));
                     sw.Write(GetHeader("screenium Test Suite Results"));
                     sw.Write(_htmlSupport.GetTagStart("body"));

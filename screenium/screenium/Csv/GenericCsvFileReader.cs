@@ -29,7 +29,7 @@ namespace screenium.Csv
     {
         private int _currentRow = 0;
 
-        //TODO use StreamReader by encapsulation not inheritance
+        //TODO CSV reader - use StreamReader by encapsulation not inheritance
 
         public GenericCsvFileReader(Stream stream)
             : base(stream)
@@ -128,9 +128,9 @@ namespace screenium.Csv
             return (row.Count > 0);
         }
 
-        public int CurrentRow 
+        public int CurrentRow
         {
-            get 
+            get
             {
                 return this._currentRow;
             }

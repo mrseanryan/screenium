@@ -49,12 +49,12 @@ OK - Report: add link to the test URL (on the test name)
 OK - report SxS into new tab. make all new tabs use index, so not re-using same tab.
 OK - make report be self contained - local images, template files
 
-==> HERE <==
-xx - only show exception details if Verbose option. else show Error: (msg)
-
-xx - add a combined summary, over multiple runs -> XML.
+OK - add a combined summary, over multiple runs -> XML.
 	ALL bat deletes the combinedReport.xml
 	Subsequent runs load it, append to it, write it, then generate combinedReport.html
+
+==> HERE <==
+xx - only show exception details if Verbose option. else show Error: (msg)
 
 xx - //TODO add Exception and have it set if the Exception property is set
 	

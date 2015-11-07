@@ -70,7 +70,7 @@ namespace screenium.SeleniumIntegration
             _driver.Navigate().GoToUrl(url);
 
             // Wait for the page to load, timeout after 10 seconds
-            //TODO find a better way to wait ...
+            //TODO selenium: find a better way to wait ...
             WebDriverWait wait = new WebDriverWait(_driver, TimeSpan.FromSeconds(10));
             Outputter.Output("Searching for title text: " + titleContains);
             wait.Until(d => d.Title.ToLower().Contains(titleContains.ToLower()));

@@ -14,7 +14,7 @@ namespace screenium.Reports
         internal const string TemplateNameCombinedReport = "combinedReport.template.html";
         internal const string TemplateNameCombinedReportTestPart = "combinedReport.testPart.template.html";
 
-        //TODO use enums not strings!
+        //TODO template: use enums not strings!
 
         //the combined report:
         internal const string TemplateParamCombinedStartTime = "{COMBINED_START_TIME}";

@@ -18,7 +18,7 @@ namespace screenium.Reports
         public List<Report> Reports { get; set; }
 
         public string FilePath { get; set; }
-        
+
         public DateTime Created { get; set; }
 
         public int CountTests
@@ -47,6 +47,8 @@ namespace screenium.Reports
             get { return CsvFileName; }
         }
         public Compare.CompareResult OverallResult { get; set; }
+
+        //TODO show Exception in the report, if it is set (Suite report + Combined report).
         public string Exception { get; set; }
     }
 }

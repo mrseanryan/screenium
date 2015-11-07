@@ -17,7 +17,7 @@ namespace screenium.Reports
     /// OR else move away from XmlSerializer!</remarks>
     public class XmlDurationHolder
     {
-        //TODO replace this horrible code with other solution -> move away from XmlSerializer ?
+        //TODO TimeSpan serializing: replace this horrible code with other solution -> move away from XmlSerializer ?
 
         TimeSpan _duration;
         [XmlIgnore]
