@@ -8,7 +8,7 @@ using System.Linq;
 
 namespace screenium.Reports
 {
-    public class ReportSet
+    public class ReportSet : XmlDurationHolder
     {
         public ReportSet()
         {
@@ -18,9 +18,7 @@ namespace screenium.Reports
         public List<Report> Reports { get; set; }
 
         public string FilePath { get; set; }
-
-        public TimeSpan Duration { get; set; }
-
+        
         public DateTime Created { get; set; }
 
         public int CountTests

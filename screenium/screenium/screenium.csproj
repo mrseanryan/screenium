@@ -66,6 +66,7 @@
     <Compile Include="Reports\Combined\CombinedHtmlReportCreator.cs" />
     <Compile Include="Reports\Combined\CombinedReportData.cs" />
     <Compile Include="Reports\Combined\CombinedReportPersistance.cs" />
+    <Compile Include="Reports\Combined\XmlDurationHolder.cs" />
     <Compile Include="Reports\DateSupport.cs" />
     <Compile Include="Reports\Html\HtmlSideBySideReportCreator.cs" />
     <Compile Include="Reports\Html\HtmlSupport.cs" />
