@@ -32,14 +32,16 @@ namespace screenium
             Console.ForegroundColor = _origColor;
         }
 
-        internal static void Output(Exception ex)
+        internal static void Output(Exception ex, bool isVerbose)
         {
             Output(ex.Message, ConsoleColor.Red);
-            Output(ex.StackTrace);
-
+            if (isVerbose)
+            {
+                Output(ex.StackTrace);
+            }
             if (ex.InnerException != null)
             {
-                Output(ex.InnerException);
+                Output(ex.InnerException, isVerbose);
             }
         }
 

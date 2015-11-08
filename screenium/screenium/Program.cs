@@ -14,6 +14,7 @@ namespace screenium
     {
         static int Main(string[] args)
         {
+            var isVerbose = false;
             try
             {
                 ArgsProcessor argProc = new ArgsProcessor(args);
@@ -23,6 +24,8 @@ namespace screenium
                     Console.WriteLine(argProc.GetUsage());
                     return 1;
                 }
+
+                isVerbose = argProc.IsOptionOn(ArgsProcessor.Options.Verbose);
 
                 if (argProc.IsOptionOn(ArgsProcessor.Options.TestSelf))
                 {
@@ -41,7 +44,7 @@ namespace screenium
             }
             catch (Exception ex)
             {
-                Outputter.Output(ex);
+                Outputter.Output(ex, isVerbose);
                 return 2;
             }
             return 0;

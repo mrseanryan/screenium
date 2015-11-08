@@ -54,10 +54,9 @@ OK - add a combined summary, over multiple runs -> XML.
 	Subsequent runs load it, append to it, write it, then generate combinedReport.html
 
 OK - add AcceptChanges option, with Y prompt -> moves actual to expected
+OK - only show exception details if Verbose option. else show Error: (msg)
 
 ==> HERE <==
-xx - only show exception details if Verbose option. else show Error: (msg)
-
 xx - add menu to select which test, or ALL.  so cmd line arg is "all" or else "menu" or else "test name"
 
 xx - have 4 adjustments: CropAdjustWidth, CropAdjustHeight -> CropAdjustTop, CropAdjustRight, CropAdjustBottom, CropAdjustLeft
@@ -68,6 +67,7 @@ xx - report archive: => make a dated archive copy of the report (with images)
 
 xx - Report: improve styling
    OK - new cmd line arg TemplateFilePath
+   xx - new JSON output -> a template.  then kendo-ish report!
    xx - bootstrap accordion from templates/template1.html
 
 xx - Report: improved side-x-side via kendo popup window
