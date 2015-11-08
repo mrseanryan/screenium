@@ -53,16 +53,16 @@ OK - add a combined summary, over multiple runs -> XML.
 	ALL bat deletes the combinedReport.xml
 	Subsequent runs load it, append to it, write it, then generate combinedReport.html
 
+OK - add AcceptChanges option, with Y prompt -> moves actual to expected
+
 ==> HERE <==
 xx - only show exception details if Verbose option. else show Error: (msg)
-
-xx - //TODO add Exception and have it set if the Exception property is set
-	
-xx - add AcceptChanges option, with Y prompt -> moves actual to expected
 
 xx - add menu to select which test, or ALL.  so cmd line arg is "all" or else "menu" or else "test name"
 
 xx - have 4 adjustments: CropAdjustWidth, CropAdjustHeight -> CropAdjustTop, CropAdjustRight, CropAdjustBottom, CropAdjustLeft
+
+xx - //TODO add Exception and have it set if the Exception property is set
 ===
 xx - report archive: => make a dated archive copy of the report (with images)
 

@@ -28,7 +28,8 @@ namespace screenium
         {
             Run,
             Save,
-            TestSelf
+            TestSelf,
+            AcceptChanges
         }
 
         Dictionary<Args, int> dictArgsToPos = new Dictionary<Args, int>();

@@ -60,6 +60,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ActualToExpectedConverter.cs" />
     <Compile Include="ArgsProcessor.cs" />
     <Compile Include="Compare\CompareResultHelper.cs" />
     <Compile Include="Csv\TestConfigReaderException.cs" />

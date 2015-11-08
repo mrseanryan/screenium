@@ -28,7 +28,12 @@ namespace screenium
                 {
                     RunSelfTest();
                 }
+                else if (argProc.IsOptionOn(ArgsProcessor.Options.AcceptChanges))
+                {
+                    ConvertActualToExpected(argProc);
+                }
                 else
+
                 {
                     var result = RunTests(argProc);
                     return GetResultAsReturnCode(result);
@@ -40,6 +45,21 @@ namespace screenium
                 return 2;
             }
             return 0;
+        }
+
+        private static void ConvertActualToExpected(ArgsProcessor argProc)
+        {
+            //protect the saved 'expected' files, by prompting the user:
+            var message = "Accept recent changes as new 'expected' images? [Y to continue]";
+            if (!IsUserOkToContinue(message))
+            {
+                Outputter.Output("Cancelling...");
+                return;
+            }
+
+            var testsToRun = ReadTests(argProc);
+            var converter = new ActualToExpectedConverter(argProc);
+            converter.Convert(testsToRun);
         }
 
         private static int GetResultAsReturnCode(CompareResult result)
@@ -64,7 +84,7 @@ namespace screenium
             if (argProc.IsOptionOn(ArgsProcessor.Options.Save))
             {
                 //protect the saved 'expected' files, by prompting the user:
-                var message = "Are you sure that you want get new saved 'expected' images? [Y to continue]";
+                var message = "Get new saved 'expected' images? [Y to continue]";
                 if (!IsUserOkToContinue(message))
                 {
                     Outputter.Output("Cancelling...");
