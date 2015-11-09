@@ -55,10 +55,9 @@ OK - add a combined summary, over multiple runs -> XML.
 
 OK - add AcceptChanges option, with Y prompt -> moves actual to expected
 OK - only show exception details if Verbose option. else show Error: (msg)
+OK - argProc throw "Not a valid combination of options"
 
 ==> HERE <==
-xx - argProc throw "Not a valid combination of options"
-
 xx - add menu to select which test, or ALL.  so cmd line arg is "all" or else "menu" or else "test name"
 
 xx - have 4 adjustments: CropAdjustWidth, CropAdjustHeight -> CropAdjustTop, CropAdjustRight, CropAdjustBottom, CropAdjustLeft

@@ -19,8 +19,10 @@ namespace screenium
             {
                 ArgsProcessor argProc = new ArgsProcessor(args);
 
-                if (!argProc.Validate())
+                string message;
+                if (!argProc.Validate(out message))
                 {
+                    Console.WriteLine(message);
                     Console.WriteLine(argProc.GetUsage());
                     return 1;
                 }
