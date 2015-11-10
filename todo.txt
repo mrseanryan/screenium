@@ -57,6 +57,8 @@ OK - add AcceptChanges option, with Y prompt -> moves actual to expected
 OK - only show exception details if Verbose option. else show Error: (msg)
 
 ==> HERE <==
+xx - bug: if 0 tests passed, then combined is Similar!
+
 xx - argProc throw "Not a valid combination of options"
 
 xx - add menu to select which test, or ALL.  so cmd line arg is "all" or else "menu" or else "test name"
