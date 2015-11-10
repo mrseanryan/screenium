@@ -4,6 +4,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using System.Text;
 
@@ -35,7 +36,7 @@ namespace screenium
 
         Dictionary<Args, int> dictArgsToPos = new Dictionary<Args, int>();
 
-        Dictionary<Options, bool> optionsOn = new Dictionary<Options, bool>();
+        Dictionary<Options, bool> optionsOnOrOff = new Dictionary<Options, bool>();
 
         string[] args;
 
@@ -90,9 +91,40 @@ namespace screenium
             return sb.ToString();
         }
 
-        internal bool Validate()
+        internal bool Validate(out string message)
         {
-            return args.Length == dictArgsToPos.Keys.Count && AreOptionsValid();
+            message = "OK";
+            if (args.Length != dictArgsToPos.Keys.Count)
+            {
+                message = "Unexpected number of arguments";
+                return false;
+            }
+            if(!AreOptionsValid())
+            {
+                message = "The options were not recognised. Options should be preceded by - or /";
+                return false;
+            }
+            if (!AreOptionsCompatible())
+            {
+                message = "Incompatible combination of options";
+                return false;
+            }
+            return true;
+        }
+
+        private bool AreOptionsCompatible()
+        {
+            List<Options> combinable = new List<Options>
+            {
+                Options.Verbose
+            };
+            var optionsOnOnly = optionsOnOrOff.Where(pair => pair.Value);
+
+            if(optionsOnOnly.Count() > 1 && optionsOnOnly.Count(opt => !combinable.Contains(opt.Key)) > 1)
+            {
+                return false;
+            }
+            return true;
         }
 
         private bool AreOptionsValid()
@@ -120,7 +152,7 @@ namespace screenium
                 }
                 else
                 {
-                    optionsOn[chToOption[ch]] = true;
+                    optionsOnOrOff[chToOption[ch]] = true;
                 }
             }
 
@@ -141,7 +173,7 @@ namespace screenium
                 }
 
                 chToOption[ch] = opt;
-                optionsOn[opt] = false;
+                optionsOnOrOff[opt] = false;
             }
             return chToOption;
         }
@@ -153,7 +185,7 @@ namespace screenium
 
         internal bool IsOptionOn(Options opt)
         {
-            return optionsOn[opt];
+            return optionsOnOrOff[opt];
         }
     }
 }
