@@ -159,9 +159,20 @@ These both can be overridden by environment variables.
 Please refer to the wiki for more information:
 https://github.com/SeleniumHQ/selenium/wiki/ChromeDriver
 
-Auto generated API docs
------------------------
+Auto generated API docs - GhostDoc
+----------------------------------
+This help file was generated with the *free* edition of GhostDoc (a VS extension):
+docs\Help\screenium.chm
+
+ref:
+http://submain.com/products/ghostdoc.aspx
+
+Auto generated API docs - docfx
+-------------------------------
 - when built in *Release* config, screenium project uses the docfx tool to generate API docs.
+
+GhostDoc is probably better, but on the other hand, docfx installs itself via nuget,
+and runs out-of-the-box as part of the build.
 
 ref:
 http://aspnet.github.io/docfx/tutorial/docfx.exe_user_manual.html
@@ -171,4 +182,3 @@ nuget package: docfx.msbuild
 notes:
 - only *public* types and methods are documented
 - docfx is still in alpha!
-

@@ -6,6 +6,10 @@ using System;
 
 namespace screenium.Csv
 {
+    /// <summary>
+    /// An error occurred when reading the CSV config file.
+    /// </summary>
+    /// <seealso cref="System.Exception" />
     public class TestConfigReaderException : Exception
     {
         public TestConfigReaderException(int row, int column, Exception innerException)
