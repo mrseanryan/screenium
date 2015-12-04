@@ -161,9 +161,14 @@ https://github.com/SeleniumHQ/selenium/wiki/ChromeDriver
 
 Auto generated API docs
 -----------------------
-- when built in *Release* config, screenium uses the docfx tool to generate API docs.
+- when built in *Release* config, screenium project uses the docfx tool to generate API docs.
 
 ref:
 http://aspnet.github.io/docfx/tutorial/docfx.exe_user_manual.html
 
 nuget package: docfx.msbuild
+
+notes:
+- only *public* types and methods are documented
+- docfx is still in alpha!
+
