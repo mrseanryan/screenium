@@ -1,0 +1,33 @@
+﻿{
+  "metadata": [
+    {
+      "src": [
+        {
+          "files": [ "**/*.sln" ],
+          "exclude": [ "**/bin/**", "**/obj/**", "**/packages/**", "**/TestData/**" ],
+          "cwd": ".."
+        }
+      ],
+      "dest": "../../docs/temp/"
+    }
+  ],
+  "build": {
+    "content": [
+      {
+        "files": [ "**/**.md", "**/*.yml" ],
+        "cwd": "../../docs/temp/"
+      }
+    ],
+    "resource": [
+      {
+        "files": [ "**/images/**" ]
+      }
+    ],
+    "externalReference": [
+    ],
+    "globalMetadata": {
+      "_appTitle": "screenium API docs"
+    },
+    "dest": "../../docs/html"
+  }
+}

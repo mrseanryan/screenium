@@ -10,9 +10,15 @@ using System.Collections.Generic;
 
 namespace screenium
 {
-    class Program
+    /// <summary>
+    /// the top level command line program class.
+    /// </summary>
+    public class Program
     {
-        static int Main(string[] args)
+        /// <summary>
+        /// the main entry point for the process.
+        /// </summary>
+        public static int Main(string[] args)
         {
             var isVerbose = false;
             try

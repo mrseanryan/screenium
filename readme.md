@@ -158,3 +158,12 @@ The Chrome browser itself is discovered by chromedriver in the default installat
 These both can be overridden by environment variables. 
 Please refer to the wiki for more information:
 https://github.com/SeleniumHQ/selenium/wiki/ChromeDriver
+
+Auto generated API docs
+-----------------------
+- when built in *Release* config, screenium uses the docfx tool to generate API docs.
+
+ref:
+http://aspnet.github.io/docfx/tutorial/docfx.exe_user_manual.html
+
+nuget package: docfx.msbuild

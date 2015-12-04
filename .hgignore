@@ -16,6 +16,9 @@ packages
 #project post build temp files:
 typescript-spike\TypeScriptHTMLApp1\Scripts\Tests\TestRunSummary.xml
 
+#docfx temp files:
+screenium/screenium/log.txt
+
 #chutzpah:
 _Chutzpah*
 TestRunSummary.xml
