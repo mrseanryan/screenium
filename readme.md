@@ -181,4 +181,3 @@ nuget package: docfx.msbuild
 
 notes:
 - only *public* types and methods are documented
-- docfx is still in alpha!
