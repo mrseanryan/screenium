@@ -3,19 +3,21 @@
     {
       "src": [
         {
-          "files": [ "**/*.sln" ],
-          "exclude": [ "**/bin/**", "**/obj/**", "**/packages/**", "**/TestData/**" ],
-          "cwd": ".."
+          "files": [ "**/*.csproj" ],
+          "exclude": [ "**/bin/**", "**/obj/**" ]
         }
       ],
-      "dest": "../../docs/temp/"
+      "dest": "obj/api"
     }
   ],
   "build": {
     "content": [
       {
-        "files": [ "**/**.md", "**/*.yml" ],
-        "cwd": "../../docs/temp/"
+        "files": [ "**/*.yml" ],
+        "cwd": "obj/"
+      },
+      {
+        "files": [ "**.md", "toc.yml" ]
       }
     ],
     "resource": [
@@ -26,8 +28,10 @@
     "externalReference": [
     ],
     "globalMetadata": {
-      "_appTitle": "screenium API docs"
     },
-    "dest": "../../docs/html"
+    "template": [
+      "default"
+    ],
+    "dest" : "../../docs/html"
   }
 }
