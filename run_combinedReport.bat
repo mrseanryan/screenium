@@ -9,8 +9,8 @@ IF EXIST "%_COMBINED_PATH_XML%" (del "%_COMBINED_PATH_XML%")
 SET _COMBINED_PATH_HTML=temp\combinedReport.html
 
 
-CALL run_google_home_quiet.bat -q
+CALL run_google_home_quiet.bat
 
-CALL run_google_home_quiet.bat -q
+CALL run_google_home_quiet.bat
 
 explorer "%_COMBINED_PATH_HTML%"
