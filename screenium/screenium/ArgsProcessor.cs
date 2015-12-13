@@ -31,7 +31,8 @@ namespace screenium
             Save,
             TestSelf,
             AcceptChanges,
-            Verbose
+            Verbose,
+            QuietNotShowResults
         }
 
         Dictionary<Args, int> dictArgsToPos = new Dictionary<Args, int>();
@@ -116,7 +117,8 @@ namespace screenium
         {
             List<Options> combinable = new List<Options>
             {
-                Options.Verbose
+                Options.Verbose,
+                Options.QuietNotShowResults
             };
             var optionsOnOnly = optionsOnOrOff.Where(pair => pair.Value);
 

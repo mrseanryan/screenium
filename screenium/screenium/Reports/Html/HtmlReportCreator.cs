@@ -189,8 +189,14 @@ namespace screenium.Reports
             WriteHtmlRow(sw, name, value.ToString());
         }
 
-        public void ShowReport(ReportSet reports)
+        public void ShowReport(ReportSet reports, bool isQuietNotShowResults)
         {
+            if (isQuietNotShowResults)
+            {
+                Outputter.Output("quiet mode - so NOT opening the reports file");
+                return;
+            }
+
             Reports.WindowsSupport.OpenFileInExplorer(reports.FilePath);
         }
     }

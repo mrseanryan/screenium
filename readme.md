@@ -95,6 +95,9 @@ Options:
 -r = Run
 -s = Save
 -t = TestSelf
+-a = AcceptChanges
+-v = Verbose
+-q = QuietNotShowResults
 ```
 
 
@@ -120,6 +123,10 @@ http://chromedriver.storage.googleapis.com/index.html
 - VS C++ 2015 Redistributable [for Image Magick.NET]
 x86 AND x64
 http://www.microsoft.com/en-us/download/details.aspx?id=48145
+
+- docfx
+nuget package: docfx.msbuild
+
 
 References
 ==========

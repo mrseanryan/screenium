@@ -135,7 +135,8 @@ namespace screenium
                 {
                     reporter.SaveReport(reports);
                 }
-                reporter.ShowReport(reports);
+
+                reporter.ShowReport(reports, argProc.IsOptionOn(ArgsProcessor.Options.QuietNotShowResults));
             }
         }
 

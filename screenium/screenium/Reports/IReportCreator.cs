@@ -10,6 +10,6 @@ namespace screenium.Reports
 
         void SaveReport(ReportSet report);
 
-        void ShowReport(ReportSet report);
+        void ShowReport(ReportSet report, bool isQuietNotShowResults);
     }
 }

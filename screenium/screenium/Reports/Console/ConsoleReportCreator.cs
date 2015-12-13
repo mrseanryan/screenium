@@ -18,8 +18,10 @@ namespace screenium.Reports
             throw new NotSupportedException();
         }
 
-        void IReportCreator.ShowReport(ReportSet reports)
+        void IReportCreator.ShowReport(ReportSet reports, bool isQuietNotShowResults)
         {
+            //console report - we can ignore isQuietNotShowResults
+
             foreach (var report in reports.Reports)
             {
                 ShowReport(report);
